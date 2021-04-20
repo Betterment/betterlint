@@ -1,0 +1,22 @@
+name: TriageDependabotPRs
+on:
+  pull_request:
+    types: 
+      - labeled
+jobs:
+  TagReviewers:
+    if: github.event.label.name == 'dependencies'
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Tag reviewers in dependabot PRs
+        env:
+          COMMENT_URL: ${{ github.event.pull_request.comments_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOC_LINK: ${{ secrets.DOC_LINK }}
+        run: |
+          curl \
+            -X POST \
+            $COMMENT_URL \
+            -H "Content-Type: application/json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            --data "{ \"body\": \"/domain @Betterment/rubocop-betterment-core\n/platform @Betterment/rubocop-betterment-core\n\n<sub>[Documentation: Dependabot Alerts]($DOC_LINK)</sub>\" }"

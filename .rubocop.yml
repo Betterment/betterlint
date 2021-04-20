@@ -1,0 +1,9 @@
+inherit_from:
+  - .rubocop_todo.yml
+  - config/default.yml
+
+require:
+  - rubocop/cop/internal_affairs
+
+AllCops:
+    TargetRubyVersion: 2.4
