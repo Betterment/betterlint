@@ -21,7 +21,7 @@ module RuboCop
 
         def on_def(node)
           (method_name, ivar_assign) = memoized?(node)
-          return if ivar_assign.nil? || node.arguments.length.zero?
+          return if ivar_assign.nil? || node.arguments.length.zero? || method_name == :initialize
 
           msg = format(MSG, method: method_name)
           add_offense(node, location: ivar_assign.source_range, message: msg)
