@@ -246,4 +246,13 @@ describe RuboCop::Cop::Betterment::MemoizationWithArguments, :config do
       end
     end
   end
+
+  context 'for initialize methods' do
+    let(:method_arguments) { '(arguments = {})' }
+    let(:method_name) { 'initialize' }
+
+    it 'does not register an offense' do
+      expect_no_offenses(method_def)
+    end
+  end
 end
