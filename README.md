@@ -156,3 +156,51 @@ Betterment/UnsafeJob:
 ```
 
 It may make sense to consult your application's values for `Rails.application.config.filter_parameters`; if the application is filtering specific parameters from being logged, it might be a good idea to prevent these values from being stored in plaintext in a database as well.
+
+### Betterment/NonStandardActions
+
+This cop looks at Rails route files and flags routes that go to non-standard controller actions.
+The 7 standard controller actions (index, show, new, edit, create, update, destroy) are well defined,
+which allow for policies and middleware that can be applied to any controller.
+For example, if we want a user role to only be able to view but not modify,
+we can blanket deny access to create, update, and destroy actions and have it work in most use cases.
+
+Custom actions require explicit configuration to work with these sorts of middleware,
+so we prefer to use new controllers instead. For example, a resourceful route with a custom action like this:
+
+```ruby
+Rails.application.routes.draw do
+  resources :alerts, only: [:index, :summary]
+end
+```
+
+This can instead by written with an additional controller:
+
+```ruby
+Rails.application.routes.draw do
+  resources :alerts, only: :index # AlertsController#index
+  namespace :alerts do
+    resource :summaries, only: :show #Alerts::SummariesController#show
+  end
+end
+```
+
+By default this will look only in `config/routes.rb` and will use the standard 7 actions.
+These values can be configured:
+
+```yaml
+Betterment/NonStandardActions:
+  AllowedActions:
+    - index
+    - show
+    - new
+    - edit
+    - create
+    - update
+    - update_all
+    - destroy
+    - destroy_all
+  Include:
+    - 'config/routes.rb'
+    - 'config/other_routes.rb'
+```
