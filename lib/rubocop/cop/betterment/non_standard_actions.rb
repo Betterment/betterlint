@@ -13,9 +13,6 @@ module RuboCop
         def_node_matcher :resource_with_only, <<-PATTERN
           (send nil? {:resource :resources} _ (hash <(pair (sym :only) {(array (sym $_)*) (sym $_*)} ) ...> ))
         PATTERN
-        # route with a to that goes to a string
-        # route with an action
-        # route with no to or action
 
         def not_to_or_action?(sym)
           !%i(to action).include?(sym)
