@@ -29,6 +29,19 @@ Betterment/AuthorizationInController:
   Description: 'Detects unsafe handling of id-like parameters in controllers.'
   Enabled: false
 
+Betterment/NonStandardActions:
+  Description: 'Detects non-standard controller actions.'
+  AllowedActions:
+    - index
+    - show
+    - new
+    - edit
+    - create
+    - update
+    - destroy
+  Include:
+    - 'config/routes.rb'
+
 Betterment/UnsafeJob:
   Enabled: false
   sensitive_params:
