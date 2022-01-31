@@ -180,7 +180,7 @@ This can instead by written with an additional controller:
 Rails.application.routes.draw do
   resources :alerts, only: :index # AlertsController#index
   namespace :alerts do
-    resource :summaries, only: :show #Alerts::SummariesController#show
+    resource :summary, only: :show #Alerts::SummariesController#show
   end
 end
 ```
