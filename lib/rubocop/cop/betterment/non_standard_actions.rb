@@ -60,7 +60,7 @@ module RuboCop
         end
 
         def allowed_actions
-          @allowed_actions ||= cop_config["AllowedActions"]
+          @allowed_actions ||= cop_config['StandardActions'] + cop_config['AdditionalAllowedActions']
         end
 
         def allowed_action?(action)

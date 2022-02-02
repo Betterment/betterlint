@@ -56,7 +56,7 @@ describe RuboCop::Cop::Betterment::NonStandardActions, :betterlint_config do
   context 'when configuring the allowed actions list' do
     let(:cop_config) do
       {
-        'AllowedActions' => %w(index show new edit create update update_all destroy destroy_all)
+        'AdditionalAllowedActions' => %w(update_all destroy_all)
       }
     end
     let(:source) do

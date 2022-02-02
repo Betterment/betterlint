@@ -190,15 +190,8 @@ These values can be configured:
 
 ```yaml
 Betterment/NonStandardActions:
-  AllowedActions:
-    - index
-    - show
-    - new
-    - edit
-    - create
-    - update
+  AdditionalAllowedActions:
     - update_all
-    - destroy
     - destroy_all
   Include:
     - 'config/routes.rb'

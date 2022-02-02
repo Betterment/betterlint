@@ -55,7 +55,8 @@ Betterment/SitePrismLoaded:
 Betterment/NonStandardActions:
   Description: 'Detects non-standard controller actions.'
   StyleGuide: '#bettermentnonstandardactions'
-  AllowedActions:
+  AdditionalAllowedActions: []
+  StandardActions:
     - index
     - show
     - new
