@@ -1,7 +1,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class SitePrismLoaded < Base
+      class SitePrismLoaded < Cop
         MSG = 'Use `be_loaded` instead of `be_displayed`'.freeze
 
         def_node_matcher :be_displayed_call?, <<-PATTERN

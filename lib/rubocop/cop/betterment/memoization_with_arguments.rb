@@ -1,7 +1,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class MemoizationWithArguments < Base
+      class MemoizationWithArguments < Cop
         MSG = 'Memoized method `%<method>s` accepts arguments, ' \
               'which may cause it to return a stale result. ' \
               'Remove memoization or refactor to remove arguments.'.freeze

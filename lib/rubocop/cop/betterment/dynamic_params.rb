@@ -1,7 +1,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class DynamicParams < Base
+      class DynamicParams < Cop
         MSG_DYNAMIC_PARAMS = <<~MSG.freeze
           Parameter names accessed dynamically, cannot determine safeness. Please inline the keys explicitly when calling `permit` or when accessing `params` like a hash.
 

@@ -1,7 +1,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class UnscopedFind < Base
+      class UnscopedFind < Cop
         attr_accessor :unauthenticated_models
 
         MSG = <<~MSG.freeze

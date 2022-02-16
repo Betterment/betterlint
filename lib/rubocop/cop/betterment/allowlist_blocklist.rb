@@ -2,7 +2,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class AllowlistBlocklist < Base
+      class AllowlistBlocklist < Cop
         MSG = <<-DOC.freeze
           Avoid usages of whitelist & blacklist, in favor of more inclusive and descriptive language.
           For consistency, favor 'allowlist' and 'blocklist' where possible, but other terms (such as

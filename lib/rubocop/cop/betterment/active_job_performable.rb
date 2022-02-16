@@ -1,7 +1,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class ActiveJobPerformable < Base
+      class ActiveJobPerformable < Cop
         MSG = <<-DOC.freeze
           Classes that are "performable" should be ActiveJobs
 
