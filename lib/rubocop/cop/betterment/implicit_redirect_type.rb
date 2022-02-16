@@ -46,7 +46,7 @@ module RuboCop
         def on_block(node)
           return unless routes_file?
 
-          if block_form_with_options(node) { |options| options.none?(&method(:valid_status_option?)) } || block_form_without_options?(node)
+          if block_form_with_options(node) { |options| options.none? { |n| valid_status_option?(n) } } || block_form_without_options?(node)
             add_offense(node)
           end
         end
@@ -54,7 +54,7 @@ module RuboCop
         def on_send(node)
           return unless routes_file?
 
-          if arg_form_with_options(node) { |options| options.none?(&method(:valid_status_option?)) } || arg_form_without_options?(node)
+          if arg_form_with_options(node) { |options| options.none? { |n| valid_status_option?(n) } } || arg_form_without_options?(node)
             add_offense(node)
           end
         end

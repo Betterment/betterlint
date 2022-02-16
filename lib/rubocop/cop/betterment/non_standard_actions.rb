@@ -30,8 +30,8 @@ module RuboCop
 
         def on_block(node)
           if routes?(node)
-            node.each_descendant(:send) do |node|
-              check_resource_with_only(node) || check_raw_route(node)
+            node.each_descendant(:send) do |descendant_node|
+              check_resource_with_only(descendant_node) || check_raw_route(descendant_node)
             end
           end
         end
@@ -60,8 +60,9 @@ module RuboCop
           end
         end
 
+        # NOTE: The InternalAffairs/UndefinedConfig rule seems to have a bug where it can't fine these configs in config/default.yml
         def allowed_actions
-          @allowed_actions ||= cop_config['StandardActions'] + cop_config['AdditionalAllowedActions']
+          @allowed_actions ||= cop_config['StandardActions'] + cop_config['AdditionalAllowedActions'] # rubocop:disable InternalAffairs/UndefinedConfig
         end
 
         def allowed_action?(action)
