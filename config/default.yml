@@ -20,6 +20,9 @@ AllCops:
   DisplayStyleGuide: true
   DisplayCopNames: true
 
+Betterment:
+  StyleGuideBaseURL: https://github.com/Betterment/betterlint
+
 Betterment/ServerErrorAssertion:
   Description: 'Detects assertions on 5XX HTTP statuses.'
   Include:
@@ -27,19 +30,42 @@ Betterment/ServerErrorAssertion:
 
 Betterment/AuthorizationInController:
   Description: 'Detects unsafe handling of id-like parameters in controllers.'
+  StyleGuide: '#bettermentauthorizationincontroller'
   Enabled: false
 
 Betterment/UnsafeJob:
   Enabled: false
+  StyleGuide: '#bettermentunsafejob'
   sensitive_params:
     - password
     - social_security_number
     - ssn
 
+Betterment/UnscopedFind:
+  StyleGuide: '#bettermentunscopedfind'
+
+Betterment/DynamicParams:
+  StyleGuide: '#bettermentdynamicparams'
+
 Betterment/SitePrismLoaded:
   Include:
     - 'spec/features/**/*_spec.rb'
     - 'spec/system/**/*_spec.rb'
+
+Betterment/NonStandardActions:
+  Description: 'Detects non-standard controller actions.'
+  StyleGuide: '#bettermentnonstandardactions'
+  AdditionalAllowedActions: []
+  StandardActions:
+    - index
+    - show
+    - new
+    - edit
+    - create
+    - update
+    - destroy
+  Include:
+    - 'config/routes.rb'
 
 Layout/ParameterAlignment:
   Enabled: false
