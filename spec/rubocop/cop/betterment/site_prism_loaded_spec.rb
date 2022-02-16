@@ -16,7 +16,7 @@ describe RuboCop::Cop::Betterment::SitePrismLoaded, :config do
     end
   end
 
-  it 'autocorrects `be_displayed` to `be_loaded` ' do
+  it 'autocorrects `be_displayed` to `be_loaded`' do
     expect(autocorrect_source('expect(page).to be_displayed')).to eq('expect(page).to be_loaded')
   end
 end

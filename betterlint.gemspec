@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.summary = "Betterment rubocop configuration"
   s.description = "Betterment rubocop configuration"
   s.license = "MIT"
+  s.metadata['rubygems_mfa_required'] = 'true'
 
   s.files = Dir["README.md", "STYLEGUIDE.md", "config/*.yml", "lib/**/*.rb"]
 

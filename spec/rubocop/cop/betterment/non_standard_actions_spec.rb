@@ -6,7 +6,7 @@ describe RuboCop::Cop::Betterment::NonStandardActions, :betterlint_config do
       <<-SRC
       Rails.application.routes.draw do
         # OK
-        resource :status, only: :show 
+        resource :status, only: :show
         resources :messages, only: [:index,:show,:create]
         get :signup, to: 'signups#show'
         get 'old_summary', to: redirect('/summary', status: 302)
@@ -56,7 +56,7 @@ describe RuboCop::Cop::Betterment::NonStandardActions, :betterlint_config do
   context 'when configuring the allowed actions list' do
     let(:cop_config) do
       {
-        'AdditionalAllowedActions' => %w(update_all destroy_all)
+        'AdditionalAllowedActions' => %w(update_all destroy_all),
       }
     end
     let(:source) do

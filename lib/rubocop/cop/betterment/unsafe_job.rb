@@ -1,7 +1,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class UnsafeJob < Cop
+      class UnsafeJob < Base
         attr_accessor :sensitive_params, :class_regex
 
         MSG = <<~MSG.freeze

@@ -29,7 +29,7 @@ module RuboCop
       #
       #     # good
       #     expect(response).to have_http_status 422
-      class ServerErrorAssertion < Cop
+      class ServerErrorAssertion < Base
         MSG = 'Do not assert on 5XX statuses. Use a semantic status (e.g., 403, 422, etc.) or treat them as bugs (omit tests).'
         BAD_STATUSES = %i(
           internal_server_error
