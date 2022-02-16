@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
  - Betterment/NonStandardActions cop
  - Add style guide links to github readme in cop output
+### Removed
+ - Removed support for Ruby versions prior to 2.6
 
 ## [1.0.0] - 2021-04-20
 ### Added
