@@ -45,7 +45,7 @@ module RuboCop
                 find?(node) ||
                 custom_scope_find?(node) ||
                 static_method_name(node.method_name)
-            ) && @unauthenticated_models.exclude?(Utils::Parser.get_root_token(node))
+            ) && !@unauthenticated_models.include?(Utils::Parser.get_root_token(node))
 
           add_offense(node) if find_param_arg(arg_nodes)
         end

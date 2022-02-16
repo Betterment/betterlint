@@ -17,7 +17,7 @@ module RuboCop
         PATTERN
 
         def not_to_or_action?(sym)
-          %i(to action).exclude?(sym)
+          !%i(to action).include?(sym)
         end
 
         # @!method route_to(node)
