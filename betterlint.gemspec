@@ -9,10 +9,11 @@ Gem::Specification.new do |s|
   s.summary = "Betterment rubocop configuration"
   s.description = "Betterment rubocop configuration"
   s.license = "MIT"
+  s.metadata['rubygems_mfa_required'] = 'true'
 
   s.files = Dir["README.md", "STYLEGUIDE.md", "config/*.yml", "lib/**/*.rb"]
 
-  s.required_ruby_version = ">= 2.4"
+  s.required_ruby_version = ">= 2.6"
 
   s.add_dependency "rubocop", "> 1.0"
   s.add_dependency "rubocop-performance"
@@ -21,6 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency "rubocop-rspec"
 
   s.add_development_dependency "bundler"
-  s.add_development_dependency "rake", "~> 10.0"
+  s.add_development_dependency "rake", ">= 12.3.3"
   s.add_development_dependency "rspec-rails"
 end

@@ -27,7 +27,7 @@ module RuboCop
           return unless arg_nodes
 
           arg_nodes.find do |arg|
-            arg.array_type? && find_dynamic_param(arg.values) || !arg.literal? && !arg.const_type?
+            (arg.array_type? && find_dynamic_param(arg.values)) || (!arg.literal? && !arg.const_type?)
           end
         end
       end
