@@ -15,7 +15,7 @@ describe RuboCop::Cop::Utils::MethodReturnTable do
 
       node_1337 = parse_source('1337').ast
 
-      expect(described_class.has_method?(:cool_number)).to eq(true)
+      expect(described_class.has_method?(:cool_number)).to be(true)
       expect(described_class.get_method(:cool_number)).to eq([node_1337])
     end
 
@@ -40,7 +40,7 @@ describe RuboCop::Cop::Utils::MethodReturnTable do
       node_b = parse_source('456').ast
       node_c = parse_source('789').ast
 
-      expect(described_class.has_method?(:cool_number)).to eq(true)
+      expect(described_class.has_method?(:cool_number)).to be(true)
       expect(described_class.get_method(:cool_number)).to eq([node_a, node_b, node_c])
     end
 
@@ -66,9 +66,9 @@ describe RuboCop::Cop::Utils::MethodReturnTable do
       node_user_id = parse_source('params.permit(:user_id)').ast
       node_123456 = parse_source('{user_id: 123456}').ast
 
-      expect(described_class.has_method?(:user_id)).to eq(true)
+      expect(described_class.has_method?(:user_id)).to be(true)
       expect(described_class.get_method(:user_id)).to eq([node_user_id])
-      expect(described_class.has_method?(:user_id_maybe)).to eq(true)
+      expect(described_class.has_method?(:user_id_maybe)).to be(true)
       expect(described_class.get_method(:user_id_maybe)).to eq([node_123456, node_user_id])
     end
   end
