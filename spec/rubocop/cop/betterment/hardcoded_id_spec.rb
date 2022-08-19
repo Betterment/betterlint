@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe RuboCop::Cop::Betterment::HardcodedID, :config do
   it "does not add an offense for valid usage" do
     expect_no_offenses(<<~RUBY)
@@ -74,6 +76,96 @@ describe RuboCop::Cop::Betterment::HardcodedID, :config do
       RSpec.describe "blah" do
         let(:amount) { 42 }
         let(:user) { FactoryBot.build(:user, amount: amount) }
+      end
+    RUBY
+  end
+
+  it "attempts to correct a let containing a factory with a hardcoded ID" do
+    expect_offense(<<~RUBY)
+      RSpec.describe do
+        let(:foo) { FactoryBot.create(:foo, id: '42', name: 'Rick') }
+                                            ^^^^^^^^ Hardcoded IDs cause flaky tests. Use a sequence instead.
+        specify { 42 }
+        specify { 'Foo 42' }
+      end
+    RUBY
+
+    expect_correction(<<~RUBY)
+      RSpec.describe do
+        let(:foo) { FactoryBot.create(:foo, name: 'Rick') }
+        specify { foo.id }
+        specify { "Foo \#{foo.id}" }
+      end
+    RUBY
+  end
+
+  it "cannot correct a let containing a factory with a hardcoded reference ID" do
+    expect_offense(<<~RUBY)
+      RSpec.describe do
+        let(:foo) { FactoryBot.create(:foo, user_id: '42', name: 'Rick') }
+                                            ^^^^^^^^^^^^^ Hardcoded IDs cause flaky tests. Use a sequence instead.
+        specify { 42 }
+        specify { 'Foo 42' }
+      end
+    RUBY
+
+    expect_no_corrections
+  end
+
+  it "cannot correct outside of a block" do
+    expect_offense(<<~RUBY)
+      RSpec.describe do
+        let(:foo) { FactoryBot.create(:foo, id: '42', name: 'Rick') }
+                                            ^^^^^^^^ Hardcoded IDs cause flaky tests. Use a sequence instead.
+        include_examples "foo", url: "/foos/42"
+      end
+    RUBY
+
+    expect_correction(<<~RUBY)
+      RSpec.describe do
+        let(:foo) { FactoryBot.create(:foo, name: 'Rick') }
+        include_examples "foo", url: "/foos/42"
+      end
+    RUBY
+  end
+
+  it "corrects a let containing an ID" do
+    expect_offense(<<~RUBY)
+      RSpec.describe do
+        let(:foo_id) { 42 }
+        ^^^^^^^^^^^^^^^^^^^ Hardcoded IDs cause flaky tests. Use a sequence instead.
+        let(:foo) { FactoryBot.create(:foo, id: foo_id, name: 'Rick') }
+        specify { foo.id }
+        specify { 'Foo 42' }
+      end
+    RUBY
+
+    expect_correction(<<~RUBY)
+      RSpec.describe do
+        let(:foo_id) { foo.id }
+        let(:foo) { FactoryBot.create(:foo, name: 'Rick') }
+        specify { foo.id }
+        specify { "Foo \#{foo.id}" }
+      end
+    RUBY
+  end
+
+  it "corrects multiple violations in a string" do
+    expect_offense(<<~RUBY)
+      RSpec.describe do
+        let(:foo) { FactoryBot.create(:foo, id: 1) }
+                                            ^^^^^ Hardcoded IDs cause flaky tests. Use a sequence instead.
+        let(:bar) { FactoryBot.create(:bar, id: 2) }
+                                            ^^^^^ Hardcoded IDs cause flaky tests. Use a sequence instead.
+        specify { 'http://example.org/foo/1/bar/2' }
+      end
+    RUBY
+
+    expect_correction(<<~RUBY)
+      RSpec.describe do
+        let(:foo) { FactoryBot.create(:foo) }
+        let(:bar) { FactoryBot.create(:bar) }
+        specify { "http://example.org/foo/\#{foo.id}/bar/\#{bar.id}" }
       end
     RUBY
   end

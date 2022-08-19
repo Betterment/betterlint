@@ -67,6 +67,9 @@ Betterment/NonStandardActions:
   Include:
     - 'config/routes.rb'
 
+Betterment/HardcodedID:
+  AutoCorrect: false
+
 Layout/ParameterAlignment:
   Enabled: false
 
