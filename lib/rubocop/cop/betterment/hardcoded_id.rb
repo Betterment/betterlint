@@ -29,7 +29,7 @@ module RuboCop
 
         # @!method on_let_id(node)
         def_node_matcher :on_let_id, <<~PATTERN
-          (block (send nil? :let (sym $#key)) _block_args $#value)
+          (block (send nil? {:let | :let!} (sym $#key)) _block_args $#value)
         PATTERN
 
         def on_send(node)

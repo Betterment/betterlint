@@ -67,7 +67,7 @@ module RuboCop
 
         # @!method extract_let_name(node)
         def_node_matcher :extract_let_name, <<~PATTERN
-          (block (send nil? :let (sym $_let_name)) _block_args _block_body)
+          (block (send nil? {:let | :let!} (sym $_let_name)) _block_args _block_body)
         PATTERN
       end
     end
