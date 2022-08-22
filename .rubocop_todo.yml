@@ -39,6 +39,13 @@ InternalAffairs/NodeMatcherDirective:
     - 'lib/rubocop/cop/betterment/unscoped_find.rb'
 
 # Offense count: 2
+# Cop supports --auto-correct.
+InternalAffairs/NumblockHandler:
+  Exclude:
+    - 'lib/rubocop/cop/betterment/implicit_redirect_type.rb'
+    - 'lib/rubocop/cop/betterment/non_standard_actions.rb'
+
+# Offense count: 2
 # Cop supports --auto-correct-all.
 Rails/NegateInclude:
   Exclude:
