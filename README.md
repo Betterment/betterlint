@@ -197,3 +197,16 @@ Betterment/NonStandardActions:
     - 'config/routes.rb'
     - 'config/other_routes.rb'
 ```
+
+### Betterment/HardcodedID
+
+This cop identifies hardcoded IDs in your specs. You should not hardcode IDs in specs because the spec may flake due to an ID collision, leading to false positives, unique constraint violations (e.g. `PG::UniqueViolation`), and more.
+
+Instead of hardcoding an ID, create the resource and reference its ID. If the ID refers to an identifier in an external system, consider using a [FactoryBot sequence](https://github.com/thoughtbot/factory_bot/blob/main/GETTING_STARTED.md#sequences).
+
+This cop is capable of autocorrecting offenses, but it's not entirely safe. If you want to opt-in, add the following config to your `rubocop.yml` and run with `rubocop -A`:
+
+```yaml
+Betterment/HardcodedID:
+  AutoCorrect: true
+```

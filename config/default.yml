@@ -68,7 +68,10 @@ Betterment/NonStandardActions:
     - 'config/routes.rb'
 
 Betterment/HardcodedID:
+  Description: 'Detects hardcoded IDs in specs'
+  StyleGuide: '#bettermenthardcodedid'
   AutoCorrect: false
+  SafeAutoCorrect: false
 
 Layout/ParameterAlignment:
   Enabled: false
