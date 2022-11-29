@@ -32,7 +32,7 @@ module RuboCop
         private
 
         def has_perform_method?(node)
-          node.descendants.find { |n| is_perform_method?(n) }
+          is_perform_method?(node.body)
         end
       end
     end
