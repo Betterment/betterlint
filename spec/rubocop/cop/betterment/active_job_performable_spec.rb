@@ -58,4 +58,16 @@ describe RuboCop::Cop::Betterment::ActiveJobPerformable, :config do
       end
     RUBY
   end
+
+  it 'accepts a class that includes a job' do
+    expect_no_offenses(<<~RUBY)
+      class MyBusinessLogic
+        class MyJob < ApplicationJob
+          def perform
+            MyBusinessLogic.call
+          end
+        end
+      end
+    RUBY
+  end
 end
