@@ -26,7 +26,7 @@ module RuboCop
           return unless has_perform_method?(node)
           return if subclasses_application_job?(node)
 
-          add_offense(node.children.first)
+          add_offense(node.identifier)
         end
 
         private
