@@ -10,7 +10,7 @@ describe RuboCop::Cop::Betterment::DynamicParams, :config do
 
   context 'when creating or updating a model' do
     it 'registers an offense when parameter names are accessed dynamically' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def create
             dynamic_field = :user_id
@@ -19,7 +19,7 @@ describe RuboCop::Cop::Betterment::DynamicParams, :config do
             params[dynamic_field]
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(3)
       expect(cop.offenses.map(&:line)).to eq([4, 5, 6])
@@ -28,7 +28,7 @@ describe RuboCop::Cop::Betterment::DynamicParams, :config do
     end
 
     it 'does not register an offense when accessing static parameter names' do
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class Application
           def create
             params.require(:user).permit(:user_id)
@@ -36,11 +36,11 @@ describe RuboCop::Cop::Betterment::DynamicParams, :config do
             params[:user_id]
           end
         end
-      DEF
+      RUBY
     end
 
     it 'does not register an offense when accessing non-params objects dynamically' do
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class Application
           def create
             dynamic_field = :something
@@ -50,7 +50,7 @@ describe RuboCop::Cop::Betterment::DynamicParams, :config do
             really_not_params_I_swear[dynamic_field]
           end
         end
-      DEF
+      RUBY
     end
   end
 end

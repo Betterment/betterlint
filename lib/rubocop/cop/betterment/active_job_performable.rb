@@ -2,7 +2,7 @@ module RuboCop
   module Cop
     module Betterment
       class ActiveJobPerformable < Cop
-        MSG = <<-DOC.freeze
+        MSG = <<~DOC.freeze
           Classes that are "performable" should be ActiveJobs
 
           class MyJob < ApplicationJob
@@ -23,16 +23,24 @@ module RuboCop
         PATTERN
 
         def on_class(node)
-          return unless has_perform_method?(node)
           return if subclasses_application_job?(node)
+          return unless has_perform_method?(node)
 
-          add_offense(node.children.first)
+          add_offense(node.identifier)
         end
 
         private
 
         def has_perform_method?(node)
-          node.descendants.find { |n| is_perform_method?(n) }
+          possible_methods_within(node).any? { |n| is_perform_method?(n) }
+        end
+
+        def possible_methods_within(node)
+          if node.body.begin_type?
+            node.body.children
+          else
+            [node.body]
+          end
         end
       end
     end

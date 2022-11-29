@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe RuboCop::Cop::Betterment::AllowlistBlocklist, :config do
   it 'rejects a method that should use allowlist' do
-    inspect_source(<<-DEF)
+    inspect_source(<<~RUBY)
       class MyClass
         def whitelist; end
       end
-    DEF
+    RUBY
 
     expect(cop.offenses.size).to eq(1)
     expect(cop.offenses.map(&:line)).to eq([1])
@@ -16,11 +16,11 @@ describe RuboCop::Cop::Betterment::AllowlistBlocklist, :config do
   end
 
   it 'rejects a class that should use allowlist' do
-    inspect_source(<<-DEF)
+    inspect_source(<<~RUBY)
       class Whitelist;
         def method; end
       end
-    DEF
+    RUBY
 
     expect(cop.offenses.size).to eq(1)
     expect(cop.offenses.map(&:line)).to eq([1])
@@ -30,11 +30,11 @@ describe RuboCop::Cop::Betterment::AllowlistBlocklist, :config do
   end
 
   it 'rejects a variable that should use allowlist' do
-    inspect_source(<<-DEF)
+    inspect_source(<<~RUBY)
       class MyClass;
         whitelist = 'something'
       end
-    DEF
+    RUBY
 
     expect(cop.offenses.size).to eq(1)
     expect(cop.offenses.map(&:line)).to eq([1])
@@ -44,11 +44,11 @@ describe RuboCop::Cop::Betterment::AllowlistBlocklist, :config do
   end
 
   it 'rejects a string that should use allowlist' do
-    inspect_source(<<-DEF)
+    inspect_source(<<~RUBY)
       class MyClass;
         myvar = 'whitelist'
       end
-    DEF
+    RUBY
 
     expect(cop.offenses.size).to eq(1)
     expect(cop.offenses.map(&:line)).to eq([1])
@@ -58,11 +58,11 @@ describe RuboCop::Cop::Betterment::AllowlistBlocklist, :config do
   end
 
   it 'rejects a method that should use blocklist' do
-    inspect_source(<<-DEF)
+    inspect_source(<<~RUBY)
       class MyClass
         def blacklist; end
       end
-    DEF
+    RUBY
 
     expect(cop.offenses.size).to eq(1)
     expect(cop.offenses.map(&:line)).to eq([1])
@@ -72,11 +72,11 @@ describe RuboCop::Cop::Betterment::AllowlistBlocklist, :config do
   end
 
   it 'rejects a class that should use blocklist' do
-    inspect_source(<<-DEF)
+    inspect_source(<<~RUBY)
       class Blacklist
         def method; end
       end
-    DEF
+    RUBY
 
     expect(cop.offenses.size).to eq(1)
     expect(cop.offenses.map(&:line)).to eq([1])
@@ -86,11 +86,11 @@ describe RuboCop::Cop::Betterment::AllowlistBlocklist, :config do
   end
 
   it 'rejects a variable that should use blocklist' do
-    inspect_source(<<-DEF)
+    inspect_source(<<~RUBY)
       class MyClass;
         blacklist = 'something else'
       end
-    DEF
+    RUBY
 
     expect(cop.offenses.size).to eq(1)
     expect(cop.offenses.map(&:line)).to eq([1])
@@ -100,11 +100,11 @@ describe RuboCop::Cop::Betterment::AllowlistBlocklist, :config do
   end
 
   it 'rejects a string that should use blocklist' do
-    inspect_source(<<-DEF)
+    inspect_source(<<~RUBY)
       class MyClass;
         myvar = 'blacklist'
       end
-    DEF
+    RUBY
 
     expect(cop.offenses.size).to eq(1)
     expect(cop.offenses.map(&:line)).to eq([1])

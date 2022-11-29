@@ -12,13 +12,13 @@ describe RuboCop::Cop::Betterment::UnsafeJob, :config do
     it 'registers an offense when perform takes unsafe parameters' do
       cop.sensitive_params = [:password]
 
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class RegistrationJob < ApplicationJob
           def perform(user_id:, password: nil)
             do_something
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(1)
       expect(cop.offenses.map(&:line)).to eq([2])
@@ -29,13 +29,13 @@ describe RuboCop::Cop::Betterment::UnsafeJob, :config do
     it 'does not register an offense when perform takes other parameters' do
       cop.sensitive_params = [:password]
 
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class RegistrationJob < ApplicationJob
           def perform(user_id:)
             do_something
           end
         end
-      DEF
+      RUBY
     end
   end
 
@@ -45,13 +45,13 @@ describe RuboCop::Cop::Betterment::UnsafeJob, :config do
       cop.class_regex = /.*Misc$/
       cop.sensitive_params = [:password]
 
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class AsyncMisc
           def perform(user_id:, password: nil)
             do_something
           end
         end
-      DEF
+      RUBY
       cop.class_regex = temp
 
       expect(cop.offenses.size).to be(1)
@@ -65,13 +65,13 @@ describe RuboCop::Cop::Betterment::UnsafeJob, :config do
       cop.class_regex = /.*Misc$/
       cop.sensitive_params = [:password]
 
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class DefaultJob
           def perform(user_id:, password: nil)
             do_something
           end
         end
-      DEF
+      RUBY
       cop.class_regex = temp
     end
   end
@@ -80,13 +80,13 @@ describe RuboCop::Cop::Betterment::UnsafeJob, :config do
     it 'registers an offense when perform takes unsafe parameters' do
       cop.sensitive_params = [:password]
 
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class RegistrationJob
           def perform(user_id:, password: nil)
             do_something
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(1)
       expect(cop.offenses.map(&:line)).to eq([2])
@@ -97,13 +97,13 @@ describe RuboCop::Cop::Betterment::UnsafeJob, :config do
     it 'does not register an offense when perform takes other parameters' do
       cop.sensitive_params = [:password]
 
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class RegistrationJob < ApplicationJob
           def perform(user_id:)
             do_something
           end
         end
-      DEF
+      RUBY
     end
   end
 
@@ -111,13 +111,13 @@ describe RuboCop::Cop::Betterment::UnsafeJob, :config do
     it 'does not register an offense when perform takes a sensitive parameter' do
       cop.sensitive_params = [:password]
 
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class SomethingElse
           def perform(user_id:, password: nil)
             do_something
           end
         end
-      DEF
+      RUBY
     end
   end
 end

@@ -9,25 +9,25 @@ describe RuboCop::Cop::Betterment::MemoizationWithArguments, :config do
       'Remove memoization or refactor to remove arguments.'
   end
   let(:method_body) do
-    <<~DEF
+    <<~RUBY
       @test_method ||= 'yay'
       #{expected_offense}
-    DEF
+    RUBY
   end
   let(:memoized_block_body) do
-    <<~DEF
+    <<~RUBY
       @test_method ||= begin
       #{expected_offense}
         :yay
       end
-    DEF
+    RUBY
   end
   let(:method_def) do
-    <<~DEF
+    <<~RUBY
       def #{method_name}#{method_arguments}
       #{method_body.gsub(/^/, '  ')}
       end
-    DEF
+    RUBY
   end
 
   context 'without arguments' do
@@ -80,12 +80,12 @@ describe RuboCop::Cop::Betterment::MemoizationWithArguments, :config do
 
     context 'when memoized at the end after other lines of code' do
       let(:method_body) do
-        <<-DEF.strip
-        line 1
-        line 2
-        @test_method ||= 'yay'
-        #{expected_offense}
-        DEF
+        <<~RUBY.strip
+          line 1
+          line 2
+          @test_method ||= 'yay'
+          #{expected_offense}
+        RUBY
       end
 
       it 'registers an offense' do
