@@ -81,10 +81,10 @@ describe RuboCop::Cop::Betterment::MemoizationWithArguments, :config do
     context 'when memoized at the end after other lines of code' do
       let(:method_body) do
         <<~RUBY.strip
-        line 1
-        line 2
-        @test_method ||= 'yay'
-        #{expected_offense}
+          line 1
+          line 2
+          @test_method ||= 'yay'
+          #{expected_offense}
         RUBY
       end
 
