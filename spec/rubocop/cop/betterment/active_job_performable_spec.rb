@@ -30,37 +30,32 @@ describe RuboCop::Cop::Betterment::ActiveJobPerformable, :config do
   end
 
   it 'accepts a performable that subclasses ApplicationJob' do
-    inspect_source(<<~RUBY)
+    expect_no_offenses(<<~RUBY)
       class MyJob < ApplicationJob
         def perform
           MyModel.new.save!
         end
       end
     RUBY
-
-    expect(cop.offenses.size).to be(0)
   end
 
   it 'accepts a performable that subclasses Module::ApplicationJob' do
-    inspect_source(<<~RUBY)
+    expect_no_offenses(<<~RUBY)
       class MyJob < MyModule::ApplicationJob
         def perform
           MyModel.new.save!
         end
       end
     RUBY
-
-    expect(cop.offenses.size).to be(0)
   end
 
   it 'accepts a class that does not define "perform"' do
-    inspect_source(<<~RUBY)
+    expect_no_offenses(<<~RUBY)
       class MyModel
         def create
           Model.create! params[:user_id]
         end
       end
     RUBY
-    expect(cop.offenses.size).to be(0)
   end
 end
