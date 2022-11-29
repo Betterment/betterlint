@@ -90,4 +90,11 @@ describe RuboCop::Cop::Betterment::ActiveJobPerformable, :config do
       end
     RUBY
   end
+
+  it 'accepts empty classes' do
+    expect_no_offenses(<<~RUBY)
+      class MyClass
+      end
+    RUBY
+  end
 end

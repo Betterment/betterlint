@@ -36,7 +36,9 @@ module RuboCop
         end
 
         def possible_methods_within(node)
-          if node.body.begin_type?
+          if node.body.nil?
+            []
+          elsif node.body.begin_type?
             node.body.children
           else
             [node.body]
