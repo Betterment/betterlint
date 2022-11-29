@@ -32,7 +32,15 @@ module RuboCop
         private
 
         def has_perform_method?(node)
-          is_perform_method?(node.body)
+          possible_methods_within(node).any? { |n| is_perform_method?(n) }
+        end
+
+        def possible_methods_within(node)
+          if node.body.begin_type?
+            node.body.children
+          else
+            [node.body]
+          end
         end
       end
     end

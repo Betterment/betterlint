@@ -29,6 +29,26 @@ describe RuboCop::Cop::Betterment::ActiveJobPerformable, :config do
     expect(cop.offenses.first.message).to include('Classes that are "performable" should be ActiveJobs')
   end
 
+  it 'rejects a performable that has multiple methods' do
+    inspect_source(<<~RUBY)
+      class MyJob
+        def foo
+        end
+
+        def perform
+          MyModel.new.save!
+        end
+
+        def bar
+        end
+      end
+    RUBY
+
+    expect(cop.offenses.size).to be(1)
+    expect(cop.offenses.map(&:line)).to eq([1])
+    expect(cop.offenses.first.message).to include('Classes that are "performable" should be ActiveJobs')
+  end
+
   it 'accepts a performable that subclasses ApplicationJob' do
     expect_no_offenses(<<~RUBY)
       class MyJob < ApplicationJob
