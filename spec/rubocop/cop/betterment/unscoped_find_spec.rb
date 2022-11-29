@@ -19,7 +19,7 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
 
   context 'when searching for records' do
     it 'registers an offense when using user input' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def create
             # find all Secret records matching a particular secret_id
@@ -27,7 +27,7 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
             Secret.find_by(user: params[:user_id])
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(2)
       expect(cop.offenses.map(&:line)).to eq([4, 5])
@@ -36,7 +36,7 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
     end
 
     it 'registers an offense when using user input wrapped by a method' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def secret_id
             params[:secret_id]
@@ -52,7 +52,7 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
             Secret.find_by(user: find_params[:user_id])
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(2)
       expect(cop.offenses.map(&:line)).to eq([12, 13])
@@ -61,7 +61,7 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
     end
 
     it 'registers an offense when passing user input to a custom scope' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def create
             # find all Secrets in the "active" scope
@@ -69,7 +69,7 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
             Secret.active.find_by(user: params[:user_id])
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(2)
       expect(cop.offenses.map(&:line)).to eq([4, 5])
@@ -78,7 +78,7 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
     end
 
     it 'does not register an offense when trust chaining even with user input' do
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class Application
           def create
             current_user.secrets.find(params[:secret_id])
@@ -87,7 +87,7 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
             current_user.secrets.active.find_by(user: params[:user_id])
           end
         end
-      DEF
+      RUBY
     end
 
     it 'does not register an offense when searching for unauthenticated models' do
@@ -97,7 +97,7 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
       # if posts is a table with strictly public content, we can add the model
       # to the list of unauthenticated models so the cop won't flag any finds
       # against it.
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class Application
           def create
             Post.find(params[:post_id])
@@ -106,7 +106,7 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
             Post.active.find_by(params[:post_id])
           end
         end
-      DEF
+      RUBY
       cop.unauthenticated_models = temp
     end
   end

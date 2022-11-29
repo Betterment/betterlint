@@ -3,57 +3,57 @@ require 'spec_helper'
 describe RuboCop::Cop::Utils::Parser do
   context 'when processing a statement' do
     it 'finds the root token for a bare send' do
-      node = parse_source(<<-DEF).ast
+      node = parse_source(<<~RUBY).ast
         method(:hello_world)
-      DEF
+      RUBY
 
       expect(described_class.get_root_token(node)).to eq(:method)
     end
 
     it 'finds the root token for a send type' do
-      node = parse_source(<<-DEF).ast
+      node = parse_source(<<~RUBY).ast
         params.permit(:parameter)
-      DEF
+      RUBY
 
       expect(described_class.get_root_token(node)).to eq(:params)
     end
 
     it 'finds the root token for a chained send' do
-      node = parse_source(<<-DEF).ast
+      node = parse_source(<<~RUBY).ast
         params.fetch(:parent, {}).permit(:username, :password)
-      DEF
+      RUBY
 
       expect(described_class.get_root_token(node)).to eq(:params)
     end
 
     it 'finds the root token for a nested send' do
-      node = parse_source(<<-DEF).ast
+      node = parse_source(<<~RUBY).ast
         SomeObject.new(params.permit(:username, :password))
-      DEF
+      RUBY
 
       expect(described_class.get_root_token(node)).to eq(:SomeObject)
     end
 
     it 'finds the root token for a send to a self node' do
-      node = parse_source(<<-DEF).ast
+      node = parse_source(<<~RUBY).ast
         self.parameter = 1
-      DEF
+      RUBY
 
       expect(described_class.get_root_token(node)).to eq(:self)
     end
 
     it 'finds the root token for a send via block pass' do
-      node = parse_source(<<-DEF).ast
+      node = parse_source(<<~RUBY).ast
         some_method(&another_method)
-      DEF
+      RUBY
 
       expect(described_class.get_root_token(node)).to eq(:some_method)
     end
 
     it 'finds the root token for a send to a module' do
-      node = parse_source(<<-DEF).ast
+      node = parse_source(<<~RUBY).ast
         Module::method.call(1, 2, 3)
-      DEF
+      RUBY
 
       expect(described_class.get_root_token(node)).to eq(:Module)
     end
@@ -61,12 +61,12 @@ describe RuboCop::Cop::Utils::Parser do
 
   context 'when looking for return values' do
     it 'finds all the explicit return values' do
-      node = parse_source(<<-DEF).ast
+      node = parse_source(<<~RUBY).ast
         def some_method(arg)
           return 123 if arg.this?
           return 456 if arg.that?
         end
-      DEF
+      RUBY
 
       node_123 = parse_source("123").ast
       node_456 = parse_source("456").ast
@@ -75,11 +75,11 @@ describe RuboCop::Cop::Utils::Parser do
     end
 
     it 'finds all the implicit return values' do
-      node = parse_source(<<-DEF).ast
+      node = parse_source(<<~RUBY).ast
         def some_method(arg)
           true if arg.test?
         end
-      DEF
+      RUBY
 
       node_true = parse_source("true").ast
 
@@ -87,14 +87,14 @@ describe RuboCop::Cop::Utils::Parser do
     end
 
     it 'finds all the implicit and explicit return values' do
-      node = parse_source(<<-DEF).ast
+      node = parse_source(<<~RUBY).ast
         def some_method(arg)
           return 123 if arg.this?
           return 456 if arg.that?
 
           789
         end
-      DEF
+      RUBY
 
       node_123 = parse_source("123").ast
       node_456 = parse_source("456").ast
@@ -104,11 +104,11 @@ describe RuboCop::Cop::Utils::Parser do
     end
 
     it 'finds a compound statement return value' do
-      node = parse_source(<<-DEF).ast
+      node = parse_source(<<~RUBY).ast
         def some_method
           self.size + 1
         end
-      DEF
+      RUBY
 
       node_add = parse_source("self.size + 1").ast
 

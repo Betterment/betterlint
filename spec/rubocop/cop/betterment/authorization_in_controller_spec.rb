@@ -23,14 +23,14 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
 
   context 'when creating or updating a model' do
     it 'registers an offense for unsafe parameters' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def create
             Model.new params[:user_id]
             Model.create! params[:user_id]
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(2)
       expect(cop.offenses.map(&:line)).to eq([3, 4])
@@ -39,14 +39,14 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'registers an offense for unsafe parameters retrieved via static strings' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def create
             Model.new params['user_id']
             Model.create! params['user_id']
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(2)
       expect(cop.offenses.map(&:line)).to eq([3, 4])
@@ -55,7 +55,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'registers an offense for selecting an unsafe parameter from a variable' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def create
             dangerous_parameters = params.permit(:user_id)
@@ -63,7 +63,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             Model.create! dangerous_parameters[:user_id]
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(2)
       expect(cop.offenses.map(&:line)).to eq([4, 5])
@@ -72,7 +72,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'registers an offense for variables holding unsafe parameters' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def create
             dangerous_parameters = params.permit(:user_id)
@@ -82,7 +82,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             @model.assign_attributes dangerous_parameters
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(4)
       expect(cop.offenses.map(&:line)).to eq([4, 5, 6, 7])
@@ -91,7 +91,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'registers an offense for methods returning unsafe parameters via static strings' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def dangerous_parameters
             params.permit('user_id')
@@ -104,7 +104,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             @model.assign_attributes dangerous_parameters
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(4)
       expect(cop.offenses.map(&:line)).to eq([7, 8, 9, 10])
@@ -113,7 +113,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'registers an offense for methods returning unsafe parameters' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def dangerous_parameters
             params.permit(:user_id)
@@ -126,7 +126,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             @model.assign_attributes dangerous_parameters
           end
         end
-      DEF
+      RUBY
       expect(cop.offenses.size).to be(4)
       expect(cop.offenses.map(&:line)).to eq([7, 8, 9, 10])
       expect(cop.highlights.uniq).to eq(['dangerous_parameters'])
@@ -134,7 +134,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'registers an offense for methods returning unsafe parameters via kwargs' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def dangerous_parameters
             params.permit(accounts: :user_id)
@@ -147,7 +147,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             @model.assign_attributes dangerous_parameters
           end
         end
-      DEF
+      RUBY
       expect(cop.offenses.size).to be(4)
       expect(cop.offenses.map(&:line)).to eq([7, 8, 9, 10])
       expect(cop.highlights.uniq).to eq(['dangerous_parameters'])
@@ -155,7 +155,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'registers an offense when selecting an unsafe parameter from a method' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def variety_params
             params.permit(:safe, :also_safe, :user_id)
@@ -168,7 +168,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             @model.assign_attributes variety_params[:user_id]
           end
         end
-      DEF
+      RUBY
       expect(cop.offenses.size).to be(4)
       expect(cop.offenses.map(&:line)).to eq([7, 8, 9, 10])
       expect(cop.highlights.uniq).to eq(['variety_params[:user_id]'])
@@ -176,7 +176,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'registers an offense when a model is created or updated using a method that returns an extracted parameter' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def user_id
             params[:user_id]
@@ -189,7 +189,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             @model.assign_attributes(user_id: user_id)
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(4)
       expect(cop.offenses.map(&:line)).to eq([7, 8, 9, 10])
@@ -198,7 +198,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'registers an offense when passing an unsafe parameter into a keyword arg' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def create_params
             params.permit(:user_id, :username)
@@ -209,7 +209,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             Model.create!(parameters: create_params)
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(2)
       expect(cop.offenses.map(&:line)).to eq([7, 8])
@@ -218,7 +218,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'registers an offense when dangerous parameters are stored and used' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def create_params
             params.permit(:user_id, :username)
@@ -229,7 +229,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             Model.new(user_id: @temporary_parameters)
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(1)
       expect(cop.offenses.map(&:line)).to eq([8])
@@ -238,7 +238,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'registers an offense when a method returning unsafe parameters is stored, modified, and used' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def create_params
             params.permit(:user_id, :username)
@@ -255,7 +255,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             Model.new(parameters: @some_more_params.merge(key: value))
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(5)
       expect(cop.offenses.map(&:line)).to eq([8, 9, 10, 11, 14])
@@ -264,7 +264,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'registers an offense when a method returning unsafe parameters is stored and used' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def create_params
             params.permit(:user_id, :username)
@@ -278,7 +278,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             @model.assign_attributes @temporary_parameters
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(4)
       expect(cop.offenses.map(&:line)).to eq([8, 9, 10, 11])
@@ -287,7 +287,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'does not register an offense when selecting a safe parameter from a variable' do
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class Application
           def a_variety_of_parameters
             params.permit(:safe, :also_safe, :user_id)
@@ -301,11 +301,11 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             @model.assign_attributes(safe_parameter: @test[:safe])
           end
         end
-      DEF
+      RUBY
     end
 
     it 'does not register an offense when selecting a safe parameter from a method' do
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class Application
           def a_variety_of_parameters
             params.permit(:safe, :also_safe, :user_id)
@@ -316,11 +316,11 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             Model.create! a_variety_of_parameters[:safe]
           end
         end
-      DEF
+      RUBY
     end
 
     it 'does not register an offense when the parameters are unknown' do
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class Application
           def create
             Model.new(config_params: params)
@@ -329,11 +329,11 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             @model.assign_attributes(config_params: params)
           end
         end
-      DEF
+      RUBY
     end
 
     it 'does not register an offense when a method permits and indexes using a non-symbol key' do
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class Application
           def create
             Model.new(test: something_unexpected)
@@ -343,11 +343,11 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             params[something.unexpected]
           end
         end
-      DEF
+      RUBY
     end
 
     it 'does not register an offense when a method wraps unexpected types' do
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class Application
           def create_params
             if test
@@ -361,11 +361,11 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             Model.new(create_params)
           end
         end
-      DEF
+      RUBY
     end
 
     it 'does not register an offense when another method wraps an unsafe parameter' do
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class Application
           def create_params
             params.permit(:safe, :also_safe, :user_id)
@@ -375,11 +375,11 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             Model.new(current_user.users.find(create_params[:user_id]))
           end
         end
-      DEF
+      RUBY
     end
 
     it 'does not register an offense when storing and using a safe parameter' do
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class Application
           def create
             @safe_parameter = params[:safe_name]
@@ -389,11 +389,11 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             @model.assign_attributes(name: @safe_parameter)
           end
         end
-      DEF
+      RUBY
     end
 
     it 'does not register an offense when extracting an unsafe parameter from an unknown source' do
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class Application
           def create
             Model.new unknown_source[:user_id]
@@ -402,11 +402,11 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             @model.assign_attributes unknown_source[:user_id]
           end
         end
-      DEF
+      RUBY
     end
 
     it 'registers an offense when a method permits and indexes using an unsafe parameter' do
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def index
             presenter = Some::Presenter.new(
@@ -419,7 +419,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             params.permit(:account_id)[:account_id]
           end
         end
-      DEF
+      RUBY
 
       expect(cop.offenses.size).to be(1)
       expect(cop.offenses.map(&:line)).to eq([5])
@@ -428,7 +428,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'does not register an offense when parameters are used safely before return' do
-      expect_no_offenses(<<-DEF)
+      expect_no_offenses(<<~RUBY)
         class Application
           def user_id
             account_id = params.permit(:user_id)
@@ -442,13 +442,13 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             Model.new(parameters: user_id)
           end
         end
-      DEF
+      RUBY
     end
 
     it 'allows unsafe parameters to be specified via config' do
       temp = cop.unsafe_parameters
       cop.unsafe_parameters = %i(dangerous shady)
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def dangerous_param
             params.permit(:shady, :benign)
@@ -463,7 +463,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             Model.new params[:user_id]
           end
         end
-      DEF
+      RUBY
       cop.unsafe_parameters = temp
 
       expect(cop.offenses.size).to be(3)
@@ -475,7 +475,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     it 'allows the config to specify a regex alternative to _id' do
       temp = cop.unsafe_regex
       cop.unsafe_regex = /(.*_fk$|^id_.*$)/
-      inspect_source(<<-DEF)
+      inspect_source(<<~RUBY)
         class Application
           def user
             params.permit(:user_fk)
@@ -491,7 +491,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
             Model.new params[:user_id]
           end
         end
-      DEF
+      RUBY
       cop.unsafe_regex = temp
 
       expect(cop.offenses.size).to be(3)
