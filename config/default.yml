@@ -19,6 +19,7 @@ AllCops:
     - 'Gemfile'
   DisplayStyleGuide: true
   DisplayCopNames: true
+  NewCops: enable
 
 Betterment:
   StyleGuideBaseURL: https://github.com/Betterment/betterlint

@@ -20,8 +20,4 @@ Gem::Specification.new do |s|
   s.add_dependency "rubocop-rails"
   s.add_dependency "rubocop-rake"
   s.add_dependency "rubocop-rspec"
-
-  s.add_development_dependency "bundler"
-  s.add_development_dependency "rake", ">= 12.3.3"
-  s.add_development_dependency "rspec-rails"
 end
