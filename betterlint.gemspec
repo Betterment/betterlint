@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |s|
   s.name = "betterlint"
-  s.version = "1.2.2"
+  s.version = "1.3.0"
   s.authors = ["Development"]
   s.email = ["development@betterment.com"]
   s.summary = "Betterment rubocop configuration"
@@ -20,8 +20,4 @@ Gem::Specification.new do |s|
   s.add_dependency "rubocop-rails"
   s.add_dependency "rubocop-rake"
   s.add_dependency "rubocop-rspec"
-
-  s.add_development_dependency "bundler"
-  s.add_development_dependency "rake", ">= 12.3.3"
-  s.add_development_dependency "rspec-rails"
 end
