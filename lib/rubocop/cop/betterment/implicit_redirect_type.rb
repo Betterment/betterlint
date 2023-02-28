@@ -62,7 +62,7 @@ module RuboCop
         private
 
         def routes_file?
-          Pathname.new(processed_source.buffer.name).basename.to_s == ROUTES_FILE_NAME
+          Pathname.new(processed_source.file_path).basename.to_s == ROUTES_FILE_NAME
         end
       end
     end

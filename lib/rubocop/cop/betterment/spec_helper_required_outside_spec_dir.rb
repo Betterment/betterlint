@@ -27,7 +27,7 @@ module RuboCop
         private
 
         def spec_directory?
-          Pathname.new(processed_source.buffer.name)
+          Pathname.new(processed_source.file_path)
             .relative_path_from(Pathname.pwd)
             .to_s
             .start_with?("spec#{File::SEPARATOR}")
