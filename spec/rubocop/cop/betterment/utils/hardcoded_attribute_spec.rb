@@ -59,11 +59,11 @@ describe RuboCop::Cop::Utils::HardcodedAttribute do
     end
 
     it "finds integer references" do
-      expect(subject.enum_for(:each_integer_reference)).to match_array([s(:int, 42)])
+      expect(subject.enum_for(:each_integer_reference)).to contain_exactly(s(:int, 42))
     end
 
     it "finds string references" do
-      expect(subject.enum_for(:each_string_reference)).to match_array([s(:str, "User 42")])
+      expect(subject.enum_for(:each_string_reference)).to contain_exactly(s(:str, "User 42"))
     end
 
     it "finds ranges of string references" do

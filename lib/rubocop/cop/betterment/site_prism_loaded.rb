@@ -11,12 +11,12 @@ module RuboCop
         def on_send(node)
           return unless be_displayed_call?(node)
 
-          add_offense(node, location: node.children[2].loc.expression)
+          add_offense(node, location: node.children[2].source_range)
         end
 
         def autocorrect(node)
           lambda do |corrector|
-            corrector.replace(node.children[2].loc.expression, 'be_loaded')
+            corrector.replace(node.children[2].source_range, 'be_loaded')
           end
         end
       end

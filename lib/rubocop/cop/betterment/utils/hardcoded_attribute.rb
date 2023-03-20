@@ -41,7 +41,7 @@ module RuboCop
         private
 
         def create_range(node, match)
-          range = node.loc.expression
+          range = node.source_range
           begin_pos = range.begin_pos + match.begin(0)
           end_pos = range.begin_pos + match.end(0)
           range.with(begin_pos: begin_pos, end_pos: end_pos)
