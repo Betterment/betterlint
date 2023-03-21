@@ -91,7 +91,7 @@ module RuboCop
         end
 
         def with_comma(attribute)
-          range = attribute.location.expression
+          range = attribute.source_range
           range = range_with_surrounding_space(range: range)
           range_with_surrounding_comma(range, :left)
         end
