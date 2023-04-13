@@ -16,7 +16,7 @@ module RuboCop
 
         def autocorrect(node)
           lambda do |corrector|
-            corrector.replace(node.children[2].source_range, 'be_loaded')
+            corrector.replace(node.children[2], 'be_loaded')
           end
         end
       end
