@@ -20,7 +20,8 @@ AllCops:
   DisplayStyleGuide: true
   DisplayCopNames: true
   NewCops: enable
-  SuggestExtensions: false
+  SuggestExtensions:
+    rubocop-capybara: false
 
 Betterment:
   StyleGuideBaseURL: https://github.com/Betterment/betterlint
