@@ -20,6 +20,7 @@ AllCops:
   DisplayStyleGuide: true
   DisplayCopNames: true
   NewCops: enable
+  SuggestExtensions: false
 
 Betterment:
   StyleGuideBaseURL: https://github.com/Betterment/betterlint
