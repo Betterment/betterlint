@@ -59,9 +59,9 @@ module RuboCop
         end
 
         def self.explicit_returns(node)
-          node.descendants.select(&:return_type?).map { |x|
+          node.descendants.select(&:return_type?).filter_map do |x|
             x&.children&.first
-          }.compact
+          end
         end
 
         def self.params_from_arguments(arguments) # rubocop:disable Metrics/PerceivedComplexity
