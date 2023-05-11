@@ -19,5 +19,5 @@ Gem::Specification.new do |s|
   s.add_dependency "rubocop-performance"
   s.add_dependency "rubocop-rails"
   s.add_dependency "rubocop-rake"
-  s.add_dependency "rubocop-rspec", ">= 2.7"
+  s.add_dependency "rubocop-rspec", ">= 2.22"
 end
