@@ -219,7 +219,7 @@ RSpec/ExampleWording:
 RSpec/ExpectChange:
   EnforcedStyle: 'block'
 
-RSpec/FactoryBot/SyntaxMethods:
+FactoryBot/SyntaxMethods:
   Enabled: false
 
 RSpec/FilePath:
