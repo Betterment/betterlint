@@ -76,6 +76,9 @@ Betterment/HardcodedID:
   AutoCorrect: false
   SafeAutoCorrect: false
 
+FactoryBot/ConsistentParenthesesStyle:
+  Enabled: false
+
 Layout/ParameterAlignment:
   Enabled: false
 
