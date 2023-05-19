@@ -188,6 +188,9 @@ Rails/HttpPositionalArguments:
 
 Rails/OutputSafety:
   Enabled: true
+  
+RSpec/BeEq:
+  Enabled: false
 
 RSpec/Capybara/FeatureMethods:
   Enabled: false
@@ -229,6 +232,9 @@ RSpec/FilePath:
   Enabled: false
 
 RSpec/HookArgument:
+  Enabled: false
+  
+RSpec/IndexedLet:
   Enabled: false
 
 RSpec/ItBehavesLike:
