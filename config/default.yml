@@ -123,6 +123,9 @@ Lint/BooleanSymbol:
   Exclude:
     - spec/**/*
 
+Lint/FloatComparison:
+  Enabled: true
+
 Metrics/AbcSize:
   Exclude:
     - spec/**/*
