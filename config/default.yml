@@ -188,7 +188,7 @@ Rails/HttpPositionalArguments:
 
 Rails/OutputSafety:
   Enabled: true
-  
+
 RSpec/BeEq:
   Enabled: false
 
@@ -233,7 +233,7 @@ RSpec/FilePath:
 
 RSpec/HookArgument:
   Enabled: false
-  
+
 RSpec/IndexedLet:
   Enabled: false
 
