@@ -26,34 +26,19 @@ AllCops:
 Betterment:
   StyleGuideBaseURL: https://github.com/Betterment/betterlint
 
-Betterment/ServerErrorAssertion:
-  Description: Detects assertions on 5XX HTTP statuses.
-  Include:
-    - spec/requests/**/*_spec.rb
-
 Betterment/AuthorizationInController:
   Description: Detects unsafe handling of id-like parameters in controllers.
   Enabled: false
   StyleGuide: '#bettermentauthorizationincontroller'
 
-Betterment/UnsafeJob:
-  Enabled: false
-  StyleGuide: '#bettermentunsafejob'
-  sensitive_params:
-    - password
-    - social_security_number
-    - ssn
-
-Betterment/UnscopedFind:
-  StyleGuide: '#bettermentunscopedfind'
-
 Betterment/DynamicParams:
   StyleGuide: '#bettermentdynamicparams'
 
-Betterment/SitePrismLoaded:
-  Include:
-    - spec/features/**/*_spec.rb
-    - spec/system/**/*_spec.rb
+Betterment/HardcodedID:
+  AutoCorrect: false
+  Description: Detects hardcoded IDs in specs
+  SafeAutoCorrect: false
+  StyleGuide: '#bettermenthardcodedid'
 
 Betterment/NonStandardActions:
   AdditionalAllowedActions: []
@@ -70,16 +55,31 @@ Betterment/NonStandardActions:
     - update
   StyleGuide: '#bettermentnonstandardactions'
 
-Betterment/HardcodedID:
-  AutoCorrect: false
-  Description: Detects hardcoded IDs in specs
-  SafeAutoCorrect: false
-  StyleGuide: '#bettermenthardcodedid'
+Betterment/ServerErrorAssertion:
+  Description: Detects assertions on 5XX HTTP statuses.
+  Include:
+    - spec/requests/**/*_spec.rb
+
+Betterment/SitePrismLoaded:
+  Include:
+    - spec/features/**/*_spec.rb
+    - spec/system/**/*_spec.rb
+
+Betterment/UnsafeJob:
+  Enabled: false
+  StyleGuide: '#bettermentunsafejob'
+  sensitive_params:
+    - password
+    - social_security_number
+    - ssn
+
+Betterment/UnscopedFind:
+  StyleGuide: '#bettermentunscopedfind'
 
 FactoryBot/ConsistentParenthesesStyle:
   Enabled: false
 
-Layout/ParameterAlignment:
+FactoryBot/SyntaxMethods:
   Enabled: false
 
 Layout/CaseIndentation:
@@ -99,6 +99,9 @@ Layout/MultilineMethodCallIndentation:
 
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
+
+Layout/ParameterAlignment:
+  Enabled: false
 
 # Disabling because of a bug in rubocop: https://github.com/rubocop-hq/rubocop/issues/6918
 Layout/RescueEnsureAlignment:
@@ -171,24 +174,6 @@ Naming/VariableNumber:
 Performance/RedundantMatch:
   Enabled: false
 
-Rails:
-  Enabled: true
-
-Rails/ApplicationRecord:
-  Enabled: false
-
-Rails/Delegate:
-  Enabled: false
-
-Rails/FindEach:
-  Enabled: false
-
-Rails/HttpPositionalArguments:
-  Enabled: true
-
-Rails/OutputSafety:
-  Enabled: true
-
 RSpec/BeEq:
   Enabled: false
 
@@ -224,9 +209,6 @@ RSpec/ExampleWording:
 
 RSpec/ExpectChange:
   EnforcedStyle: block
-
-FactoryBot/SyntaxMethods:
-  Enabled: false
 
 RSpec/FilePath:
   Enabled: false
@@ -272,6 +254,24 @@ RSpec/ScatteredLet:
 
 RSpec/ScatteredSetup:
   Enabled: false
+
+Rails:
+  Enabled: true
+
+Rails/ApplicationRecord:
+  Enabled: false
+
+Rails/Delegate:
+  Enabled: false
+
+Rails/FindEach:
+  Enabled: false
+
+Rails/HttpPositionalArguments:
+  Enabled: true
+
+Rails/OutputSafety:
+  Enabled: true
 
 Style/AccessModifierDeclarations:
   Enabled: false
