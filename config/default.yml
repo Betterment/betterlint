@@ -9,14 +9,14 @@ require:
 
 AllCops:
   Exclude:
+    - Gemfile
     - bin/**/*
-    - db/**/*
-    - vendor/**/*
-    - frontend/**/*
     - build/**/*
+    - db/**/*
+    - frontend/**/*
     - node_modules/**/*
     - tmp/**/*
-    - Gemfile
+    - vendor/**/*
   DisplayStyleGuide: true
   DisplayCopNames: true
   NewCops: enable
@@ -60,13 +60,13 @@ Betterment/NonStandardActions:
   StyleGuide: '#bettermentnonstandardactions'
   AdditionalAllowedActions: []
   StandardActions:
-    - index
-    - show
-    - new
-    - edit
     - create
-    - update
     - destroy
+    - edit
+    - index
+    - new
+    - show
+    - update
   Include:
     - config/routes.rb
 
