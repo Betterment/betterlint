@@ -9,14 +9,14 @@ require:
 
 AllCops:
   Exclude:
-    - 'bin/**/*'
-    - 'db/**/*'
-    - 'vendor/**/*'
-    - 'frontend/**/*'
-    - 'build/**/*'
-    - 'node_modules/**/*'
-    - 'tmp/**/*'
-    - 'Gemfile'
+    - bin/**/*
+    - db/**/*
+    - vendor/**/*
+    - frontend/**/*
+    - build/**/*
+    - node_modules/**/*
+    - tmp/**/*
+    - Gemfile
   DisplayStyleGuide: true
   DisplayCopNames: true
   NewCops: enable
@@ -27,12 +27,12 @@ Betterment:
   StyleGuideBaseURL: https://github.com/Betterment/betterlint
 
 Betterment/ServerErrorAssertion:
-  Description: 'Detects assertions on 5XX HTTP statuses.'
+  Description: Detects assertions on 5XX HTTP statuses.
   Include:
-    - 'spec/requests/**/*_spec.rb'
+    - spec/requests/**/*_spec.rb
 
 Betterment/AuthorizationInController:
-  Description: 'Detects unsafe handling of id-like parameters in controllers.'
+  Description: Detects unsafe handling of id-like parameters in controllers.
   StyleGuide: '#bettermentauthorizationincontroller'
   Enabled: false
 
@@ -52,11 +52,11 @@ Betterment/DynamicParams:
 
 Betterment/SitePrismLoaded:
   Include:
-    - 'spec/features/**/*_spec.rb'
-    - 'spec/system/**/*_spec.rb'
+    - spec/features/**/*_spec.rb
+    - spec/system/**/*_spec.rb
 
 Betterment/NonStandardActions:
-  Description: 'Detects non-standard controller actions.'
+  Description: Detects non-standard controller actions.
   StyleGuide: '#bettermentnonstandardactions'
   AdditionalAllowedActions: []
   StandardActions:
@@ -68,10 +68,10 @@ Betterment/NonStandardActions:
     - update
     - destroy
   Include:
-    - 'config/routes.rb'
+    - config/routes.rb
 
 Betterment/HardcodedID:
-  Description: 'Detects hardcoded IDs in specs'
+  Description: Detects hardcoded IDs in specs
   StyleGuide: '#bettermenthardcodedid'
   AutoCorrect: false
   SafeAutoCorrect: false
@@ -106,24 +106,24 @@ Layout/RescueEnsureAlignment:
 
 Lint/AmbiguousBlockAssociation:
   Exclude:
-    - 'spec/**/*'
+    - spec/**/*
 
 Lint/AmbiguousOperator:
   Exclude:
-    - 'spec/**/*'
+    - spec/**/*
 
 Lint/AmbiguousRegexpLiteral:
   Exclude:
-    - 'spec/**/*'
+    - spec/**/*
 
 Lint/BooleanSymbol:
   Exclude:
-    - 'spec/**/*'
+    - spec/**/*
 
 Metrics/AbcSize:
   Exclude:
-    - 'spec/**/*'
-    - 'webvalve/**/*'
+    - spec/**/*
+    - webvalve/**/*
 
 Metrics/BlockLength:
   Enabled: false
@@ -131,13 +131,13 @@ Metrics/BlockLength:
 Metrics/ClassLength:
   Max: 250
   Exclude:
-    - 'webvalve/**/*'
+    - webvalve/**/*
 
 Metrics/CyclomaticComplexity:
   Max: 10
   Exclude:
-    - 'spec/**/*'
-    - 'webvalve/**/*'
+    - spec/**/*
+    - webvalve/**/*
 
 Metrics/MethodLength:
   Enabled: false
@@ -145,7 +145,7 @@ Metrics/MethodLength:
 Metrics/ModuleLength:
   Max: 250
   Exclude:
-    - 'webvalve/**/*'
+    - webvalve/**/*
 
 Metrics/ParameterLists:
   Max: 5
@@ -153,8 +153,8 @@ Metrics/ParameterLists:
 
 Metrics/PerceivedComplexity:
   Exclude:
-    - 'spec/**/*'
-    - 'webvalve/**/*'
+    - spec/**/*
+    - webvalve/**/*
 
 Naming/HeredocDelimiterNaming:
   Enabled: false
@@ -166,7 +166,7 @@ Naming/PredicateName:
     - is_
 
 Naming/VariableNumber:
-  EnforcedStyle: 'snake_case'
+  EnforcedStyle: snake_case
 
 Performance/RedundantMatch:
   Enabled: false
@@ -202,7 +202,7 @@ RSpec/DescribeClass:
   Enabled: false
 
 RSpec/DescribedClass:
-  EnforcedStyle: 'described_class'
+  EnforcedStyle: described_class
 
 RSpec/EmptyLineAfterExampleGroup:
   Enabled: false
@@ -223,7 +223,7 @@ RSpec/ExampleWording:
   Enabled: false
 
 RSpec/ExpectChange:
-  EnforcedStyle: 'block'
+  EnforcedStyle: block
 
 FactoryBot/SyntaxMethods:
   Enabled: false
@@ -299,7 +299,7 @@ Style/Lambda:
 
 Style/LambdaCall:
   Exclude:
-    - 'app/views/**/*.jbuilder'
+    - app/views/**/*.jbuilder
 
 Style/MissingElse:
   Enabled: true
@@ -307,12 +307,12 @@ Style/MissingElse:
 
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
-    default: '()'
-    '%i': '()'
-    '%I': '()'
+    default: ()
+    '%i': ()
+    '%I': ()
     '%r': '{}'
-    '%w': '()'
-    '%W': '()'
+    '%w': ()
+    '%W': ()
 
 Style/SafeNavigation:
   Enabled: false
