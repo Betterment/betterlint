@@ -8,6 +8,8 @@ require:
   - rubocop-rspec
 
 AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
   Exclude:
     - Gemfile
     - bin/**/*
@@ -17,8 +19,6 @@ AllCops:
     - node_modules/**/*
     - tmp/**/*
     - vendor/**/*
-  DisplayStyleGuide: true
-  DisplayCopNames: true
   NewCops: enable
   SuggestExtensions:
     rubocop-capybara: false
@@ -33,8 +33,8 @@ Betterment/ServerErrorAssertion:
 
 Betterment/AuthorizationInController:
   Description: Detects unsafe handling of id-like parameters in controllers.
-  StyleGuide: '#bettermentauthorizationincontroller'
   Enabled: false
+  StyleGuide: '#bettermentauthorizationincontroller'
 
 Betterment/UnsafeJob:
   Enabled: false
@@ -56,9 +56,10 @@ Betterment/SitePrismLoaded:
     - spec/system/**/*_spec.rb
 
 Betterment/NonStandardActions:
-  Description: Detects non-standard controller actions.
-  StyleGuide: '#bettermentnonstandardactions'
   AdditionalAllowedActions: []
+  Description: Detects non-standard controller actions.
+  Include:
+    - config/routes.rb
   StandardActions:
     - create
     - destroy
@@ -67,14 +68,13 @@ Betterment/NonStandardActions:
     - new
     - show
     - update
-  Include:
-    - config/routes.rb
+  StyleGuide: '#bettermentnonstandardactions'
 
 Betterment/HardcodedID:
-  Description: Detects hardcoded IDs in specs
-  StyleGuide: '#bettermenthardcodedid'
   AutoCorrect: false
+  Description: Detects hardcoded IDs in specs
   SafeAutoCorrect: false
+  StyleGuide: '#bettermenthardcodedid'
 
 FactoryBot/ConsistentParenthesesStyle:
   Enabled: false
@@ -129,27 +129,27 @@ Metrics/BlockLength:
   Enabled: false
 
 Metrics/ClassLength:
-  Max: 250
   Exclude:
     - webvalve/**/*
+  Max: 250
 
 Metrics/CyclomaticComplexity:
-  Max: 10
   Exclude:
     - spec/**/*
     - webvalve/**/*
+  Max: 10
 
 Metrics/MethodLength:
   Enabled: false
 
 Metrics/ModuleLength:
-  Max: 250
   Exclude:
     - webvalve/**/*
+  Max: 250
 
 Metrics/ParameterLists:
-  Max: 5
   CountKeywordArgs: false
+  Max: 5
 
 Metrics/PerceivedComplexity:
   Exclude:
@@ -160,9 +160,9 @@ Naming/HeredocDelimiterNaming:
   Enabled: false
 
 Naming/PredicateName:
-  NamePrefix:
-    - is_
   ForbiddenPrefixes:
+    - is_
+  NamePrefix:
     - is_
 
 Naming/VariableNumber:
@@ -307,12 +307,12 @@ Style/MissingElse:
 
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
-    default: ()
-    '%i': ()
     '%I': ()
+    '%W': ()
+    '%i': ()
     '%r': '{}'
     '%w': ()
-    '%W': ()
+    default: ()
 
 Style/SafeNavigation:
   Enabled: false
