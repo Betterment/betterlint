@@ -8,17 +8,17 @@ require:
   - rubocop-rspec
 
 AllCops:
-  Exclude:
-    - 'bin/**/*'
-    - 'db/**/*'
-    - 'vendor/**/*'
-    - 'frontend/**/*'
-    - 'build/**/*'
-    - 'node_modules/**/*'
-    - 'tmp/**/*'
-    - 'Gemfile'
-  DisplayStyleGuide: true
   DisplayCopNames: true
+  DisplayStyleGuide: true
+  Exclude:
+    - Gemfile
+    - bin/**/*
+    - build/**/*
+    - db/**/*
+    - frontend/**/*
+    - node_modules/**/*
+    - tmp/**/*
+    - vendor/**/*
   NewCops: enable
   SuggestExtensions:
     rubocop-capybara: false
@@ -26,15 +26,44 @@ AllCops:
 Betterment:
   StyleGuideBaseURL: https://github.com/Betterment/betterlint
 
-Betterment/ServerErrorAssertion:
-  Description: 'Detects assertions on 5XX HTTP statuses.'
-  Include:
-    - 'spec/requests/**/*_spec.rb'
-
 Betterment/AuthorizationInController:
-  Description: 'Detects unsafe handling of id-like parameters in controllers.'
-  StyleGuide: '#bettermentauthorizationincontroller'
+  Description: Detects unsafe handling of id-like parameters in controllers.
   Enabled: false
+  StyleGuide: '#bettermentauthorizationincontroller'
+
+Betterment/DynamicParams:
+  StyleGuide: '#bettermentdynamicparams'
+
+Betterment/HardcodedID:
+  AutoCorrect: false
+  Description: Detects hardcoded IDs in specs
+  SafeAutoCorrect: false
+  StyleGuide: '#bettermenthardcodedid'
+
+Betterment/NonStandardActions:
+  AdditionalAllowedActions: []
+  Description: Detects non-standard controller actions.
+  Include:
+    - config/routes.rb
+  StandardActions:
+    - create
+    - destroy
+    - edit
+    - index
+    - new
+    - show
+    - update
+  StyleGuide: '#bettermentnonstandardactions'
+
+Betterment/ServerErrorAssertion:
+  Description: Detects assertions on 5XX HTTP statuses.
+  Include:
+    - spec/requests/**/*_spec.rb
+
+Betterment/SitePrismLoaded:
+  Include:
+    - spec/features/**/*_spec.rb
+    - spec/system/**/*_spec.rb
 
 Betterment/UnsafeJob:
   Enabled: false
@@ -47,39 +76,10 @@ Betterment/UnsafeJob:
 Betterment/UnscopedFind:
   StyleGuide: '#bettermentunscopedfind'
 
-Betterment/DynamicParams:
-  StyleGuide: '#bettermentdynamicparams'
-
-Betterment/SitePrismLoaded:
-  Include:
-    - 'spec/features/**/*_spec.rb'
-    - 'spec/system/**/*_spec.rb'
-
-Betterment/NonStandardActions:
-  Description: 'Detects non-standard controller actions.'
-  StyleGuide: '#bettermentnonstandardactions'
-  AdditionalAllowedActions: []
-  StandardActions:
-    - index
-    - show
-    - new
-    - edit
-    - create
-    - update
-    - destroy
-  Include:
-    - 'config/routes.rb'
-
-Betterment/HardcodedID:
-  Description: 'Detects hardcoded IDs in specs'
-  StyleGuide: '#bettermenthardcodedid'
-  AutoCorrect: false
-  SafeAutoCorrect: false
-
 FactoryBot/ConsistentParenthesesStyle:
   Enabled: false
 
-Layout/ParameterAlignment:
+FactoryBot/SyntaxMethods:
   Enabled: false
 
 Layout/CaseIndentation:
@@ -100,95 +100,83 @@ Layout/MultilineMethodCallIndentation:
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 
+Layout/ParameterAlignment:
+  Enabled: false
+
 # Disabling because of a bug in rubocop: https://github.com/rubocop-hq/rubocop/issues/6918
 Layout/RescueEnsureAlignment:
   Enabled: false
 
 Lint/AmbiguousBlockAssociation:
   Exclude:
-    - 'spec/**/*'
+    - spec/**/*
 
 Lint/AmbiguousOperator:
   Exclude:
-    - 'spec/**/*'
+    - spec/**/*
 
 Lint/AmbiguousRegexpLiteral:
   Exclude:
-    - 'spec/**/*'
+    - spec/**/*
 
 Lint/BooleanSymbol:
   Exclude:
-    - 'spec/**/*'
+    - spec/**/*
+
+Lint/FloatComparison:
+  Enabled: true
 
 Metrics/AbcSize:
   Exclude:
-    - 'spec/**/*'
-    - 'webvalve/**/*'
+    - spec/**/*
+    - webvalve/**/*
 
 Metrics/BlockLength:
   Enabled: false
 
 Metrics/ClassLength:
-  Max: 250
   Exclude:
-    - 'webvalve/**/*'
+    - webvalve/**/*
+  Max: 250
 
 Metrics/CyclomaticComplexity:
-  Max: 10
   Exclude:
-    - 'spec/**/*'
-    - 'webvalve/**/*'
+    - spec/**/*
+    - webvalve/**/*
+  Max: 10
 
 Metrics/MethodLength:
   Enabled: false
 
 Metrics/ModuleLength:
-  Max: 250
   Exclude:
-    - 'webvalve/**/*'
+    - webvalve/**/*
+  Max: 250
 
 Metrics/ParameterLists:
-  Max: 5
   CountKeywordArgs: false
+  Max: 5
 
 Metrics/PerceivedComplexity:
   Exclude:
-    - 'spec/**/*'
-    - 'webvalve/**/*'
+    - spec/**/*
+    - webvalve/**/*
 
 Naming/HeredocDelimiterNaming:
   Enabled: false
 
 Naming/PredicateName:
-  NamePrefix:
-    - is_
   ForbiddenPrefixes:
+    - is_
+  NamePrefix:
     - is_
 
 Naming/VariableNumber:
-  EnforcedStyle: 'snake_case'
+  EnforcedStyle: snake_case
 
 Performance/RedundantMatch:
   Enabled: false
 
-Rails:
-  Enabled: true
-
-Rails/ApplicationRecord:
-  Enabled: false
-
-Rails/Delegate:
-  Enabled: false
-
-Rails/FindEach:
-  Enabled: false
-
-Rails/HttpPositionalArguments:
-  Enabled: true
-
-Rails/OutputSafety:
-  Enabled: true
-  
 RSpec/BeEq:
   Enabled: false
 
@@ -202,7 +190,7 @@ RSpec/DescribeClass:
   Enabled: false
 
 RSpec/DescribedClass:
-  EnforcedStyle: 'described_class'
+  EnforcedStyle: described_class
 
 RSpec/EmptyLineAfterExampleGroup:
   Enabled: false
@@ -223,17 +211,14 @@ RSpec/ExampleWording:
   Enabled: false
 
 RSpec/ExpectChange:
-  EnforcedStyle: 'block'
-
-FactoryBot/SyntaxMethods:
-  Enabled: false
+  EnforcedStyle: block
 
 RSpec/FilePath:
   Enabled: false
 
 RSpec/HookArgument:
   Enabled: false
-  
+
 RSpec/IndexedLet:
   Enabled: false
 
@@ -273,6 +258,24 @@ RSpec/ScatteredLet:
 RSpec/ScatteredSetup:
   Enabled: false
 
+Rails:
+  Enabled: true
+
+Rails/ApplicationRecord:
+  Enabled: false
+
+Rails/Delegate:
+  Enabled: false
+
+Rails/FindEach:
+  Enabled: false
+
+Rails/HttpPositionalArguments:
+  Enabled: true
+
+Rails/OutputSafety:
+  Enabled: true
+
 Style/AccessModifierDeclarations:
   Enabled: false
 
@@ -299,7 +302,7 @@ Style/Lambda:
 
 Style/LambdaCall:
   Exclude:
-    - 'app/views/**/*.jbuilder'
+    - app/views/**/*.jbuilder
 
 Style/MissingElse:
   Enabled: true
@@ -307,12 +310,12 @@ Style/MissingElse:
 
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
-    default: '()'
-    '%i': '()'
-    '%I': '()'
+    '%I': ()
+    '%W': ()
+    '%i': ()
     '%r': '{}'
-    '%w': '()'
-    '%W': '()'
+    '%w': ()
+    default: ()
 
 Style/SafeNavigation:
   Enabled: false
