@@ -308,6 +308,10 @@ Style/MissingElse:
   Enabled: true
   EnforcedStyle: case
 
+Style/NumberedParameters:
+  Enabled: true
+  EnforcedStyle: disallow
+
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
     '%I': ()
