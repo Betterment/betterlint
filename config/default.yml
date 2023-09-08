@@ -213,7 +213,10 @@ RSpec/ExampleWording:
 RSpec/ExpectChange:
   EnforcedStyle: block
 
-RSpec/FilePath:
+RSpec/SpecFilePathSuffix:
+  Enabled: false
+
+RSpec/SpecFilePathFormat:
   Enabled: false
 
 RSpec/HookArgument:
