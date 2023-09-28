@@ -17,7 +17,7 @@ module RuboCop
           See here for more information on this error:
           https://github.com/Betterment/betterlint/blob/main/README.md#bettermentunscopedfind
         MSG
-        METHOD_PATTERN = /^find_by_(.+?)(!)?$/.freeze
+        METHOD_PATTERN = /^find_by_(.+?)(!)?$/
         FINDS = %i(find find_by find_by! where).freeze
 
         def_node_matcher :custom_scope_find?, <<-PATTERN
