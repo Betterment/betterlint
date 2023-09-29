@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |s|
   s.name = "betterlint"
-  s.version = "1.4.9"
+  s.version = "1.5.0"
   s.authors = ["Development"]
   s.email = ["development@betterment.com"]
   s.summary = "Betterment rubocop configuration"
@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["README.md", "STYLEGUIDE.md", "config/*.yml", "lib/**/*.rb"]
 
-  s.required_ruby_version = ">= 2.7"
+  s.required_ruby_version = ">= 3.0"
 
   s.add_dependency "rubocop", "> 1.0"
   s.add_dependency "rubocop-performance"
