@@ -49,15 +49,6 @@ Performance/MapMethodChain:
   Exclude:
     - 'lib/rubocop/cop/betterment/server_error_assertion.rb'
 
-# Offense count: 3
-# Configuration parameters: Include, CustomTransform, IgnoreMethods, SpecSuffixOnly.
-# Include: **/*_spec*rb*, **/spec/**/*
-RSpec/FilePath:
-  Exclude:
-    - 'spec/rubocop/cop/betterment/utils/hardcoded_attribute_spec.rb'
-    - 'spec/rubocop/cop/betterment/utils/method_return_table_spec.rb'
-    - 'spec/rubocop/cop/betterment/utils/parser_spec.rb'
-
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/NegateInclude:
