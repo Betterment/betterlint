@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe RuboCop::Cop::Utils::Parser do
+describe RuboCop::Cop::Betterment::Utils::Parser do
   context 'when processing a statement' do
     it 'finds the root token for a bare send' do
       node = parse_source(<<~RUBY).ast

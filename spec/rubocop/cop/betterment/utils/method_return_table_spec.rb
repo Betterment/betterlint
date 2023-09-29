@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe RuboCop::Cop::Utils::MethodReturnTable do
+describe RuboCop::Cop::Betterment::Utils::MethodReturnTable do
   context 'when processing a class' do
     it 'tracks methods with a single return value' do
       described_class.populate_index(parse_source(

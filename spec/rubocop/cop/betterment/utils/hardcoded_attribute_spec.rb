@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe RuboCop::Cop::Utils::HardcodedAttribute do
+describe RuboCop::Cop::Betterment::Utils::HardcodedAttribute do
   include RuboCop::AST::Sexp
 
   subject { described_class.new(find_attribute) }
