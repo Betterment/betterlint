@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module RuboCop
   module Cop
     module Betterment
       class Timeout < Cop
-        MSG = 'Using Timeout.timeout without a custom exception can prevent rescue blocks from executing'.freeze
+        MSG = 'Using Timeout.timeout without a custom exception can prevent rescue blocks from executing'
 
         def_node_matcher :timeout_call?, <<-PATTERN
           (send (const nil? :Timeout) :timeout _)

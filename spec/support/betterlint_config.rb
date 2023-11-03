@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 BETTERLINT_CONFIG_PATH = File.expand_path('../../config/default.yml', __dir__)
 
 RSpec.shared_context 'betterlint_config', :betterlint_config do

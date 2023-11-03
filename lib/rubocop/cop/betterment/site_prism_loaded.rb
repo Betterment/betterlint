@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module RuboCop
   module Cop
     module Betterment
       class SitePrismLoaded < Cop
-        MSG = 'Use `be_loaded` instead of `be_displayed`'.freeze
+        MSG = 'Use `be_loaded` instead of `be_displayed`'
 
         def_node_matcher :be_displayed_call?, <<-PATTERN
           (send (send nil? :expect _) _ (send nil? :be_displayed))

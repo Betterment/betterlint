@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RuboCop
   module Cop
     module Betterment
@@ -13,7 +15,7 @@ module RuboCop
       #   spec/models/my_class_spec.rb
       #   require 'rails_helper'
       class SpecHelperRequiredOutsideSpecDir < Cop
-        MSG = 'Spec helper required outside of a spec/ directory.'.freeze
+        MSG = 'Spec helper required outside of a spec/ directory.'
 
         def_node_matcher :requires_spec_helper?, <<-PATTERN
           (send nil? :require

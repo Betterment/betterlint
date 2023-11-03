@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module RuboCop
   module Cop
     module Betterment
       class NonStandardActions < Cop
-        MSG_GENERAL = 'Use a new controller instead of custom actions.'.freeze
+        MSG_GENERAL = 'Use a new controller instead of custom actions.'
         MSG_RESOURCE_ONLY = "Resource route refers to a non-standard action in it's 'only:' param. #{MSG_GENERAL}".freeze
         MSG_ROUTE_TO = "Route goes to a non-standard controller action. #{MSG_GENERAL}".freeze
 
