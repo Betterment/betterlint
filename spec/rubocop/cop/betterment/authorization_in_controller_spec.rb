@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
   let(:offense_create) do
-    <<~MSG.freeze
+    <<~MSG
       Model created/updated using unsafe parameters.
       Please query for the associated record in a way that enforces authorization (e.g. "trust-root chaining"),
       and then pass the resulting object into your model instead of the unsafe parameter.

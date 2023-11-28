@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RuboCop
   module Cop
     module Betterment
@@ -5,7 +7,7 @@ module RuboCop
         include RangeHelp
         extend AutoCorrector
 
-        MSG = 'Hardcoded IDs cause flaky tests. Use a sequence instead.'.freeze
+        MSG = 'Hardcoded IDs cause flaky tests. Use a sequence instead.'
 
         # @!method key(node)
         def_node_matcher :key, '/^id$|_id$/'

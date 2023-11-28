@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module RuboCop
   module Cop
     module Betterment
       class MemoizationWithArguments < Cop
         MSG = 'Memoized method `%<method>s` accepts arguments, ' \
               'which may cause it to return a stale result. ' \
-              'Remove memoization or refactor to remove arguments.'.freeze
+              'Remove memoization or refactor to remove arguments.'
 
         def self.node_pattern
           memo_assign = '(or_asgn $(ivasgn _) _)'

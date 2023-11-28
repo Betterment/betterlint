@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module RuboCop
   module Cop
     module Betterment
       class DynamicParams < Cop
-        MSG_DYNAMIC_PARAMS = <<~MSG.freeze
+        MSG_DYNAMIC_PARAMS = <<~MSG
           Parameter names accessed dynamically, cannot determine safeness. Please inline the keys explicitly when calling `permit` or when accessing `params` like a hash.
 
           See here for more information on this error:

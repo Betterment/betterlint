@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rubocop'
 require 'rubocop/cop/betterment/utils/parser'
 require 'rubocop/cop/betterment/utils/method_return_table'

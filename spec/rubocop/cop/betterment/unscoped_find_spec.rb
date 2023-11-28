@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe RuboCop::Cop::Betterment::UnscopedFind, :config do
   let(:offense_unscoped_find) do
-    <<~MSG.freeze
+    <<~MSG
       Records are being retrieved directly using user input.
       Please query for the associated record in a way that enforces authorization (e.g. "trust-root chaining").
 

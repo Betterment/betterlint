@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module RuboCop
   module Cop
     module Betterment
       class UnsafeJob < Cop
         attr_accessor :sensitive_params, :class_regex
 
-        MSG = <<~MSG.freeze
+        MSG = <<~MSG
           This job takes a parameter that will end up serialized in plaintext. Do not pass sensitive data as bare arguments into jobs.
 
           See here for more information on this error:

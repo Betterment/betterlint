@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 describe RuboCop::Cop::Betterment::UnsafeJob, :config do
   let(:offense_unsafe_job) do
-    <<~MSG.freeze
+    <<~MSG
       This job takes a parameter that will end up serialized in plaintext. Do not pass sensitive data as bare arguments into jobs.
 
       See here for more information on this error:

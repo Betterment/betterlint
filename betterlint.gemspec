@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |s|
   s.name = "betterlint"
-  s.version = "1.5.0"
+  s.version = "1.6.0"
   s.authors = ["Development"]
   s.email = ["development@betterment.com"]
   s.summary = "Betterment rubocop configuration"

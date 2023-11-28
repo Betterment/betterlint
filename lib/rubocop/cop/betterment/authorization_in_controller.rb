@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RuboCop
   module Cop
     module Betterment
@@ -5,7 +7,7 @@ module RuboCop
         attr_accessor :unsafe_parameters, :unsafe_regex
 
         # MSG_UNSAFE_CREATE = 'Model created/updated using unsafe parameters'.freeze
-        MSG_UNSAFE_CREATE = <<~MSG.freeze
+        MSG_UNSAFE_CREATE = <<~MSG
           Model created/updated using unsafe parameters.
           Please query for the associated record in a way that enforces authorization (e.g. "trust-root chaining"),
           and then pass the resulting object into your model instead of the unsafe parameter.

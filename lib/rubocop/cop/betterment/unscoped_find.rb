@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module RuboCop
   module Cop
     module Betterment
       class UnscopedFind < Cop
         attr_accessor :unauthenticated_models
 
-        MSG = <<~MSG.freeze
+        MSG = <<~MSG
           Records are being retrieved directly using user input.
           Please query for the associated record in a way that enforces authorization (e.g. "trust-root chaining").
 

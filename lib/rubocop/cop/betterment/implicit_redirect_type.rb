@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RuboCop
   module Cop
     module Betterment
@@ -13,10 +15,10 @@ module RuboCop
       #   get '/', redirect('/dashboard', status: 301)
       #   get(status: 302) { |params, request| '/dashboard' }
       class ImplicitRedirectType < Cop
-        ROUTES_FILE_NAME = 'routes.rb'.freeze
+        ROUTES_FILE_NAME = 'routes.rb'
         MSG =
           'Rails will create a permanent (301) redirect, which is dangerous. ' \
-          'Please specify your desired status, e.g. redirect(..., status: 302)'.freeze
+          'Please specify your desired status, e.g. redirect(..., status: 302)'
 
         # redirect('/')
         def_node_matcher :arg_form_without_options?, <<-PATTERN

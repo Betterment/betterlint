@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module RuboCop
   module Cop
     module Betterment
       class VagueSerialize < Base
         MSG = 'Active Record models with serialized columns should specify which ' \
-              'deserializer to use instead of falling back to the default.'.freeze
+              'deserializer to use instead of falling back to the default.'
 
         # @!method serialize?(node)
         def_node_matcher :serialize?, <<-PATTERN
