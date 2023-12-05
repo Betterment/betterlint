@@ -86,7 +86,7 @@ Layout/CaseIndentation:
   IndentOneStep: true
 
 Layout/ClosingParenthesisIndentation:
-  Enabled: false
+  Enabled: true
 
 Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
