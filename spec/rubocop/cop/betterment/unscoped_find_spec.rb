@@ -79,9 +79,42 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
       expect(cop.messages.uniq).to eq([offense_unscoped_find])
     end
 
-    it 'does not register an offense when trust chaining even with user input' do
+    it 'registers an offense when in a GraphQL namespace with no params' do
+      inspect_source(<<~RUBY)
+        class Foo::GraphQL::Application
+          def create
+            user_id = 1
+            secret_id = 2
+            # find all Secret records matching a particular secret_id
+            Secret.find(secret_id)
+            Secret.find_by(user: user_id)
+          end
+        end
+
+        module Foo
+          module GraphQL
+            class Application
+              def create
+                user_id = 1
+                secret_id = 2
+                # find all Secret records matching a particular secret_id
+                Secret.find(secret_id)
+                Secret.find_by(user: user_id)
+              end
+            end
+          end
+        end
+      RUBY
+
+      expect(cop.offenses.size).to be(4)
+      expect(cop.offenses.map(&:line)).to eq([6, 7, 18, 19])
+      expect(cop.highlights.uniq).to eq(['Secret.find(secret_id)', 'Secret.find_by(user: user_id)'])
+      expect(cop.messages.uniq).to eq([offense_unscoped_find])
+    end
+
+    it 'does not register an offense when trust chaining even with user input in graphql namespace' do
       expect_no_offenses(<<~RUBY)
-        class Application
+        class GraphQL::Application
           def create
             current_user.secrets.find(params[:secret_id])
             current_user.secrets.active.find(params[:secret_id])

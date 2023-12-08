@@ -49,10 +49,17 @@ module RuboCop
                 static_method_name(node.method_name)
             ) && !@unauthenticated_models.include?(Utils::Parser.get_root_token(node))
 
-          add_offense(node) if find_param_arg(arg_nodes)
+          add_offense(node) if find_param_arg(arg_nodes) || graphql_namespace?(node)
         end
 
         private
+
+        def graphql_namespace?(node)
+          node
+            .ancestors
+            .select { |n| n.class_type? || n.module_type? }
+            .any? { |n| n.identifier.to_s.downcase.include?("graphql") }
+        end
 
         def find_param_arg(arg_nodes)
           return unless arg_nodes
