@@ -92,7 +92,7 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
         end
 
         module Foo
-          module GraphQL
+          module Graphql
             class Application
               def create
                 user_id = 1

@@ -58,7 +58,7 @@ module RuboCop
           node
             .ancestors
             .select { |n| n.class_type? || n.module_type? }
-            .any? { |n| n.identifier.to_s.downcase.include?("graphql") }
+            .any? { |n| n.identifier.to_s.match(/\bGraphQL\b/i) }
         end
 
         def find_param_arg(arg_nodes)
