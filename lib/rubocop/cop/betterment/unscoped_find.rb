@@ -21,6 +21,7 @@ module RuboCop
         MSG
         METHOD_PATTERN = /^find_by_(.+?)(!)?$/
         FINDS = %i(find find_by find_by! where).freeze
+        GRAPHQL_PATTERN = /\bGraphQL\b/i
 
         def_node_matcher :custom_scope_find?, <<-PATTERN
           (send (send (const ... _) ...) {#{FINDS.map(&:inspect).join(' ')}} ...)
@@ -55,10 +56,12 @@ module RuboCop
         private
 
         def graphql_namespace?(node)
+          return true if processed_source.path&.match(GRAPHQL_PATTERN)
+
           node
             .ancestors
             .select { |n| n.class_type? || n.module_type? }
-            .any? { |n| n.identifier.to_s.match(/\bGraphQL\b/i) }
+            .any? { |n| n.identifier.to_s.match(GRAPHQL_PATTERN) }
         end
 
         def find_param_arg(arg_nodes)

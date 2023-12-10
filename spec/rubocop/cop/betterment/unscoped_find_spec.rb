@@ -83,11 +83,8 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
       inspect_source(<<~RUBY)
         class Foo::GraphQL::Application
           def create
-            user_id = 1
-            secret_id = 2
-            # find all Secret records matching a particular secret_id
-            Secret.find(secret_id)
-            Secret.find_by(user: user_id)
+            Secret.find(1)
+            Secret.find_by(user: 2)
           end
         end
 
@@ -95,11 +92,8 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
           module Graphql
             class Application
               def create
-                user_id = 1
-                secret_id = 2
-                # find all Secret records matching a particular secret_id
-                Secret.find(secret_id)
-                Secret.find_by(user: user_id)
+                Secret.find(1)
+                Secret.find_by(user: 2)
               end
             end
           end
@@ -107,13 +101,29 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
       RUBY
 
       expect(cop.offenses.size).to be(4)
-      expect(cop.offenses.map(&:line)).to eq([6, 7, 18, 19])
-      expect(cop.highlights.uniq).to eq(['Secret.find(secret_id)', 'Secret.find_by(user: user_id)'])
+      expect(cop.offenses.map(&:line)).to eq([3, 4, 12, 13])
+      expect(cop.highlights.uniq).to eq(['Secret.find(1)', 'Secret.find_by(user: 2)'])
+      expect(cop.messages.uniq).to eq([offense_unscoped_find])
+    end
+
+    it 'registers an offense when in a GraphQL file namespace with no params' do
+      inspect_source(<<~RUBY, '/graphql/subject.rb')
+        class UnscopedFindSubject
+          def create
+            Secret.find(1)
+            Secret.find_by(user: 2)
+          end
+        end
+      RUBY
+
+      expect(cop.offenses.size).to be(2)
+      expect(cop.offenses.map(&:line)).to eq([3, 4])
+      expect(cop.highlights.uniq).to eq(['Secret.find(1)', 'Secret.find_by(user: 2)'])
       expect(cop.messages.uniq).to eq([offense_unscoped_find])
     end
 
     it 'does not register an offense when trust chaining even with user input in graphql namespace' do
-      expect_no_offenses(<<~RUBY)
+      expect_no_offenses(<<~RUBY, '/graphql/subject.rb')
         class GraphQL::Application
           def create
             current_user.secrets.find(params[:secret_id])
