@@ -56,12 +56,12 @@ module RuboCop
         private
 
         def graphql_namespace?(node)
-          return true if processed_source.path&.match(GRAPHQL_PATTERN)
+          return true if processed_source.path&.match?(GRAPHQL_PATTERN)
 
           node
             .ancestors
             .select { |n| n.class_type? || n.module_type? }
-            .any? { |n| n.identifier.to_s.match(GRAPHQL_PATTERN) }
+            .any? { |n| n.identifier.to_s.match?(GRAPHQL_PATTERN) }
         end
 
         def find_param_arg(arg_nodes)
