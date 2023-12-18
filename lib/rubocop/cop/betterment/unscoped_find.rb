@@ -44,9 +44,9 @@ module RuboCop
           _, _, *arg_nodes = *node # rubocop:disable InternalAffairs/NodeDestructuring
           return unless
             (
-                find?(node) ||
-                custom_scope_find?(node) ||
-                static_method_name(node.method_name)
+              find?(node) ||
+              custom_scope_find?(node) ||
+              static_method_name(node.method_name)
             ) && !@unauthenticated_models.include?(Utils::Parser.get_root_token(node))
 
           add_offense(node) if find_param_arg(arg_nodes)
