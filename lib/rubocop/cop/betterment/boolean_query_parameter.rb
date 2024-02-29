@@ -12,10 +12,7 @@ module RuboCop
 
         # @!method fetch_boolean?(node)
         def_node_matcher :fetch_boolean?, <<-PATTERN
-          (send
-            (send ...) :fetch
-            (sym ...)
-            (boolean))
+          (send _ :fetch _ (boolean))
         PATTERN
 
         # @!method boolean_cast?(node)

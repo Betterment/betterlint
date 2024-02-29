@@ -19,8 +19,8 @@ describe RuboCop::Cop::Betterment::BooleanQueryParameter, :config do
       expect_offense(<<~RUBY)
         class UserController < ApplicationController
           def create
-            in_progress = user_params.fetch(:in_progress, true)
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ A boolean fetched [...]
+            in_progress = ENV.fetch('IN_PROGRESS', true)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ A boolean fetched [...]
             check_for(in_progress)
           end
         end
@@ -61,7 +61,7 @@ describe RuboCop::Cop::Betterment::BooleanQueryParameter, :config do
         class Application
           def create
             params.fetch(:taxable, false)
-            in_progress = user_params.fetch(:in_progress, true)
+            in_progress = ENV.fetch('IN_PROGRESS', true)
             do_thing(
               in_progress: create_params.permit(:in_progress, :taxable).fetch(:in_progress, false),
             )
