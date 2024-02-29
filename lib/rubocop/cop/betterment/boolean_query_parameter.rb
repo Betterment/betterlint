@@ -36,10 +36,6 @@ module RuboCop
           }
         PATTERN
 
-        def initialize(config = nil, options = nil)
-          super(config, options)
-        end
-
         def on_send(node)
           return unless fetch_boolean?(node)
 
