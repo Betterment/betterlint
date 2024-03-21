@@ -3,16 +3,21 @@
 module RuboCop
   module Cop
     module Betterment
-      class BooleanQueryParameter < Base
+      class FetchBoolean < Base
         MSG = <<~MSG
-          A boolean fetched from query params will never be false when
-          explicitly specified on the request. Please use
-          ActiveModel::Type::Boolean.new.cast to cast the value to a boolean.
+          A boolean fetched from query params or ENV will never be false when
+          explicitly specified on the request or env var. Please use a model
+          with a boolean attribute, or cast the value.
         MSG
 
         # @!method fetch_boolean?(node)
         def_node_matcher :fetch_boolean?, <<-PATTERN
           (send _ :fetch _ (boolean))
+        PATTERN
+
+        # @!method fetch_env_boolean?(node)
+        def_node_matcher :fetch_env_boolean?, <<-PATTERN
+          (send (const nil? :ENV) :fetch _ (boolean))
         PATTERN
 
         # @!method boolean_cast?(node)
@@ -34,9 +39,8 @@ module RuboCop
         PATTERN
 
         def on_send(node)
-          return unless fetch_boolean?(node)
-
-          return unless inherit_action_controller_base?(node)
+          return unless fetch_env_boolean?(node) ||
+            (fetch_boolean?(node) && inherit_action_controller_base?(node))
 
           return if node.each_ancestor(:send).any? { |ancestor| boolean_cast?(ancestor) }
 
