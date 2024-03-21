@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    betterlint (1.7.0)
+    betterlint (1.8.0)
       rubocop (> 1.0)
       rubocop-performance
       rubocop-rails
