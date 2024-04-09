@@ -76,6 +76,13 @@ Betterment/UnsafeJob:
 Betterment/UnscopedFind:
   StyleGuide: '#bettermentunscopedfind'
 
+Betterment/StatusCode:
+  AutoCorrect: false
+  SafeAutoCorrect: false
+  Description: Detect missing status codes for POST, PUT, PATCH, or DELETE responses
+  Include:
+    - app/controllers/**/*.rb
+
 FactoryBot/ConsistentParenthesesStyle:
   Enabled: false
 
