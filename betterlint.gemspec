@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |s|
   s.name = "betterlint"
-  s.version = "1.9.0"
+  s.version = "1.10.0"
   s.authors = ["Development"]
   s.email = ["development@betterment.com"]
   s.summary = "Betterment rubocop configuration"
