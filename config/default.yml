@@ -77,12 +77,12 @@ Betterment/UnscopedFind:
   StyleGuide: '#bettermentunscopedfind'
 
 Betterment/RedirectStatus:
+  SafeAutoCorrect: false
   Description: Detect missing status codes when redirecting POST, PUT, PATCH, or DELETE responses
   Include:
     - app/controllers/**/*.rb
 
 Betterment/RenderStatus:
-  AutoCorrect: false
   SafeAutoCorrect: false
   Description: Detect missing status codes when rendering POST, PUT, PATCH, or DELETE responses
   Include:

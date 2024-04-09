@@ -210,3 +210,20 @@ This cop is capable of autocorrecting offenses, but it's not entirely safe. If y
 Betterment/HardcodedID:
   AutoCorrect: true
 ```
+
+### Betterment/RedirectStatus
+
+The `redirect_to` method defaults to a `302 Found`, but when redirecting a POST/PUT/PATCH/DELETE
+to a GET location, the correct response code is `303 See Other`.
+
+This cop requires you to explictly provide an HTTP status code when redirecting from the create,
+update, and destory actions. When autocorrecting, this will automatically add `status: :see_other`.
+
+### Betterment/RenderStatus
+
+The `render` method defaults to a `200 OK`. Calling `render` in the create, update, and destroy
+actions often indicates error handling (e.g. `422 Unprocessable Entity`).
+
+This cop requires you to explicitly provide an HTTP status code when rendering a response in the
+create, update, and destroy actions. When autocorrecting, this will automatically add
+`status: :unprocessable_entity` or `status: :ok` depending on what you're rendering.

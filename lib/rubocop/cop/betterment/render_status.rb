@@ -19,10 +19,26 @@ module RuboCop
         def on_def(node)
           each_offense(node, :render) do |responder|
             add_offense(responder) do |corrector|
-              corrector.insert_after(responder, ", status: :unprocessable_entity")
+              corrector.insert_after(responder, ", status: #{infer_status(responder).inspect}")
             end
           end
         end
+
+        private
+
+        def infer_status(responder)
+          case extract_template(responder).to_s
+            when 'new', 'edit'
+              :unprocessable_entity
+            else
+              :ok
+          end
+        end
+
+        # @!method extract_template(node)
+        def_node_matcher :extract_template, <<~PATTERN
+          (send nil? :render {(sym $_) (str $_)} ...)
+        PATTERN
       end
     end
   end
