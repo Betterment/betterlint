@@ -76,10 +76,15 @@ Betterment/UnsafeJob:
 Betterment/UnscopedFind:
   StyleGuide: '#bettermentunscopedfind'
 
-Betterment/StatusCode:
+Betterment/RedirectStatus:
+  Description: Detect missing status codes when redirecting POST, PUT, PATCH, or DELETE responses
+  Include:
+    - app/controllers/**/*.rb
+
+Betterment/RenderStatus:
   AutoCorrect: false
   SafeAutoCorrect: false
-  Description: Detect missing status codes for POST, PUT, PATCH, or DELETE responses
+  Description: Detect missing status codes when rendering POST, PUT, PATCH, or DELETE responses
   Include:
     - app/controllers/**/*.rb
 
