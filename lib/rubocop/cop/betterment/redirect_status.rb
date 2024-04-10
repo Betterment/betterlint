@@ -19,7 +19,7 @@ module RuboCop
         def on_def(node)
           each_offense(node, :redirect_to) do |responder|
             add_offense(responder) do |corrector|
-              corrector.insert_after(responder, ", status: :see_other")
+              corrector.insert_after(responder.last_argument, ", status: :see_other")
             end
           end
         end

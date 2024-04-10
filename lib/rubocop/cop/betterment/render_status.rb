@@ -19,19 +19,19 @@ module RuboCop
         def on_def(node)
           each_offense(node, :render) do |responder|
             add_offense(responder) do |corrector|
-              corrector.insert_after(responder, ", status: #{infer_status(responder).inspect}")
+              corrector.insert_after(responder.last_argument, infer_correction(responder))
             end
           end
         end
 
         private
 
-        def infer_status(responder)
+        def infer_correction(responder)
           case extract_template(responder).to_s
             when 'new', 'edit'
-              :unprocessable_entity
+              ", status: :unprocessable_entity"
             else
-              :ok
+              ", status: :ok"
           end
         end
 

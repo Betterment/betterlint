@@ -8,6 +8,8 @@ describe RuboCop::Cop::Betterment::RedirectStatus, :config do
       def create
         redirect_to '/'
         ^^^^^^^^^^^^^^^ Did you forget to specify an HTTP status code? [...]
+        redirect_to('/')
+        ^^^^^^^^^^^^^^^^ Did you forget to specify an HTTP status code? [...]
       end
 
       def update
@@ -19,6 +21,7 @@ describe RuboCop::Cop::Betterment::RedirectStatus, :config do
     expect_correction(<<~RUBY)
       def create
         redirect_to '/', status: :see_other
+        redirect_to('/', status: :see_other)
       end
 
       def update

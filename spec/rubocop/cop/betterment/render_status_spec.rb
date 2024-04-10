@@ -16,6 +16,8 @@ describe RuboCop::Cop::Betterment::RenderStatus, :config do
         ^^^^^^^^^^^^^^ Did you forget to specify an HTTP status code? [...]
         render plain: 'OK'
         ^^^^^^^^^^^^^^^^^^ Did you forget to specify an HTTP status code? [...]
+        render(:new)
+        ^^^^^^^^^^^^ Did you forget to specify an HTTP status code? [...]
       end
 
       def update
@@ -33,6 +35,7 @@ describe RuboCop::Cop::Betterment::RenderStatus, :config do
         render :other, status: :ok
         render 'other', status: :ok
         render plain: 'OK', status: :ok
+        render(:new, status: :unprocessable_entity)
       end
 
       def update
