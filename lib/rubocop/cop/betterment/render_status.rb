@@ -19,19 +19,25 @@ module RuboCop
         def on_def(node)
           each_offense(node, :render) do |responder|
             add_offense(responder) do |corrector|
-              corrector.insert_after(responder.last_argument, infer_correction(responder))
+              status = infer_status(responder)
+
+              if responder.arguments?
+                corrector.insert_after(responder.last_argument, ", status: #{status.inspect}")
+              else
+                corrector.replace(responder, "render status: #{status.inspect}")
+              end
             end
           end
         end
 
         private
 
-        def infer_correction(responder)
+        def infer_status(responder)
           case extract_template(responder).to_s
             when 'new', 'edit'
-              ", status: :unprocessable_entity"
+              :unprocessable_entity
             else
-              ", status: :ok"
+              :ok
           end
         end
 

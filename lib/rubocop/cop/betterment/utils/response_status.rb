@@ -19,7 +19,10 @@ module RuboCop
 
           # @!method on_missing_status(node)
           def_node_search :on_missing_status, <<~PATTERN
-            (send nil? %1 ... !(hash <(pair (sym :status) _) ...>))
+            {
+              (send nil? %1)
+              (send nil? %1 ... !(hash <(pair (sym :status) _) ...>))
+            }
           PATTERN
         end
       end
