@@ -18,15 +18,7 @@ module RuboCop
 
         def on_def(node)
           each_offense(node, :render) do |responder|
-            add_offense(responder) do |corrector|
-              status = infer_status(responder)
-
-              if responder.arguments?
-                corrector.insert_after(responder.last_argument, ", status: #{status.inspect}")
-              else
-                corrector.replace(responder, "render status: #{status.inspect}")
-              end
-            end
+            infer_status(responder)
           end
         end
 

@@ -72,6 +72,7 @@ describe RuboCop::Cop::Betterment::RenderStatus, :config do
       def create
         render plain: "OK", status: :ok
         render :new, status: :unprocessable_entity
+        render status: :ok
       end
     RUBY
   end
