@@ -18,9 +18,7 @@ module RuboCop
 
         def on_def(node)
           each_offense(node, :render) do |responder|
-            add_offense(responder) do |corrector|
-              corrector.insert_after(responder, ", status: #{infer_status(responder).inspect}")
-            end
+            infer_status(responder)
           end
         end
 
