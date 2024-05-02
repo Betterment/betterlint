@@ -2,6 +2,7 @@
 
 require:
   - rubocop/cop/betterment.rb
+  - rubocop-graphql
   - rubocop-performance
   - rubocop-rails
   - rubocop-rake
