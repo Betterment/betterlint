@@ -11,6 +11,13 @@ Gem::Specification.new do |s|
   s.summary = "Betterment rubocop configuration"
   s.description = "Betterment rubocop configuration"
   s.license = "MIT"
+
+  s.homepage = "https://github.com/Betterment/#{s.name}"
+  s.metadata["homepage_uri"] = s.homepage
+  s.metadata["source_code_uri"] = "#{s.homepage}/tree/v#{s.version}"
+  s.metadata["changelog_uri"] = "#{s.homepage}/blob/v#{s.version}/CHANGELOG.md"
+  s.metadata["bug_tracker_uri"] = "#{s.homepage}/issues"
+  s.metadata["documentation_uri"] = "https://www.rubydoc.info/gems/#{s.name}/#{s.version}"
   s.metadata['rubygems_mfa_required'] = 'true'
 
   s.files = Dir["README.md", "STYLEGUIDE.md", "config/*.yml", "lib/**/*.rb"]
