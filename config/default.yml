@@ -124,6 +124,13 @@ Betterment/UseGlobalStrictLoading/ForAssociations:
 FactoryBot/AssociationStyle:
   Enabled: false
 
+Betterment/NotUsingRswag:
+  Enabled: false
+  SafeAutoCorrect: false
+  Description: Detect API specs missing OpenAPI documentation using rswag
+  Include:
+    - spec/requests/**/*_spec.rb
+
 FactoryBot/ConsistentParenthesesStyle:
   Enabled: false
 

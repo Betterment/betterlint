@@ -26,6 +26,7 @@ InternalAffairs/NumblockHandler:
   Exclude:
     - 'lib/rubocop/cop/betterment/implicit_redirect_type.rb'
     - 'lib/rubocop/cop/betterment/non_standard_actions.rb'
+    - 'lib/rubocop/cop/betterment/not_using_rswag.rb'
 
 # Offense count: 1
 Performance/MapMethodChain:
