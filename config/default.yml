@@ -89,6 +89,13 @@ Betterment/RenderStatus:
   Include:
     - app/controllers/**/*.rb
 
+Betterment/NotUsingRswag:
+  Enabled: false
+  SafeAutoCorrect: false
+  Description: Detect API specs missing OpenAPI documentation using rswag
+  Include:
+    - spec/requests/**/*_spec.rb
+
 FactoryBot/ConsistentParenthesesStyle:
   Enabled: false
 
