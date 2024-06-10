@@ -5,7 +5,7 @@ module RuboCop
     module Betterment
       module Utils
         module Parser
-          def self.get_root_token(node) # rubocop:disable Metrics/PerceivedComplexity, Metrics/AbcSize
+          def self.get_root_token(node) # rubocop:disable Metrics/PerceivedComplexity
             return nil unless node
 
             return get_root_token(node.receiver) if node.receiver
@@ -33,7 +33,7 @@ module RuboCop
             name
           end
 
-          def self.get_return_values(node) # rubocop:disable Metrics/AbcSize
+          def self.get_return_values(node)
             return [] unless node
             return explicit_returns(node) + get_return_values(node.body) if node.def_type?
             return [node] if node.literal? || node.variable?
@@ -84,7 +84,7 @@ module RuboCop
             parameter_names
           end
 
-          def self.get_extracted_parameters(node, param_aliases: []) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+          def self.get_extracted_parameters(node, param_aliases: []) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
             return [] unless node.send_type?
 
             parameter_names = []

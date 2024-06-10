@@ -51,7 +51,7 @@ module RuboCop
           end
         end
 
-        def on_send(node) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity
+        def on_send(node) # rubocop:disable Metrics/PerceivedComplexity
           return if !model_new?(node) && !model_update?(node)
 
           node.arguments.each do |argument|
@@ -88,7 +88,7 @@ module RuboCop
 
         # Flags objects being created/updated with unsafe
         # params indirectly from params or through params.permit
-        def flag_indirect_param_use(node) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+        def flag_indirect_param_use(node) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
           name = Utils::Parser.get_root_token(node)
           # extracted_params contains parameters used like:
           # def create

@@ -143,6 +143,8 @@ Metrics/AbcSize:
   Exclude:
     - spec/**/*
     - webvalve/**/*
+  CountRepeatedAttributes: false
+  Max: 34
 
 Metrics/BlockLength:
   Enabled: false
