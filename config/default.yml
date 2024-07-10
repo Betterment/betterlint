@@ -56,6 +56,18 @@ Betterment/NonStandardActions:
     - update
   StyleGuide: '#bettermentnonstandardactions'
 
+Betterment/RedirectStatus:
+  SafeAutoCorrect: false
+  Description: Detect missing status codes when redirecting POST, PUT, PATCH, or DELETE responses
+  Include:
+    - app/controllers/**/*.rb
+
+Betterment/RenderStatus:
+  SafeAutoCorrect: false
+  Description: Detect missing status codes when rendering POST, PUT, PATCH, or DELETE responses
+  Include:
+    - app/controllers/**/*.rb
+
 Betterment/ServerErrorAssertion:
   Description: Detects assertions on 5XX HTTP statuses.
   Include:
@@ -77,17 +89,8 @@ Betterment/UnsafeJob:
 Betterment/UnscopedFind:
   StyleGuide: '#bettermentunscopedfind'
 
-Betterment/RedirectStatus:
-  SafeAutoCorrect: false
-  Description: Detect missing status codes when redirecting POST, PUT, PATCH, or DELETE responses
-  Include:
-    - app/controllers/**/*.rb
-
-Betterment/RenderStatus:
-  SafeAutoCorrect: false
-  Description: Detect missing status codes when rendering POST, PUT, PATCH, or DELETE responses
-  Include:
-    - app/controllers/**/*.rb
+FactoryBot/AssociationStyle:
+  Enabled: false
 
 FactoryBot/ConsistentParenthesesStyle:
   Enabled: false
