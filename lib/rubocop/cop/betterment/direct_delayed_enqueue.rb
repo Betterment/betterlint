@@ -3,7 +3,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class Delay < Base
+      class DirectDelayedEnqueue < Base
         DELAY_MESSAGE = 'Please use Active Job instead of using `Object#delay`'
         ENQUEUE_MESSAGE = 'Please use Active Job instead of using `Delayed::Job.enqueue`'
 

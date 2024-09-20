@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RuboCop::Cop::Betterment::Delay, :config do
+RSpec.describe RuboCop::Cop::Betterment::DirectDelayedEnqueue, :config do
   it "adds an offense when using `.delay` without arguments" do
     expect_offense(<<~RUBY)
       user.delay.save!
