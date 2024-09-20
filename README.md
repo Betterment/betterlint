@@ -101,6 +101,15 @@ Betterment/UnscopedFind:
     - ZipCode
 ```
 
+### Betterment/DirectDelayedEnqueue
+
+This cop flags code that uses `Object#delay` or `Delayed::Job.enqueue`. Please use `ActiveJob` instead.
+
+```ruby
+user.delay.save!
+Delayed::Job.enqueue(MyJob.new)
+```
+
 ### Betterment/DynamicParams
 
 This cop flags code that accesses parameters whose names may be dynamically generated, such as a list of parameters in an a global variable or a return value from a method. In some cases, dynamically accessing parameter names can obscure what the client is expected to send and may make it difficult to reason about the code, both manually and programmatically. For example:
