@@ -16,4 +16,11 @@ RSpec.describe RuboCop::Cop::Betterment::Delay, :config do
       ^^^^^^^^^^^^^^^^^^^^^^ Please use Active Job instead of using `Object#delay`
     RUBY
   end
+
+  it "adds an offense when using `Delayed::Job.enqueue`" do
+    expect_offense(<<~RUBY)
+      Delayed::Job.enqueue(Job.new)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Please use Active Job instead of using `Delayed::Job.enqueue`
+    RUBY
+  end
 end
