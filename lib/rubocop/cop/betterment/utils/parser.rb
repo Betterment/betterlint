@@ -39,25 +39,25 @@ module RuboCop
             return [node] if node.literal? || node.variable?
 
             case node.type
-              when :begin
-                get_return_values(node.children.last)
-              when :block
-                get_return_values(node.body)
-              when :if
-                if_rets = get_return_values(node.if_branch)
-                else_rets = get_return_values(node.else_branch)
-                if_rets + else_rets
-              when :case
-                cases = []
-                node.each_when do |block|
-                  cases += get_return_values(block.body)
-                end
+            when :begin
+              get_return_values(node.children.last)
+            when :block
+              get_return_values(node.body)
+            when :if
+              if_rets = get_return_values(node.if_branch)
+              else_rets = get_return_values(node.else_branch)
+              if_rets + else_rets
+            when :case
+              cases = []
+              node.each_when do |block|
+                cases += get_return_values(block.body)
+              end
 
-                cases + get_return_values(node.else_branch)
-              when :send
-                [node]
-              else
-                []
+              cases + get_return_values(node.else_branch)
+            when :send
+              [node]
+            else
+              []
             end
           end
 

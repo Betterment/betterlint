@@ -14,9 +14,9 @@ RSpec.shared_context 'betterlint_config', :betterlint_config do
       .default_configuration.for_cop(cop_class)
       .merge(betterlint_config.for_cop(cop_class))
       .merge({
-               'Enabled' => true, # in case it is 'pending'
-               'AutoCorrect' => true, # in case defaults set it to false
-             })
+        'Enabled' => true, # in case it is 'pending'
+        'AutoCorrect' => true, # in case defaults set it to false
+      })
       .merge(cop_config)
   end
 end
