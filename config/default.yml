@@ -98,14 +98,42 @@ FactoryBot/ConsistentParenthesesStyle:
 FactoryBot/SyntaxMethods:
   Enabled: false
 
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/ArrayAlignment:
+  EnforcedStyle: with_fixed_indentation
+
 Layout/CaseIndentation:
-  IndentOneStep: true
+  EnforcedStyle: end
+  IndentOneStep: false
 
 Layout/ClosingParenthesisIndentation:
   Enabled: true
 
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: variable
+
+Layout/FirstArgumentIndentation:
+  EnforcedStyle: consistent
+
 Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstParameterIndentation:
+  Enabled: false
+
+Layout/LineContinuationLeadingSpace:
+  Enabled: false
+
+Layout/LineContinuationSpacing:
+  Enabled: true
+
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: false
 
 Layout/LineLength:
   Max: 140
@@ -117,11 +145,11 @@ Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 
 Layout/ParameterAlignment:
-  Enabled: false
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
 
-# Disabling because of a bug in rubocop: https://github.com/rubocop-hq/rubocop/issues/6918
 Layout/RescueEnsureAlignment:
-  Enabled: false
+  Enabled: true
 
 Lint/AmbiguousBlockAssociation:
   Exclude:

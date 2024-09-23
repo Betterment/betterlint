@@ -5,10 +5,7 @@ require 'spec_helper'
 RSpec.describe 'standard compliance' do
   let(:exceptions) do
     %w(
-      Layout/CaseIndentation
       Layout/LineLength
-      Layout/ParameterAlignment
-      Layout/RescueEnsureAlignment
       Lint/AmbiguousBlockAssociation
       Lint/AmbiguousOperator
       Lint/AmbiguousRegexpLiteral
@@ -65,13 +62,19 @@ RSpec.describe 'standard compliance' do
       name if betterlint != standard
     end
 
-    violations -= exceptions
-    violations.sort!
+    new_violations = (violations - exceptions).sort
+    old_exceptions = (exceptions - violations).sort
 
-    expect(violations).to be_empty, <<~MSG
+    expect(new_violations).to be_empty, <<~MSG
       All new rules should match Standard. These following rules are invalid:
 
-      #{violations.join("\n")}
+      #{new_violations.join("\n")}
+    MSG
+
+    expect(old_exceptions).to be_empty, <<~MSG
+      The following rules are now compliant with Standard and can be removed from the exceptions:
+
+      #{old_exceptions.join("\n")}
     MSG
   end
 end
