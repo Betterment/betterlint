@@ -13,7 +13,7 @@ module RuboCop
 
         # @!method association_with_class_name(node)
         def_node_matcher :association_with_class_name, <<-PATTERN
-          (send nil? {:has_many :has_one :belongs_to} ... (hash <(pair (sym :class_name) ${str _}) ...>))
+          (send nil? {:has_many :has_one :belongs_to} ... (hash <(pair (sym :class_name) ${str}) ...>))
         PATTERN
 
         # @!method rspec_describe(node)
