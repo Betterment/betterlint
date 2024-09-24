@@ -6,7 +6,7 @@ module RuboCop
       class InternalsProtection < Base
         MSG = <<~END.gsub(/\s+/, " ")
           Internal constants may only be referenced from code within its containing module.
-          Constants defined within a modules Internals submodule may only be referenced by code in that module,
+          Constants defined within a module's Internals submodule may only be referenced by code in that module,
           or nested classes and modules
           (e.g. MyModule::Internals::MyClass may only be referenced from code in MyModule or MyModule::MyPublicClass).
         END
