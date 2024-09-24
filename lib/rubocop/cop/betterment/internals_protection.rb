@@ -11,21 +11,39 @@ module RuboCop
           (e.g. MyModule::Internals::MyClass may only be referenced from code in MyModule or MyModule::MyPublicClass).
         END
 
+        # @!method association_with_class_name(node)
+        def_node_matcher :association_with_class_name, <<-PATTERN
+          (send nil? {:has_many :has_one :belongs_to} ... (hash <(pair (sym :class_name) ${str _}) ...>))
+        PATTERN
+
         def on_const(node)
           if node.children[1] == :Internals
-            module_path = containing_module_path(node)
-            context_path = definition_context_path(node)
+            module_path = node.each_descendant(:const, :cbase).map { |n| n.children[1] }.reverse
 
-            unless module_path.empty? || context_path.each_cons(module_path.size).any?(module_path)
-              add_offense(node)
-            end
+            ensure_allowed_reference!(node, module_path)
+          end
+        end
+
+        def on_send(node)
+          class_name_node = association_with_class_name(node)
+          return unless class_name_node
+
+          full_path = class_name_node.children[0].split('::').map { |name| name == '' ? nil : name.to_sym }
+          internals_index = full_path.find_index(:Internals)
+          if internals_index
+            module_path = full_path.take(internals_index)
+            ensure_allowed_reference!(class_name_node, module_path)
           end
         end
 
         private
 
-        def containing_module_path(node)
-          node.each_descendant(:const, :cbase).map { |n| n.children[1] }.reverse
+        def ensure_allowed_reference!(node, module_path)
+          return if module_path.empty?
+
+          unless definition_context_path(node).each_cons(module_path.size).any?(module_path)
+            add_offense(node)
+          end
         end
 
         def definition_context_path(node)
