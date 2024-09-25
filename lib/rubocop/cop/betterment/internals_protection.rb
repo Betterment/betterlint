@@ -21,7 +21,6 @@ module RuboCop
           (block (send (const nil? :RSpec) :describe ${const | str}) ...)
         PATTERN
 
-
         def on_const(node)
           if node.children[1] == :Internals
             module_path = const_path(node)
@@ -71,13 +70,13 @@ module RuboCop
         end
 
         def rspec_context_path(node)
-          rspec_described_class = node.each_ancestor(:block).filter_map do |ancestor|
+          rspec_described_class = node.each_ancestor(:block).filter_map { |ancestor|
             rspec_describe(ancestor)
-          end.first
+          }.first
           case rspec_described_class&.type
             when :const then const_path(rspec_described_class)
             when :str then string_path(rspec_described_class)
-            else nil
+            else nil # rubocop:disable Style/EmptyElse
           end
         end
       end

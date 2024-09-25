@@ -164,13 +164,13 @@ describe RuboCop::Cop::Betterment::InternalsProtection, :config do
       context 'when reference is invalid' do
         it 'registers an offense' do
           expect_offense(<<~RUBY)
-          RSpec.describe Bar::MyPublicResource do
-            let!(:existing_widget) do
-              Foo::Internals::Widget.create!
-              ^^^^^^^^^^^^^^ Internal constants may only be referenced from code within its containing module. [...]
+            RSpec.describe Bar::MyPublicResource do
+              let!(:existing_widget) do
+                Foo::Internals::Widget.create!
+                ^^^^^^^^^^^^^^ Internal constants may only be referenced from code within its containing module. [...]
+              end
             end
-          end
-        RUBY
+          RUBY
         end
       end
     end
@@ -191,13 +191,13 @@ describe RuboCop::Cop::Betterment::InternalsProtection, :config do
       context 'when reference is invalid' do
         it 'registers an offense' do
           expect_offense(<<~RUBY)
-          RSpec.describe 'Bar::MyPublicResource' do
-            let!(:existing_widget) do
-              Foo::Internals::Widget.create!
-              ^^^^^^^^^^^^^^ Internal constants may only be referenced from code within its containing module. [...]
+            RSpec.describe 'Bar::MyPublicResource' do
+              let!(:existing_widget) do
+                Foo::Internals::Widget.create!
+                ^^^^^^^^^^^^^^ Internal constants may only be referenced from code within its containing module. [...]
+              end
             end
-          end
-        RUBY
+          RUBY
         end
       end
     end
