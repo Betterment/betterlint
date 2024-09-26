@@ -26,10 +26,10 @@ module RuboCop
 
         def infer_status(responder)
           case extract_template(responder).to_s
-            when 'new', 'edit'
-              :unprocessable_entity
-            else
-              :ok
+          when 'new', 'edit'
+            :unprocessable_entity
+          else
+            :ok
           end
         end
 

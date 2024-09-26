@@ -53,10 +53,10 @@ module RuboCop
           if route
             (path, param, value) = route
             action = case param
-                       when :to then value.first.split('#').last
-                       when :action then value.first
-                       else path
-                     end
+            when :to then value.first.split('#').last
+            when :action then value.first
+            else path
+            end
             add_offense(node, message: MSG_ROUTE_TO) unless allowed_action?(action)
             true
           end
