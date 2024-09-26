@@ -32,6 +32,9 @@ Betterment/AuthorizationInController:
   Enabled: false
   StyleGuide: '#bettermentauthorizationincontroller'
 
+Betterment/DirectDelayedEnqueue:
+  StyleGuide: '#bettermentdirectdelayedenqueue'
+
 Betterment/DynamicParams:
   StyleGuide: '#bettermentdynamicparams'
 
