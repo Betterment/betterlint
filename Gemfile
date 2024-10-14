@@ -7,4 +7,5 @@ group :development do
   gem 'bundler'
   gem 'rspec-rails'
   gem 'rake', '>= 12.3.3'
+  gem 'standard'
 end
