@@ -74,9 +74,9 @@ module RuboCop
             rspec_describe(ancestor)
           }.first
           case rspec_described_class&.type
-            when :const then const_path(rspec_described_class)
-            when :str then string_path(rspec_described_class)
-            else nil # rubocop:disable Style/EmptyElse
+          when :const then const_path(rspec_described_class)
+          when :str then string_path(rspec_described_class)
+          else nil # rubocop:disable Style/EmptyElse
           end
         end
       end
