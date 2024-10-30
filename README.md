@@ -130,6 +130,50 @@ end
 ```
 
 All three `params.permit` calls will be flagged.
+### Betterment/InternalsProtection
+
+This cop is not enabled by default, and must be enabled from your `.rubocop.yml` file:
+
+```yaml
+Betterment/InternalsProtection:
+  Enabled: true
+```
+
+This cop enforces constants defined within `Internals` modules from being referenced from other modules.
+
+For example, if you have a `Widget` ActiveRecord class that you don't want to be used directly,
+you can place it into an Internals module such as:
+```ruby
+class Widgets::Internals::Widget < ApplicationRecord
+end
+```
+
+Code outside of the `Widgets` module will not be allowed to reference Widget:
+```ruby
+class WidgetsController < ApplicationController
+  def create
+    Widgets::Internals::Widget.create!
+    ^^^^^^^^^^^^^^^^^^ Internal constants may only be referenced from code within its containing module. [...]
+  end
+end
+```
+
+Non-Internal code within the module can be used to manage access.
+```ruby
+class Widgets::WidgetCreation
+  def save!
+    Widgets::Internals::Widget.create!
+  end
+end
+
+class WidgetsController < ApplicationController
+  def create
+    Widgets::WidgetCreation.new.save!
+  end
+end
+```
+
+This cop inspects all direct constant references, and the `class_name` attribute on ActiveRecord associations.
 
 ### Betterment/UnsafeJob
 
