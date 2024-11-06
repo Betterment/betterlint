@@ -150,6 +150,14 @@ describe RuboCop::Cop::Betterment::InternalsProtection, :config do
   end
 
   context 'when in a spec with a constant described class' do
+    context 'when subject is within an Internals module' do
+      it 'does not register offences' do
+        expect_no_offenses(<<~RUBY)
+          RSpec.describe Foo::Internals::Widget, type: :model do
+          end
+        RUBY
+      end
+    end
     context 'when reference is valid' do
       it 'does not register offences' do
         expect_no_offenses(<<~RUBY)

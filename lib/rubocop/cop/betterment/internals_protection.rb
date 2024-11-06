@@ -18,7 +18,7 @@ module RuboCop
 
         # @!method rspec_describe(node)
         def_node_matcher :rspec_describe, <<-PATTERN
-          (block (send (const nil? :RSpec) :describe ${const | str}) ...)
+          (block (send (const nil? :RSpec) :describe ${const | str} ...) ...)
         PATTERN
 
         def on_const(node)
