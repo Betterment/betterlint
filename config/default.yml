@@ -44,6 +44,11 @@ Betterment/HardcodedID:
   SafeAutoCorrect: false
   StyleGuide: '#bettermenthardcodedid'
 
+Betterment/InternalsProtection:
+  Description: Detects invalid references to Internals modules
+  StyleGuide: '#bettermentinternalsprotection'
+  Enabled: false
+
 Betterment/NonStandardActions:
   AdditionalAllowedActions: []
   Description: Detects non-standard controller actions.
