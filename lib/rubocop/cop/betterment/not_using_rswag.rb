@@ -4,30 +4,70 @@ module RuboCop
   module Cop
     module Betterment
       class NotUsingRswag < Base
-        MSG = 'API tests should use documented using rswag and not the built in `get`, `post`, `put`, `patch`, `delete` methods'
+        MSG = 'Ensure request spec conforms to the required structure.'
 
-        # @!method test?(node)
-        def_node_matcher :test?, <<-PATTERN
-          (block (send nil? :it _) ...)
-        PATTERN
+        def on_new_investigation
+          return if processed_source.ast.nil?
 
-        # @!method shared_method?(node)
-        def_node_matcher :shared_method?, <<-PATTERN
-          (def ...)
-        PATTERN
-
-        # @!method before_block?(node)
-        def_node_matcher :before_block?, <<-PATTERN
-          (block (send nil? :before) ...)
-        PATTERN
-
-        RESTRICT_ON_SEND = %i(get put patch post delete).freeze
-
-        def on_send(node)
-          return unless node.ancestors.any? { |a| test?(a) || shared_method?(a) || before_block?(a) }
-
-          add_offense(node)
+          unless valid_path_structure?(processed_source.ast)
+            add_offense(processed_source.ast)
+          end
         end
+
+        private
+
+        def valid_path_structure?(node)
+          node.each_descendant.any? do |descendant|
+            next unless path_node?(descendant)
+
+            find_method_and_response_nodes(descendant)
+          end
+        end
+
+        def find_method_and_response_nodes(node)
+          method_found = false
+          response_found = false
+
+          node.each_descendant do |descendant|
+            method_found ||= method_node?(descendant)
+            response_found ||= response_node?(descendant)
+            break if method_found && response_found
+          end
+
+          method_found && response_found
+        end
+
+        # @!method path_with_code?(node)
+        def_node_matcher :path_with_code?, <<~PATTERN
+          (block
+            (send nil? :path (str _))
+            args
+            !nil?)
+        PATTERN
+
+        # @!method path_node?(node)
+        def_node_matcher :path_node?, <<~PATTERN
+          (block
+            (send nil? :path (str _))
+            args
+            _)
+        PATTERN
+
+        # @!method method_node?(node)
+        def_node_matcher :method_node?, <<~PATTERN
+          (block
+            (send nil? {:get :post :put :patch :delete} str)
+            args
+            _)
+        PATTERN
+
+        # @!method response_node?(node)
+        def_node_matcher :response_node?, <<~PATTERN
+          (block
+            (send nil? :response str str)
+            args
+            _)
+        PATTERN
       end
     end
   end
