@@ -64,6 +64,11 @@ Betterment/NonStandardActions:
     - update
   StyleGuide: '#bettermentnonstandardactions'
 
+Betterment/NonStandardController:
+  Description: Detects non-standard controller names.
+  Include:
+    - config/routes.rb
+
 Betterment/RedirectStatus:
   SafeAutoCorrect: false
   Description: Detect missing status codes when redirecting POST, PUT, PATCH, or DELETE responses
