@@ -44,6 +44,11 @@ Betterment/HardcodedID:
   SafeAutoCorrect: false
   StyleGuide: '#bettermenthardcodedid'
 
+Betterment/InternalsProtection:
+  Description: Detects invalid references to Internals modules
+  StyleGuide: '#bettermentinternalsprotection'
+  Enabled: false
+
 Betterment/NonStandardActions:
   AdditionalAllowedActions: []
   Description: Detects non-standard controller actions.
@@ -58,6 +63,11 @@ Betterment/NonStandardActions:
     - show
     - update
   StyleGuide: '#bettermentnonstandardactions'
+
+Betterment/NonStandardController:
+  Description: Detects non-standard controller names.
+  Include:
+    - config/routes.rb
 
 Betterment/RedirectStatus:
   SafeAutoCorrect: false
