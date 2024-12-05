@@ -50,6 +50,29 @@ RSpec.describe RuboCop::Cop::Betterment::NotUsingRswag, :config do
     RUBY
   end
 
+  it 'registers an no offense if method and response nodes are present in parallel with non-rswag context' do
+    expect_no_offenses(<<~RUBY)
+      RSpec.describe MyApiController do
+        path '/blogs' do
+          context 'some situation' do
+            get 'Creates a blog' do
+              context 'another situation' do
+                response '201', 'blog created' do
+                end
+              end
+            end
+          end
+        end
+
+        it 'returns ok status with expected response' do
+          get "/api/widgets/1"
+          expect(response).to have_http_status :ok
+          expect(response_json).to eq accepted_response.as_json
+        end
+      end
+    RUBY
+  end
+
   it 'does not register an offense for nested contexts with valid structure' do
     expect_no_offenses(<<~RUBY)
       RSpec.describe MyApiController do
