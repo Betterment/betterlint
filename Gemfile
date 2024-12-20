@@ -2,10 +2,12 @@ source 'https://rubygems.org'
 
 gemspec
 
-group :development do
-  gem 'pry'
-  gem 'bundler'
-  gem 'rspec-rails'
-  gem 'rake', '>= 12.3.3'
-  gem 'standard'
-end
+# NOTE: Not adding appraisal here, because it should not be run against this Gemfile.
+#       See: `appraisal_root.gemfile`
+gem 'rails', '>= 6.1'
+gem 'pry'
+gem 'rspec-rails'
+gem 'rake', '>= 13'
+gem 'rubocop-packaging', '~> 0.5', '>= 0.5.2'
+# Skip some bad releases of standard
+gem 'standard', '>= 1.35.1', '!= 1.41.1', '!= 1.42.0'

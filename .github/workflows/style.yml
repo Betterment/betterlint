@@ -1,0 +1,39 @@
+name: style
+
+on: [push, pull_request]
+
+jobs:
+  rubocop:
+    name: RuboCop
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ruby: "3.3"
+            appraisal: "style"
+            taskname: "rubocop"
+            gemfile: "appraisal_root"
+            rubygems: latest
+            bundler: latest
+    runs-on: ubuntu-latest
+    env: # $BUNDLE_GEMFILE must be set at job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Ruby & RubyGems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          rubygems: ${{ matrix.rubygems }}
+          bundler: ${{ matrix.bundler }}
+          bundler-cache: false
+      # `bundle` uses BUNDLE_GEMFILE, set automatically via matrix.gemfile (i.e. appraisal_root)
+      # We need to do this first to get appraisal installed.
+      # NOTE: We do not use the root Gemfile in CI workflows at all.
+      - name: Bundle for Appraisal ${{ matrix.appraisal }} on Ruby ${{ matrix.ruby }}
+        run: bundle
+      - name: Install Appraisal ${{ matrix.appraisal }} dependencies on Ruby ${{ matrix.ruby }}
+        run: bundle exec appraisal ${{ matrix.appraisal }} bundle
+      - name: Run ${{ matrix.appraisal }} style checks via ${{ matrix.taskname }} on Ruby ${{ matrix.ruby }}
+        run: bundle exec appraisal ${{ matrix.appraisal }} bundle exec rake ${{ matrix.taskname }}

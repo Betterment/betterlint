@@ -8,23 +8,98 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: ["3.0", "3.1", "3.2"]
-        gemfile:
-          - Gemfile
+        include:
+          # Ruby 3.0
+          - ruby: "3.0"
+            appraisal: "rails-6-1"
+            taskname: "spec"
+            gemfile: "appraisal_root"
+            rubygems: '3.5.23'
+            bundler: '2.5.23'
+          - ruby: "3.0"
+            appraisal: "rails-7-0"
+            taskname: "spec"
+            gemfile: "appraisal_root"
+            rubygems: '3.5.23'
+            bundler: '2.5.23'
+          - ruby: "3.0"
+            appraisal: "rails-7-1"
+            taskname: "spec"
+            gemfile: "appraisal_root"
+            rubygems: '3.5.23'
+            bundler: '2.5.23'
+
+          # Ruby 3.1
+          - ruby: "3.1"
+            appraisal: "rails-7-0"
+            taskname: "spec"
+            gemfile: "appraisal_root"
+            rubygems: latest
+            bundler: latest
+          - ruby: "3.1"
+            appraisal: "rails-7-1"
+            taskname: "spec"
+            gemfile: "appraisal_root"
+            rubygems: latest
+            bundler: latest
+          - ruby: "3.1"
+            appraisal: "rails-7-2"
+            taskname: "spec"
+            gemfile: "appraisal_root"
+            rubygems: latest
+            bundler: latest
+
+          # Ruby 3.2
+          - ruby: "3.2"
+            appraisal: "rails-7-1"
+            taskname: "spec"
+            gemfile: "appraisal_root"
+            rubygems: latest
+            bundler: latest
+          - ruby: "3.2"
+            appraisal: "rails-7-2"
+            taskname: "spec"
+            gemfile: "appraisal_root"
+            rubygems: latest
+            bundler: latest
+          - ruby: "3.2"
+            appraisal: "rails-8-0"
+            taskname: "spec"
+            gemfile: "appraisal_root"
+            rubygems: latest
+            bundler: latest
+
+          # Ruby 3.3
+          - ruby: "3.3"
+            appraisal: "rails-7-2"
+            taskname: "spec"
+            gemfile: "appraisal_root"
+            rubygems: latest
+            bundler: latest
+          - ruby: "3.3"
+            appraisal: "rails-8-0"
+            taskname: "spec"
+            gemfile: "appraisal_root"
+            rubygems: latest
+            bundler: latest
 
     steps:
-    - uses: actions/checkout@v4
-    - uses: ruby/setup-ruby@v1
-      env:
-        BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Ruby & RubyGems
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
-        bundler-cache: true
-    - name: Run linter
-      env:
-        BUNDLE_GEMFILE: ${{ matrix.gemfile }}
-      run: bundle exec rubocop --parallel
-    - name: Run tests
-      env:
-        BUNDLE_GEMFILE: ${{ matrix.gemfile }}
-      run: bundle exec rake
+        rubygems: ${{ matrix.rubygems }}
+        bundler: ${{ matrix.bundler }}
+        bundler-cache: false
+    # `bundle` uses BUNDLE_GEMFILE, set automatically via matrix.gemfile (i.e. appraisal_root)
+    # We need to do this first to get appraisal installed.
+    # NOTE: We do not use the root Gemfile in CI workflows at all.
+    - name: Bundle for Appraisal ${{ matrix.appraisal }} on Ruby ${{ matrix.ruby }}
+      run: bundle
+    - name: Install Appraisal ${{ matrix.appraisal }} dependencies on Ruby ${{ matrix.ruby }}
+      run: bundle exec appraisal ${{ matrix.appraisal }} bundle
+    - name: Run ${{ matrix.appraisal }} tests via ${{ matrix.taskname }} on Ruby ${{ matrix.ruby }}
+      run: bundle exec appraisal ${{ matrix.appraisal }} bundle exec rake ${{ matrix.taskname }}

@@ -280,3 +280,15 @@ actions often indicates error handling (e.g. `422 Unprocessable Entity`).
 This cop requires you to explicitly provide an HTTP status code when rendering a response in the
 create, update, and destroy actions. When autocorrecting, this will automatically add
 `status: :unprocessable_entity` or `status: :ok` depending on what you're rendering.
+
+## Contributing
+
+### Appraisal
+
+Generate a new set of Appraisal gemfiles:
+
+```bash
+BUNDLE_GEMFILE=appraisal_root.gemfile bundle update
+BUNDLE_GEMFILE=appraisal_root.gemfile appraisal update
+BUNDLE_GEMFILE=gemfiles/style.gemfile bundle exec rubocop -A --only Style/FrozenStringLiteralComment,Layout/EmptyLineAfterMagicComment
+```
