@@ -34,7 +34,7 @@ module RuboCop
         PATTERN
 
         def initialize(config = nil, options = nil)
-          super(config, options)
+          super
           config = @config.for_cop(self)
           @unsafe_parameters = config.fetch("unsafe_parameters", []).map(&:to_sym)
           @unsafe_regex = Regexp.new config.fetch("unsafe_regex", ".*_id$")

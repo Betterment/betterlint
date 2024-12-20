@@ -14,7 +14,7 @@ module RuboCop
         MSG
 
         def initialize(config = nil, options = nil)
-          super(config, options)
+          super
           config = @config.for_cop(self)
           @sensitive_params = config.fetch("sensitive_params", []).map(&:to_sym)
           @class_regex = Regexp.new config.fetch("class_regex", ".*Job$")

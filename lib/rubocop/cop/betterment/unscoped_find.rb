@@ -36,7 +36,7 @@ module RuboCop
         PATTERN
 
         def initialize(config = nil, options = nil)
-          super(config, options)
+          super
           config = @config.for_cop(self)
           @unauthenticated_models = config.fetch("unauthenticated_models", []).map(&:to_sym)
         end
