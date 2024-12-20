@@ -17,4 +17,6 @@ source "https://rubygems.org"
 #   as it is tailored for local development,
 #   and includes things unrelated to running the spec suite.
 
+gem 'appraisal', '~> 2.5'
+
 gemspec
