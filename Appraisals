@@ -68,8 +68,6 @@ end
 #   + Ruby 3.2
 #   + Ruby 3.3
 #   + ruby-head
-#   + truffleruby-head
-#   - jruby-head
 appraise "rails-8-0" do
   gem "mutex_m", "~> 0.2"
   gem "rails", "~> 8.0.1"

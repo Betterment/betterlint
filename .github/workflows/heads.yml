@@ -21,14 +21,6 @@ jobs:
             rubygems: latest
             bundler: latest
 
-          # truffleruby-head
-          - ruby: "truffleruby-head"
-            appraisal: "rails-8-0"
-            taskname: "spec"
-            gemfile: "appraisal_root"
-            rubygems: latest
-            bundler: latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
