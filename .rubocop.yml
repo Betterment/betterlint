@@ -4,6 +4,7 @@ inherit_from:
 
 require:
   - rubocop/cop/internal_affairs
+  - rubocop-packaging
 
 AllCops:
   NewCops: enable
