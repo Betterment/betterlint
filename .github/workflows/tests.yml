@@ -4,6 +4,8 @@ on: [push, pull_request]
 
 jobs:
   test:
+    env: # $BUNDLE_GEMFILE must be set at job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}.gemfile
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
