@@ -292,3 +292,13 @@ BUNDLE_GEMFILE=appraisal_root.gemfile bundle update
 BUNDLE_GEMFILE=appraisal_root.gemfile appraisal update
 BUNDLE_GEMFILE=gemfiles/style.gemfile bundle exec rubocop -A --only Style/FrozenStringLiteralComment,Layout/EmptyLineAfterMagicComment
 ```
+
+### Reproduce CI test failure
+
+Example: A test fails in the workflow for `rails-8-0`.
+
+You want to reproduce it similar to how it runs on CI:
+
+```shell
+CI=true BUNDLE_GEMFILE=appraisal_root.gemfile appraisal "rails-8-0" bundle exec rake spec
+```

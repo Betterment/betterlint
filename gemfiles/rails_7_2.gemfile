@@ -9,6 +9,8 @@ gem "mutex_m", "~> 0.2"
 gem "rails", "~> 7.2.2", ">= 7.2.2.1"
 gem "rake", ">= 13"
 gem "rspec-rails"
+gem "rubocop", "~> 1.69", ">= 1.69.2"
+gem "standard", ">= 1.35.1", "!= 1.41.1", "!= 1.42.0"
 gem "stringio", "~> 3.0"
 
 gemspec path: "../"
