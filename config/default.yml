@@ -2,6 +2,8 @@
 
 require:
   - rubocop/cop/betterment.rb
+  - rubocop-capybara
+  - rubocop-factory_bot
   - rubocop-graphql
   - rubocop-performance
   - rubocop-rails
@@ -237,9 +239,6 @@ Performance/RedundantMatch:
   Enabled: false
 
 RSpec/BeEq:
-  Enabled: false
-
-RSpec/Capybara/FeatureMethods:
   Enabled: false
 
 RSpec/ContextWording:

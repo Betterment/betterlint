@@ -30,4 +30,6 @@ Gem::Specification.new do |s|
   s.add_dependency "rubocop-rails", "~> 2.24"
   s.add_dependency "rubocop-rake", "~> 0.6"
   s.add_dependency "rubocop-rspec", ">= 2.28"
+  s.add_dependency "rubocop-capybara", "~> 2.21"
+  s.add_dependency "rubocop-factory_bot", "~> 2.26"
 end
