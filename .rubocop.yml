@@ -9,3 +9,6 @@ require:
 AllCops:
   NewCops: enable
   TargetRubyVersion: 3.0
+
+Rails/RakeEnvironment:
+  Enabled: false
