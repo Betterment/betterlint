@@ -25,7 +25,6 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">= 3.0"
 
   s.add_dependency "rubocop", "~> 1.62"
-  s.add_dependency "rubocop-capybara", "~> 2.21"
   s.add_dependency "rubocop-factory_bot", "~> 2.26"
   s.add_dependency "rubocop-graphql", "~> 1.5"
   s.add_dependency "rubocop-performance", "~> 1.21"

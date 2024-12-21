@@ -3,7 +3,6 @@ PATH
   specs:
     betterlint (1.16.0)
       rubocop (~> 1.62)
-      rubocop-capybara (~> 2.21)
       rubocop-factory_bot (~> 2.26)
       rubocop-graphql (~> 1.5)
       rubocop-performance (~> 1.21)
@@ -65,8 +64,6 @@ GEM
       unicode-display_width (>= 2.4.0, < 4.0)
     rubocop-ast (1.37.0)
       parser (>= 3.3.1.0)
-    rubocop-capybara (2.21.0)
-      rubocop (~> 1.41)
     rubocop-factory_bot (2.26.1)
       rubocop (~> 1.61)
     rubocop-graphql (1.5.4)

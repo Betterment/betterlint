@@ -2,7 +2,6 @@
 
 require:
   - rubocop/cop/betterment.rb
-  - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-graphql
   - rubocop-performance
