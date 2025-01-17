@@ -280,3 +280,20 @@ actions often indicates error handling (e.g. `422 Unprocessable Entity`).
 This cop requires you to explicitly provide an HTTP status code when rendering a response in the
 create, update, and destroy actions. When autocorrecting, this will automatically add
 `status: :unprocessable_entity` or `status: :ok` depending on what you're rendering.
+
+### Betterment/UseGlobalStrictLoading/ByDefaultForModels
+
+This cop identifies models where `self.strict_loading_by_default` is assigned to explicitly, and prefers that it be removed in favor of using the global strict loading settings.
+
+We use this to create a `.rubocop_todo.yml` file showing all the models that have been explicitly configured, so that we can "burn down" and lean more heavily on using global settings. We prefer to enable strict loading by default globally, but transioning a large Rails application to work in that state is difficult and must be broken down into smaller steps. Our workflow is to change all models to turn off strict loading, regenerate our rubocop todo file, then enable the flag globally. Then on a model-by-model basis we'll enable them one at a time, and fix all spec failures per model.
+
+This allows us two benefits:
+
+1. We can gradually change code used by older models to use strict loading without having to fix the world all at once.
+2. All new models will strict load by default, forcing us to specify the objcts to load up-front in our controllers and other call sites.
+
+### Betterment/UseGlobalStrictLoading/ForAssociations
+
+This cop identifies associations where `:strict_loading` is set explicitly, and prefers that it be removed in favor of using the global strict loading settings.
+
+This is related to the [Betterment/UseGlobalStrictLoading/ByDefaultForModels](#bettermentuseglobalstrictloadingbydefaultformodels) cop, but allows for more granular enablement and disablement of associations within a model. The intention is similar, in that we are using this cop to help "burn down" code to strict load, but it allows us to focus on the per-association level. Some models may have quite a lot of usage, so enabling it for a model might cause thousands of failures in the specs. In those cases we will disable all the associations, and then work through them one at a time until all code that uses the model strict loads.
