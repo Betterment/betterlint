@@ -62,9 +62,8 @@ module RuboCop
           end
         end
 
-        # NOTE: The InternalAffairs/UndefinedConfig rule seems to have a bug where it can't fine these configs in config/default.yml
         def allowed_actions
-          @allowed_actions ||= cop_config['StandardActions'] + cop_config['AdditionalAllowedActions'] # rubocop:disable InternalAffairs/UndefinedConfig
+          @allowed_actions ||= cop_config['StandardActions'] + cop_config['AdditionalAllowedActions']
         end
 
         def allowed_action?(action)
