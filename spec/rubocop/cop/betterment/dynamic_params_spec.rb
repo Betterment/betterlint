@@ -12,21 +12,19 @@ describe RuboCop::Cop::Betterment::DynamicParams, :config do
 
   context 'when creating or updating a model' do
     it 'registers an offense when parameter names are accessed dynamically' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def create
             dynamic_field = :user_id
             params.require(:user).permit(dynamic_field)
+                                         ^^^^^^^^^^^^^ Parameter names accessed dynamically[...]
             params.permit(dynamic_field)
+                          ^^^^^^^^^^^^^ Parameter names accessed dynamically[...]
             params[dynamic_field]
+                   ^^^^^^^^^^^^^ Parameter names accessed dynamically[...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(3)
-      expect(cop.offenses.map(&:line)).to eq([4, 5, 6])
-      expect(cop.highlights.uniq).to eq(['dynamic_field'])
-      expect(cop.messages.uniq).to eq([offense_dynamic_parameter])
     end
 
     it 'does not register an offense when accessing static parameter names' do
