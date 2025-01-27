@@ -1,31 +1,18 @@
 # frozen_string_literal: true
 
 describe RuboCop::Cop::Betterment::UnsafeJob, :config do
-  let(:offense_unsafe_job) do
-    <<~MSG
-      This job takes a parameter that will end up serialized in plaintext. Do not pass sensitive data as bare arguments into jobs.
-
-      See here for more information on this error:
-      https://github.com/Betterment/betterlint#bettermentunsafejob
-    MSG
-  end
-
   context 'when creating a job that inherits from ApplicationJob' do
     it 'registers an offense when perform takes unsafe parameters' do
       cop.sensitive_params = [:password]
 
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class RegistrationJob < ApplicationJob
           def perform(user_id:, password: nil)
+                                ^^^^^^^^^^^^^ This job takes a parameter [...]
             do_something
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(1)
-      expect(cop.offenses.map(&:line)).to eq([2])
-      expect(cop.highlights.uniq).to eq(['password: nil'])
-      expect(cop.messages.uniq).to eq([offense_unsafe_job])
     end
 
     it 'does not register an offense when perform takes other parameters' do
@@ -47,19 +34,16 @@ describe RuboCop::Cop::Betterment::UnsafeJob, :config do
       cop.class_regex = /.*Misc$/
       cop.sensitive_params = [:password]
 
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class AsyncMisc
           def perform(user_id:, password: nil)
+                                ^^^^^^^^^^^^^ This job takes a parameter [...]
             do_something
           end
         end
       RUBY
+    ensure
       cop.class_regex = temp
-
-      expect(cop.offenses.size).to be(1)
-      expect(cop.offenses.map(&:line)).to eq([2])
-      expect(cop.highlights.uniq).to eq(['password: nil'])
-      expect(cop.messages.uniq).to eq([offense_unsafe_job])
     end
 
     it 'does not register an offense that uses the default naming scheme' do
@@ -74,6 +58,7 @@ describe RuboCop::Cop::Betterment::UnsafeJob, :config do
           end
         end
       RUBY
+    ensure
       cop.class_regex = temp
     end
   end
@@ -82,18 +67,14 @@ describe RuboCop::Cop::Betterment::UnsafeJob, :config do
     it 'registers an offense when perform takes unsafe parameters' do
       cop.sensitive_params = [:password]
 
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class RegistrationJob
           def perform(user_id:, password: nil)
+                                ^^^^^^^^^^^^^ This job takes a parameter [...]
             do_something
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(1)
-      expect(cop.offenses.map(&:line)).to eq([2])
-      expect(cop.highlights.uniq).to eq(['password: nil'])
-      expect(cop.messages.uniq).to eq([offense_unsafe_job])
     end
 
     it 'does not register an offense when perform takes other parameters' do
