@@ -3,7 +3,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class MemoizationWithArguments < Cop
+      class MemoizationWithArguments < Base
         MSG = 'Memoized method `%<method>s` accepts arguments, ' \
               'which may cause it to return a stale result. ' \
               'Remove memoization or refactor to remove arguments.'
@@ -26,7 +26,7 @@ module RuboCop
           return if ivar_assign.nil? || node.arguments.empty? || method_name == :initialize
 
           msg = format(MSG, method: method_name)
-          add_offense(node, location: ivar_assign.source_range, message: msg)
+          add_offense(ivar_assign, message: msg)
         end
         alias on_defs on_def
       end
