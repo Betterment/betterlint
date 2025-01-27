@@ -3,7 +3,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class UnscopedFind < Cop
+      class UnscopedFind < Base
         attr_accessor :unauthenticated_models
 
         MSG = <<~MSG
