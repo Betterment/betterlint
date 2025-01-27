@@ -31,6 +31,8 @@ Betterment/AuthorizationInController:
   Description: Detects unsafe handling of id-like parameters in controllers.
   Enabled: false
   StyleGuide: '#bettermentauthorizationincontroller'
+  unsafe_regex: ".*_id$"
+  unsafe_parameters: []
 
 Betterment/DirectDelayedEnqueue:
   StyleGuide: '#bettermentdirectdelayedenqueue'
@@ -94,6 +96,7 @@ Betterment/SitePrismLoaded:
 Betterment/UnsafeJob:
   Enabled: false
   StyleGuide: '#bettermentunsafejob'
+  class_regex: ".*Job$"
   sensitive_params:
     - password
     - social_security_number
@@ -101,6 +104,7 @@ Betterment/UnsafeJob:
 
 Betterment/UnscopedFind:
   StyleGuide: '#bettermentunscopedfind'
+  unauthenticated_models: []
 
 Betterment/UseGlobalStrictLoading/ByDefaultForModels:
   Enabled: true

@@ -35,9 +35,8 @@ module RuboCop
 
         def initialize(config = nil, options = nil)
           super
-          config = @config.for_cop(self)
-          @unsafe_parameters = config.fetch("unsafe_parameters", []).map(&:to_sym)
-          @unsafe_regex = Regexp.new config.fetch("unsafe_regex", ".*_id$")
+          @unsafe_parameters = cop_config.fetch("unsafe_parameters").map(&:to_sym)
+          @unsafe_regex = Regexp.new cop_config.fetch("unsafe_regex")
           @param_wrappers = []
         end
 

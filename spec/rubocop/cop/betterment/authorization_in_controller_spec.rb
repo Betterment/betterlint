@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
+describe RuboCop::Cop::Betterment::AuthorizationInController, :betterlint_config do
   context 'when creating or updating a model' do
     it 'registers an offense for unsafe parameters' do
       expect_offense(<<~RUBY)

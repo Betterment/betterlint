@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe RuboCop::Cop::Betterment::UnscopedFind, :config do
+describe RuboCop::Cop::Betterment::UnscopedFind, :betterlint_config do
   context 'when searching for records' do
     it 'registers an offense when using user input' do
       expect_offense(<<~RUBY)

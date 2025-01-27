@@ -37,8 +37,7 @@ module RuboCop
 
         def initialize(config = nil, options = nil)
           super
-          config = @config.for_cop(self)
-          @unauthenticated_models = config.fetch("unauthenticated_models", []).map(&:to_sym)
+          @unauthenticated_models = cop_config.fetch("unauthenticated_models").map(&:to_sym)
         end
 
         def on_class(node)

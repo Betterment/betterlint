@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe RuboCop::Cop::Betterment::UnsafeJob, :config do
+describe RuboCop::Cop::Betterment::UnsafeJob, :betterlint_config do
   context 'when creating a job that inherits from ApplicationJob' do
     it 'registers an offense when perform takes unsafe parameters' do
       cop.sensitive_params = [:password]
