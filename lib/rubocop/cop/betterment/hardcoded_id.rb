@@ -44,6 +44,7 @@ module RuboCop
             end
           end
         end
+        alias on_csend on_send
 
         def on_block(node)
           on_let_id(node) do |name, value|

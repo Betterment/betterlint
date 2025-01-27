@@ -16,6 +16,7 @@ module RuboCop
           add_offense(node, message: DELAY_MESSAGE) if node.method?(:delay)
           add_offense(node, message: ENQUEUE_MESSAGE) if enqueue?(node)
         end
+        alias on_csend on_send
       end
     end
   end

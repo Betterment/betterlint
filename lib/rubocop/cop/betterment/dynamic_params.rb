@@ -22,6 +22,7 @@ module RuboCop
           dynamic_param = find_dynamic_param(arg_nodes)
           add_offense(dynamic_param, message: MSG_DYNAMIC_PARAMS) if dynamic_param
         end
+        alias on_csend on_send
 
         private
 

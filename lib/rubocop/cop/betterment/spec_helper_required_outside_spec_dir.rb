@@ -25,6 +25,7 @@ module RuboCop
         def on_send(node)
           add_offense(node) if requires_spec_helper?(node) && !spec_directory?
         end
+        alias on_csend on_send
 
         private
 

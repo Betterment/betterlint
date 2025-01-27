@@ -17,6 +17,7 @@ module RuboCop
 
           add_offense(node) if node.arguments.length < 2 || !node.arguments[1].const_type?
         end
+        alias on_csend on_send
       end
     end
   end

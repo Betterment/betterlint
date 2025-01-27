@@ -56,6 +56,7 @@ module RuboCop
 
           add_offense(node) if find_param_arg(arg_nodes) || graphql_file? || graphql_namespace?(node)
         end
+        alias on_csend on_send
 
         private
 

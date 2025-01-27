@@ -15,6 +15,7 @@ module RuboCop
 
           add_offense(node)
         end
+        alias on_csend on_send
       end
     end
   end
