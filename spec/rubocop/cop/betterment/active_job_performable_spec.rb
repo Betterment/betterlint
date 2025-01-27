@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe RuboCop::Cop::Betterment::ActiveJobPerformable, :config do
   it 'rejects a performable that is a plain ruby class' do
-    inspect_source(<<~RUBY)
+    offenses = inspect_source(<<~RUBY)
       class MyJob
         def perform
           MyModel.new.save!
@@ -12,13 +12,13 @@ describe RuboCop::Cop::Betterment::ActiveJobPerformable, :config do
       end
     RUBY
 
-    expect(cop.offenses.size).to be(1)
-    expect(cop.offenses.map(&:line)).to eq([1])
-    expect(cop.offenses.first.message).to include('Classes that are "performable" should be ActiveJobs')
+    expect(offenses.size).to be(1)
+    expect(offenses.map(&:line)).to eq([1])
+    expect(offenses.first.message).to include('Classes that are "performable" should be ActiveJobs')
   end
 
   it 'rejects a performable that does not subclass ApplicationJob' do
-    inspect_source(<<~RUBY)
+    offenses = inspect_source(<<~RUBY)
       class MyJob < Base::Class
         def perform
           MyModel.new.save!
@@ -26,13 +26,13 @@ describe RuboCop::Cop::Betterment::ActiveJobPerformable, :config do
       end
     RUBY
 
-    expect(cop.offenses.size).to be(1)
-    expect(cop.offenses.map(&:line)).to eq([1])
-    expect(cop.offenses.first.message).to include('Classes that are "performable" should be ActiveJobs')
+    expect(offenses.size).to be(1)
+    expect(offenses.map(&:line)).to eq([1])
+    expect(offenses.first.message).to include('Classes that are "performable" should be ActiveJobs')
   end
 
   it 'rejects a performable that has multiple methods' do
-    inspect_source(<<~RUBY)
+    offenses = inspect_source(<<~RUBY)
       class MyJob
         def foo
         end
@@ -46,9 +46,9 @@ describe RuboCop::Cop::Betterment::ActiveJobPerformable, :config do
       end
     RUBY
 
-    expect(cop.offenses.size).to be(1)
-    expect(cop.offenses.map(&:line)).to eq([1])
-    expect(cop.offenses.first.message).to include('Classes that are "performable" should be ActiveJobs')
+    expect(offenses.size).to be(1)
+    expect(offenses.map(&:line)).to eq([1])
+    expect(offenses.first.message).to include('Classes that are "performable" should be ActiveJobs')
   end
 
   it 'accepts a performable that subclasses ApplicationJob' do
