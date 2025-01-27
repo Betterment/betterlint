@@ -4,114 +4,74 @@ require 'spec_helper'
 
 describe RuboCop::Cop::Betterment::AllowlistBlocklist, :config do
   it 'rejects a method that should use allowlist' do
-    offenses = inspect_source(<<~RUBY)
+    expect_offense(<<~RUBY)
       class MyClass
+      ^^^^^^^^^^^^^ Avoid usages of whitelist & blacklist[...]
         def whitelist; end
       end
     RUBY
-
-    expect(offenses.size).to eq(1)
-    expect(offenses.map(&:line)).to eq([1])
-    expect(offenses.first.message).to include(
-      'Avoid usages of whitelist & blacklist, in favor of more inclusive and descriptive language',
-    )
   end
 
   it 'rejects a class that should use allowlist' do
-    offenses = inspect_source(<<~RUBY)
+    expect_offense(<<~RUBY)
       class Whitelist;
+      ^^^^^^^^^^^^^^^^ Avoid usages of whitelist & blacklist[...]
         def method; end
       end
     RUBY
-
-    expect(offenses.size).to eq(1)
-    expect(offenses.map(&:line)).to eq([1])
-    expect(offenses.first.message).to include(
-      'Avoid usages of whitelist & blacklist, in favor of more inclusive and descriptive language',
-    )
   end
 
   it 'rejects a variable that should use allowlist' do
-    offenses = inspect_source(<<~RUBY)
+    expect_offense(<<~RUBY)
       class MyClass;
+      ^^^^^^^^^^^^^^ Avoid usages of whitelist & blacklist[...]
         whitelist = 'something'
       end
     RUBY
-
-    expect(offenses.size).to eq(1)
-    expect(offenses.map(&:line)).to eq([1])
-    expect(offenses.first.message).to include(
-      'Avoid usages of whitelist & blacklist, in favor of more inclusive and descriptive language',
-    )
   end
 
   it 'rejects a string that should use allowlist' do
-    offenses = inspect_source(<<~RUBY)
+    expect_offense(<<~RUBY)
       class MyClass;
+      ^^^^^^^^^^^^^^ Avoid usages of whitelist & blacklist[...]
         myvar = 'whitelist'
       end
     RUBY
-
-    expect(offenses.size).to eq(1)
-    expect(offenses.map(&:line)).to eq([1])
-    expect(offenses.first.message).to include(
-      'Avoid usages of whitelist & blacklist, in favor of more inclusive and descriptive language',
-    )
   end
 
   it 'rejects a method that should use blocklist' do
-    offenses = inspect_source(<<~RUBY)
+    expect_offense(<<~RUBY)
       class MyClass
+      ^^^^^^^^^^^^^ Avoid usages of whitelist & blacklist[...]
         def blacklist; end
       end
     RUBY
-
-    expect(offenses.size).to eq(1)
-    expect(offenses.map(&:line)).to eq([1])
-    expect(offenses.first.message).to include(
-      'Avoid usages of whitelist & blacklist, in favor of more inclusive and descriptive language',
-    )
   end
 
   it 'rejects a class that should use blocklist' do
-    offenses = inspect_source(<<~RUBY)
+    expect_offense(<<~RUBY)
       class Blacklist
+      ^^^^^^^^^^^^^^^ Avoid usages of whitelist & blacklist[...]
         def method; end
       end
     RUBY
-
-    expect(offenses.size).to eq(1)
-    expect(offenses.map(&:line)).to eq([1])
-    expect(offenses.first.message).to include(
-      'Avoid usages of whitelist & blacklist, in favor of more inclusive and descriptive language',
-    )
   end
 
   it 'rejects a variable that should use blocklist' do
-    offenses = inspect_source(<<~RUBY)
+    expect_offense(<<~RUBY)
       class MyClass;
+      ^^^^^^^^^^^^^^ Avoid usages of whitelist & blacklist[...]
         blacklist = 'something else'
       end
     RUBY
-
-    expect(offenses.size).to eq(1)
-    expect(offenses.map(&:line)).to eq([1])
-    expect(offenses.first.message).to include(
-      'Avoid usages of whitelist & blacklist, in favor of more inclusive and descriptive language',
-    )
   end
 
   it 'rejects a string that should use blocklist' do
-    offenses = inspect_source(<<~RUBY)
+    expect_offense(<<~RUBY)
       class MyClass;
+      ^^^^^^^^^^^^^^ Avoid usages of whitelist & blacklist[...]
         myvar = 'blacklist'
       end
     RUBY
-
-    expect(offenses.size).to eq(1)
-    expect(offenses.map(&:line)).to eq([1])
-    expect(offenses.first.message).to include(
-      'Avoid usages of whitelist & blacklist, in favor of more inclusive and descriptive language',
-    )
   end
 end

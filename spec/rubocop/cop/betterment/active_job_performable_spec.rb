@@ -4,36 +4,31 @@ require 'spec_helper'
 
 describe RuboCop::Cop::Betterment::ActiveJobPerformable, :config do
   it 'rejects a performable that is a plain ruby class' do
-    offenses = inspect_source(<<~RUBY)
+    expect_offense(<<~RUBY)
       class MyJob
+            ^^^^^ Classes that are "performable" should be ActiveJobs[...]
         def perform
           MyModel.new.save!
         end
       end
     RUBY
-
-    expect(offenses.size).to be(1)
-    expect(offenses.map(&:line)).to eq([1])
-    expect(offenses.first.message).to include('Classes that are "performable" should be ActiveJobs')
   end
 
   it 'rejects a performable that does not subclass ApplicationJob' do
-    offenses = inspect_source(<<~RUBY)
+    expect_offense(<<~RUBY)
       class MyJob < Base::Class
+            ^^^^^ Classes that are "performable" should be ActiveJobs[...]
         def perform
           MyModel.new.save!
         end
       end
     RUBY
-
-    expect(offenses.size).to be(1)
-    expect(offenses.map(&:line)).to eq([1])
-    expect(offenses.first.message).to include('Classes that are "performable" should be ActiveJobs')
   end
 
   it 'rejects a performable that has multiple methods' do
-    offenses = inspect_source(<<~RUBY)
+    expect_offense(<<~RUBY)
       class MyJob
+            ^^^^^ Classes that are "performable" should be ActiveJobs[...]
         def foo
         end
 
@@ -45,10 +40,6 @@ describe RuboCop::Cop::Betterment::ActiveJobPerformable, :config do
         end
       end
     RUBY
-
-    expect(offenses.size).to be(1)
-    expect(offenses.map(&:line)).to eq([1])
-    expect(offenses.first.message).to include('Classes that are "performable" should be ActiveJobs')
   end
 
   it 'accepts a performable that subclasses ApplicationJob' do
