@@ -3,7 +3,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class AuthorizationInController < Cop
+      class AuthorizationInController < Base
         attr_accessor :unsafe_parameters, :unsafe_regex
 
         # MSG_UNSAFE_CREATE = 'Model created/updated using unsafe parameters'.freeze
