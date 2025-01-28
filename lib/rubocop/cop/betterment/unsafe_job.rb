@@ -3,7 +3,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class UnsafeJob < Cop
+      class UnsafeJob < Base
         attr_accessor :sensitive_params, :class_regex
 
         MSG = <<~MSG
@@ -14,10 +14,9 @@ module RuboCop
         MSG
 
         def initialize(config = nil, options = nil)
-          super(config, options)
-          config = @config.for_cop(self)
-          @sensitive_params = config.fetch("sensitive_params", []).map(&:to_sym)
-          @class_regex = Regexp.new config.fetch("class_regex", ".*Job$")
+          super
+          @sensitive_params = cop_config.fetch("sensitive_params").map(&:to_sym)
+          @class_regex = Regexp.new cop_config.fetch("class_regex")
         end
 
         def on_def(node)

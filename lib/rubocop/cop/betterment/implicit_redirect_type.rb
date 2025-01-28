@@ -14,7 +14,7 @@ module RuboCop
       #   # good
       #   get '/', redirect('/dashboard', status: 301)
       #   get(status: 302) { |params, request| '/dashboard' }
-      class ImplicitRedirectType < Cop
+      class ImplicitRedirectType < Base
         ROUTES_FILE_NAME = 'routes.rb'
         MSG =
           'Rails will create a permanent (301) redirect, which is dangerous. ' \
@@ -60,6 +60,7 @@ module RuboCop
             add_offense(node)
           end
         end
+        alias on_csend on_send
 
         private
 

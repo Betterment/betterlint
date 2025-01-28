@@ -3,7 +3,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class AuthorizationInController < Cop
+      class AuthorizationInController < Base
         attr_accessor :unsafe_parameters, :unsafe_regex
 
         # MSG_UNSAFE_CREATE = 'Model created/updated using unsafe parameters'.freeze
@@ -34,10 +34,9 @@ module RuboCop
         PATTERN
 
         def initialize(config = nil, options = nil)
-          super(config, options)
-          config = @config.for_cop(self)
-          @unsafe_parameters = config.fetch("unsafe_parameters", []).map(&:to_sym)
-          @unsafe_regex = Regexp.new config.fetch("unsafe_regex", ".*_id$")
+          super
+          @unsafe_parameters = cop_config.fetch("unsafe_parameters").map(&:to_sym)
+          @unsafe_regex = Regexp.new cop_config.fetch("unsafe_regex")
           @param_wrappers = []
         end
 
@@ -67,6 +66,7 @@ module RuboCop
             end
           end
         end
+        alias on_csend on_send
 
         private
 

@@ -2,98 +2,68 @@
 
 require 'spec_helper'
 
-describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
-  let(:offense_create) do
-    <<~MSG
-      Model created/updated using unsafe parameters.
-      Please query for the associated record in a way that enforces authorization (e.g. "trust-root chaining"),
-      and then pass the resulting object into your model instead of the unsafe parameter.
-
-      INSTEAD OF THIS:
-      post_parameters = params.permit(:album_id, :caption)
-      Post.new(post_parameters)
-
-      DO THIS:
-      album = current_user.albums.find(params[:album_id])
-      post_parameters = params.permit(:caption).merge(album: album)
-      Post.new(post_parameters)
-
-      See here for more information on this error:
-      https://github.com/Betterment/betterlint/blob/main/README.md#bettermentauthorizationincontroller
-    MSG
-  end
-
+describe RuboCop::Cop::Betterment::AuthorizationInController, :betterlint_config do
   context 'when creating or updating a model' do
     it 'registers an offense for unsafe parameters' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def create
             Model.new params[:user_id]
+                      ^^^^^^^^^^^^^^^^ Model created/updated [...]
             Model.create! params[:user_id]
+                          ^^^^^^^^^^^^^^^^ Model created/updated [...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(2)
-      expect(cop.offenses.map(&:line)).to eq([3, 4])
-      expect(cop.highlights.uniq).to eq(['params[:user_id]'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'registers an offense for unsafe parameters retrieved via static strings' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def create
             Model.new params['user_id']
+                      ^^^^^^^^^^^^^^^^^ Model created/updated [...]
             Model.create! params['user_id']
+                          ^^^^^^^^^^^^^^^^^ Model created/updated [...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(2)
-      expect(cop.offenses.map(&:line)).to eq([3, 4])
-      expect(cop.highlights.uniq).to eq(["params['user_id']"])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'registers an offense for selecting an unsafe parameter from a variable' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def create
             dangerous_parameters = params.permit(:user_id)
             Model.new dangerous_parameters[:user_id]
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             Model.create! dangerous_parameters[:user_id]
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(2)
-      expect(cop.offenses.map(&:line)).to eq([4, 5])
-      expect(cop.highlights.uniq).to eq(['dangerous_parameters[:user_id]'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'registers an offense for variables holding unsafe parameters' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def create
             dangerous_parameters = params.permit(:user_id)
             Model.new dangerous_parameters
+                      ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             Model.create! dangerous_parameters
+                          ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             @model.update dangerous_parameters
+                          ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             @model.assign_attributes dangerous_parameters
+                                     ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(4)
-      expect(cop.offenses.map(&:line)).to eq([4, 5, 6, 7])
-      expect(cop.highlights.uniq).to eq(['dangerous_parameters'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'registers an offense for methods returning unsafe parameters via static strings' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def dangerous_parameters
             params.permit('user_id')
@@ -101,21 +71,20 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
 
           def create
             Model.new dangerous_parameters
+                      ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             Model.create! dangerous_parameters
+                          ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             @model.update dangerous_parameters
+                          ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             @model.assign_attributes dangerous_parameters
+                                     ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(4)
-      expect(cop.offenses.map(&:line)).to eq([7, 8, 9, 10])
-      expect(cop.highlights.uniq).to eq(['dangerous_parameters'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'registers an offense for methods returning unsafe parameters' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def dangerous_parameters
             params.permit(:user_id)
@@ -123,20 +92,20 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
 
           def create
             Model.new dangerous_parameters
+                      ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             Model.create! dangerous_parameters
+                          ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             @model.update dangerous_parameters
+                          ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             @model.assign_attributes dangerous_parameters
+                                     ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
           end
         end
       RUBY
-      expect(cop.offenses.size).to be(4)
-      expect(cop.offenses.map(&:line)).to eq([7, 8, 9, 10])
-      expect(cop.highlights.uniq).to eq(['dangerous_parameters'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'registers an offense for methods returning unsafe parameters via kwargs' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def dangerous_parameters
             params.permit(accounts: :user_id)
@@ -144,20 +113,20 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
 
           def create
             Model.new dangerous_parameters
+                      ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             Model.create! dangerous_parameters
+                          ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             @model.update dangerous_parameters
+                          ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             @model.assign_attributes dangerous_parameters
+                                     ^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
           end
         end
       RUBY
-      expect(cop.offenses.size).to be(4)
-      expect(cop.offenses.map(&:line)).to eq([7, 8, 9, 10])
-      expect(cop.highlights.uniq).to eq(['dangerous_parameters'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'registers an offense when selecting an unsafe parameter from a method' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def variety_params
             params.permit(:safe, :also_safe, :user_id)
@@ -165,20 +134,20 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
 
           def create
             Model.new variety_params[:user_id]
+                      ^^^^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             Model.create! variety_params[:user_id]
+                          ^^^^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             @model.update(user_id: variety_params[:user_id])
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             @model.assign_attributes variety_params[:user_id]
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
           end
         end
       RUBY
-      expect(cop.offenses.size).to be(4)
-      expect(cop.offenses.map(&:line)).to eq([7, 8, 9, 10])
-      expect(cop.highlights.uniq).to eq(['variety_params[:user_id]'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'registers an offense when a model is created or updated using a method that returns an extracted parameter' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def user_id
             params[:user_id]
@@ -186,21 +155,20 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
 
           def create
             Model.new(user_id: user_id)
+                               ^^^^^^^ Model created/updated [...]
             Model.create!(user_id: user_id)
+                                   ^^^^^^^ Model created/updated [...]
             @model.update(user_id: user_id)
+                                   ^^^^^^^ Model created/updated [...]
             @model.assign_attributes(user_id: user_id)
+                                              ^^^^^^^ Model created/updated [...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(4)
-      expect(cop.offenses.map(&:line)).to eq([7, 8, 9, 10])
-      expect(cop.highlights.uniq).to eq(['user_id'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'registers an offense when passing an unsafe parameter into a keyword arg' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def create_params
             params.permit(:user_id, :username)
@@ -208,19 +176,16 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
 
           def create
             Model.new(parameters: create_params)
+                                  ^^^^^^^^^^^^^ Model created/updated [...]
             Model.create!(parameters: create_params)
+                                      ^^^^^^^^^^^^^ Model created/updated [...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(2)
-      expect(cop.offenses.map(&:line)).to eq([7, 8])
-      expect(cop.highlights.uniq).to eq(['create_params'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'registers an offense when dangerous parameters are stored and used' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def create_params
             params.permit(:user_id, :username)
@@ -229,18 +194,14 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
           def create
             @temporary_parameters = params[:user_id]
             Model.new(user_id: @temporary_parameters)
+                               ^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(1)
-      expect(cop.offenses.map(&:line)).to eq([8])
-      expect(cop.highlights.uniq).to eq(['@temporary_parameters'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'registers an offense when a method returning unsafe parameters is stored, modified, and used' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def create_params
             params.permit(:user_id, :username)
@@ -249,24 +210,24 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
           def create
             @temporary_parameters = create_params.merge(key: value)
             Model.new @temporary_parameters
+                      ^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             Model.create! @temporary_parameters
+                          ^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             @model.update @temporary_parameters
+                          ^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             @model.assign_attributes @temporary_parameters
+                                     ^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
 
             @some_more_params = create_params
             Model.new(parameters: @some_more_params.merge(key: value))
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(5)
-      expect(cop.offenses.map(&:line)).to eq([8, 9, 10, 11, 14])
-      expect(cop.highlights.uniq).to eq(['@temporary_parameters', '@some_more_params.merge(key: value)'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'registers an offense when a method returning unsafe parameters is stored and used' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def create_params
             params.permit(:user_id, :username)
@@ -275,17 +236,16 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
           def create
             @temporary_parameters = create_params
             Model.new @temporary_parameters
+                      ^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             Model.create! @temporary_parameters
+                          ^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             @model.update @temporary_parameters
+                          ^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             @model.assign_attributes @temporary_parameters
+                                     ^^^^^^^^^^^^^^^^^^^^^ Model created/updated [...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(4)
-      expect(cop.offenses.map(&:line)).to eq([8, 9, 10, 11])
-      expect(cop.highlights.uniq).to eq(['@temporary_parameters'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'does not register an offense when selecting a safe parameter from a variable' do
@@ -408,12 +368,13 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     end
 
     it 'registers an offense when a method permits and indexes using an unsafe parameter' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def index
             presenter = Some::Presenter.new(
               user: current_user,
               from_account_id: account_id
+                               ^^^^^^^^^^ Model created/updated [...]
             )
           end
 
@@ -422,11 +383,6 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(1)
-      expect(cop.offenses.map(&:line)).to eq([5])
-      expect(cop.highlights.uniq).to eq(['account_id'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'does not register an offense when parameters are used safely before return' do
@@ -450,7 +406,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
     it 'allows unsafe parameters to be specified via config' do
       temp = cop.unsafe_parameters
       cop.unsafe_parameters = %i(dangerous shady)
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def dangerous_param
             params.permit(:shady, :benign)
@@ -459,25 +415,24 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
           def create
             # specified via unsafe_parameters
             Model.new params[:dangerous]
+                      ^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             Model.new(dangerous_param)
+                      ^^^^^^^^^^^^^^^ Model created/updated [...]
 
             # _id should still be flagged
             Model.new params[:user_id]
+                      ^^^^^^^^^^^^^^^^ Model created/updated [...]
           end
         end
       RUBY
+    ensure
       cop.unsafe_parameters = temp
-
-      expect(cop.offenses.size).to be(3)
-      expect(cop.offenses.map(&:line)).to eq([8, 9, 12])
-      expect(cop.highlights.uniq).to eq(['params[:dangerous]', 'dangerous_param', 'params[:user_id]'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
 
     it 'allows the config to specify a regex alternative to _id' do
       temp = cop.unsafe_regex
       cop.unsafe_regex = /(.*_fk$|^id_.*$)/
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def user
             params.permit(:user_fk)
@@ -486,20 +441,19 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :config do
           def create
             # the specified parameter name matches the regex
             Model.new params[:user_fk]
+                      ^^^^^^^^^^^^^^^^ Model created/updated [...]
             Model.new params[:id_number]
+                      ^^^^^^^^^^^^^^^^^^ Model created/updated [...]
             Model.new(user: user)
+                            ^^^^ Model created/updated [...]
 
             # does not match the regex any more
             Model.new params[:user_id]
           end
         end
       RUBY
+    ensure
       cop.unsafe_regex = temp
-
-      expect(cop.offenses.size).to be(3)
-      expect(cop.offenses.map(&:line)).to eq([8, 9, 10])
-      expect(cop.highlights.uniq).to eq(['params[:user_fk]', 'params[:id_number]', 'user'])
-      expect(cop.messages.uniq).to eq([offense_create])
     end
   end
 end

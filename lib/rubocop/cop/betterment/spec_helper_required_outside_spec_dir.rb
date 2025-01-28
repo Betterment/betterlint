@@ -14,7 +14,7 @@ module RuboCop
       #   # good
       #   spec/models/my_class_spec.rb
       #   require 'rails_helper'
-      class SpecHelperRequiredOutsideSpecDir < Cop
+      class SpecHelperRequiredOutsideSpecDir < Base
         MSG = 'Spec helper required outside of a spec/ directory.'
 
         def_node_matcher :requires_spec_helper?, <<-PATTERN
@@ -25,6 +25,7 @@ module RuboCop
         def on_send(node)
           add_offense(node) if requires_spec_helper?(node) && !spec_directory?
         end
+        alias on_csend on_send
 
         private
 

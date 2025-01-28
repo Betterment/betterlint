@@ -3,7 +3,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class DynamicParams < Cop
+      class DynamicParams < Base
         MSG_DYNAMIC_PARAMS = <<~MSG
           Parameter names accessed dynamically, cannot determine safeness. Please inline the keys explicitly when calling `permit` or when accessing `params` like a hash.
 
@@ -22,6 +22,7 @@ module RuboCop
           dynamic_param = find_dynamic_param(arg_nodes)
           add_offense(dynamic_param, message: MSG_DYNAMIC_PARAMS) if dynamic_param
         end
+        alias on_csend on_send
 
         private
 

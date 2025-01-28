@@ -4,8 +4,8 @@
 module RuboCop
   module Cop
     module Betterment
-      class AllowlistBlocklist < Cop
-        MSG = <<-DOC
+      class AllowlistBlocklist < Base
+        MSG = <<~DOC
           Avoid usages of whitelist & blacklist, in favor of more inclusive and descriptive language.
           For consistency, favor 'allowlist' and 'blocklist' where possible, but other terms (such as
           denylist, ignorelist, warnlist, safelist, etc) may be appropriate, depending on the use case.

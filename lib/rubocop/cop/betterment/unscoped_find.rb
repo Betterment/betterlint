@@ -3,7 +3,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class UnscopedFind < Cop
+      class UnscopedFind < Base
         attr_accessor :unauthenticated_models
 
         MSG = <<~MSG
@@ -36,9 +36,8 @@ module RuboCop
         PATTERN
 
         def initialize(config = nil, options = nil)
-          super(config, options)
-          config = @config.for_cop(self)
-          @unauthenticated_models = config.fetch("unauthenticated_models", []).map(&:to_sym)
+          super
+          @unauthenticated_models = cop_config.fetch("unauthenticated_models").map(&:to_sym)
         end
 
         def on_class(node)
@@ -56,6 +55,7 @@ module RuboCop
 
           add_offense(node) if find_param_arg(arg_nodes) || graphql_file? || graphql_namespace?(node)
         end
+        alias on_csend on_send
 
         private
 

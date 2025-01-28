@@ -18,6 +18,7 @@ module RuboCop
         def on_send(node)
           resources_with_controller(node) { |option| add_offense(option) }
         end
+        alias on_csend on_send
       end
     end
   end

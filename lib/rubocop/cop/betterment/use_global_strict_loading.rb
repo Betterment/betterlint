@@ -23,6 +23,7 @@ module RuboCop
               end
             end
           end
+          alias on_csend on_send
         end
 
         # This cop ensures that `strict_loading: <any value>` is not set in ActiveRecord associations.
@@ -46,6 +47,7 @@ module RuboCop
               end
             end
           end
+          alias on_csend on_send
         end
       end
     end

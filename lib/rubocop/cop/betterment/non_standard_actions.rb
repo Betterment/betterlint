@@ -3,7 +3,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class NonStandardActions < Cop
+      class NonStandardActions < Base
         MSG_GENERAL = 'Use a new controller instead of custom actions.'
         MSG_RESOURCE_ONLY = "Resource route refers to a non-standard action in it's 'only:' param. #{MSG_GENERAL}".freeze
         MSG_ROUTE_TO = "Route goes to a non-standard controller action. #{MSG_GENERAL}".freeze
@@ -62,9 +62,8 @@ module RuboCop
           end
         end
 
-        # NOTE: The InternalAffairs/UndefinedConfig rule seems to have a bug where it can't fine these configs in config/default.yml
         def allowed_actions
-          @allowed_actions ||= cop_config['StandardActions'] + cop_config['AdditionalAllowedActions'] # rubocop:disable InternalAffairs/UndefinedConfig
+          @allowed_actions ||= cop_config['StandardActions'] + cop_config['AdditionalAllowedActions']
         end
 
         def allowed_action?(action)

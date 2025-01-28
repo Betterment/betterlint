@@ -3,7 +3,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class Timeout < Cop
+      class Timeout < Base
         MSG = 'Using Timeout.timeout without a custom exception can prevent rescue blocks from executing'
 
         def_node_matcher :timeout_call?, <<-PATTERN
@@ -15,6 +15,7 @@ module RuboCop
 
           add_offense(node)
         end
+        alias on_csend on_send
       end
     end
   end

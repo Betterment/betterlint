@@ -40,6 +40,7 @@ module RuboCop
             ensure_allowed_reference!(class_name_node, module_path)
           end
         end
+        alias on_csend on_send
 
         private
 

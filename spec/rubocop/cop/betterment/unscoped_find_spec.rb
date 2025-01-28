@@ -2,43 +2,24 @@
 
 require 'spec_helper'
 
-describe RuboCop::Cop::Betterment::UnscopedFind, :config do
-  let(:offense_unscoped_find) do
-    <<~MSG
-      Records are being retrieved directly using user input.
-      Please query for the associated record in a way that enforces authorization (e.g. "trust-root chaining").
-
-      INSTEAD OF THIS:
-      Post.find(params[:post_id])
-
-      DO THIS:
-      current_user.posts.find(params[:post_id])
-
-      See here for more information on this error:
-      https://github.com/Betterment/betterlint/blob/main/README.md#bettermentunscopedfind
-    MSG
-  end
-
+describe RuboCop::Cop::Betterment::UnscopedFind, :betterlint_config do
   context 'when searching for records' do
     it 'registers an offense when using user input' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def create
             # find all Secret records matching a particular secret_id
             Secret.find(params[:secret_id])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Records are being retrieved [...]
             Secret.find_by(user: params[:user_id])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Records are being retrieved [...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(2)
-      expect(cop.offenses.map(&:line)).to eq([4, 5])
-      expect(cop.highlights.uniq).to eq(['Secret.find(params[:secret_id])', 'Secret.find_by(user: params[:user_id])'])
-      expect(cop.messages.uniq).to eq([offense_unscoped_find])
     end
 
     it 'registers an offense when using user input wrapped by a method' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def secret_id
             params[:secret_id]
@@ -51,40 +32,36 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
           def create
             # find all Secret records matching a particular secret_id
             Secret.find(secret_id)
+            ^^^^^^^^^^^^^^^^^^^^^^ Records are being retrieved [...]
             Secret.find_by(user: find_params[:user_id])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Records are being retrieved [...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(2)
-      expect(cop.offenses.map(&:line)).to eq([12, 13])
-      expect(cop.highlights.uniq).to eq(['Secret.find(secret_id)', 'Secret.find_by(user: find_params[:user_id])'])
-      expect(cop.messages.uniq).to eq([offense_unscoped_find])
     end
 
     it 'registers an offense when passing user input to a custom scope' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Application
           def create
             # find all Secrets in the "active" scope
             Secret.active.find(params[:secret_id])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Records are being retrieved [...]
             Secret.active.find_by(user: params[:user_id])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Records are being retrieved [...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(2)
-      expect(cop.offenses.map(&:line)).to eq([4, 5])
-      expect(cop.highlights.uniq).to eq(['Secret.active.find(params[:secret_id])', 'Secret.active.find_by(user: params[:user_id])'])
-      expect(cop.messages.uniq).to eq([offense_unscoped_find])
     end
 
     it 'registers an offense when in a GraphQL namespace with no params' do
-      inspect_source(<<~RUBY)
+      expect_offense(<<~RUBY)
         class Foo::GraphQL::Application
           def create
             Secret.find(1)
+            ^^^^^^^^^^^^^^ Records are being retrieved [...]
             Secret.find_by(user: 2)
+            ^^^^^^^^^^^^^^^^^^^^^^^ Records are being retrieved [...]
           end
         end
 
@@ -93,33 +70,27 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
             class Application
               def create
                 Secret.find(1)
+                ^^^^^^^^^^^^^^ Records are being retrieved [...]
                 Secret.find_by(user: 2)
+                ^^^^^^^^^^^^^^^^^^^^^^^ Records are being retrieved [...]
               end
             end
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(4)
-      expect(cop.offenses.map(&:line)).to eq([3, 4, 12, 13])
-      expect(cop.highlights.uniq).to eq(['Secret.find(1)', 'Secret.find_by(user: 2)'])
-      expect(cop.messages.uniq).to eq([offense_unscoped_find])
     end
 
     it 'registers an offense when in a GraphQL file namespace with no params' do
-      inspect_source(<<~RUBY, '/graphql/subject.rb')
+      expect_offense(<<~RUBY, '/graphql/subject.rb')
         class UnscopedFindSubject
           def create
             Secret.find(1)
+            ^^^^^^^^^^^^^^ Records are being retrieved [...]
             Secret.find_by(user: 2)
+            ^^^^^^^^^^^^^^^^^^^^^^^ Records are being retrieved [...]
           end
         end
       RUBY
-
-      expect(cop.offenses.size).to be(2)
-      expect(cop.offenses.map(&:line)).to eq([3, 4])
-      expect(cop.highlights.uniq).to eq(['Secret.find(1)', 'Secret.find_by(user: 2)'])
-      expect(cop.messages.uniq).to eq([offense_unscoped_find])
     end
 
     it 'does not register an offense when trust chaining even with user input in graphql namespace' do
@@ -152,6 +123,7 @@ describe RuboCop::Cop::Betterment::UnscopedFind, :config do
           end
         end
       RUBY
+    ensure
       cop.unauthenticated_models = temp
     end
   end
