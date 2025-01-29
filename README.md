@@ -130,6 +130,27 @@ end
 ```
 
 All three `params.permit` calls will be flagged.
+
+### Betterment/Environment
+
+This cop identifies references to `ENV` outside of the config directory.
+
+Environment variables should be parsed at boot time. If an environment variable is missing or invalid,
+the application should fail to boot.
+
+If there isn't a better place to assign your environment variable, Rails provides the `config.x` namespace
+for [custom configuration](https://guides.rubyonrails.org/configuring.html#custom-configuration):
+
+```ruby
+config.x.whatever = ENV.fetch('WHATEVER')
+```
+
+Here's how you'd reference this configuration parameter at runtime:
+
+```ruby
+Rails.configuration.x.whatever
+```
+
 ### Betterment/InternalsProtection
 
 This cop is not enabled by default, and must be enabled from your `.rubocop.yml` file:
