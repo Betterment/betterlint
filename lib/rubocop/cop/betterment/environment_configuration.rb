@@ -3,7 +3,7 @@
 module RuboCop
   module Cop
     module Betterment
-      class Environment < Base
+      class EnvironmentConfiguration < Base
         MSG =
           "Environment variables should be parsed at boot time and assigned " \
           "to `Rails.configuration` or some other configurable object."

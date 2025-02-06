@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RuboCop::Cop::Betterment::Environment, :config do
+RSpec.describe RuboCop::Cop::Betterment::EnvironmentConfiguration, :config do
   it 'does not allow access to the ENV' do
     expect_offense(<<~RUBY)
       ENV['RAILS_ENV']

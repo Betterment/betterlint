@@ -40,8 +40,8 @@ Betterment/DirectDelayedEnqueue:
 Betterment/DynamicParams:
   StyleGuide: '#bettermentdynamicparams'
   
-Betterment/Environment:
-  StyleGuide: '#bettermentenvironment'
+Betterment/EnvironmentConfiguration:
+  StyleGuide: '#bettermentenvironmentconfiguration'
   Exclude:
     - config/**/*.rb
     - spec/**/*.rb

@@ -131,7 +131,7 @@ end
 
 All three `params.permit` calls will be flagged.
 
-### Betterment/Environment
+### Betterment/EnvironmentConfiguration
 
 This cop identifies references to `ENV` outside of the config directory.
 
