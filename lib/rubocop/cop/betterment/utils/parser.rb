@@ -67,16 +67,16 @@ module RuboCop
             end
           end
 
-          def self.params_from_arguments(arguments) # rubocop:disable Metrics/PerceivedComplexity
+          def self.params_from_arguments(arguments)
             parameter_names = []
 
             arguments.each do |arg|
               if arg.hash_type?
                 arg.children.each do |pair|
                   value = pair.value
-                  parameter_names << value.value if value.sym_type? || value.str_type?
+                  parameter_names << value.value if value.type?(:sym, :str)
                 end
-              elsif arg.sym_type? || arg.str_type?
+              elsif arg.type?(:sym, :str)
                 parameter_names << arg.value
               end
             end
@@ -92,7 +92,7 @@ module RuboCop
 
             if node.method?(:[]) && param_aliases.include?(get_root_token(node))
               return node.arguments.select { |x|
-                x.sym_type? || x.str_type?
+                x.type?(:sym, :str)
               }.map(&:value)
             end
 

@@ -1,18 +1,25 @@
 # frozen_string_literal: true
 
+require "bundler/gem_tasks"
+
 begin
-  require 'bundler/setup'
+  require 'rubocop/rake_task'
+
+  RuboCop::RakeTask.new
 rescue LoadError
-  puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
+  task(:rubocop) do
+    warn("RuboCop is disabled")
+  end
 end
 
-Bundler::GemHelper.install_tasks
+begin
+  require 'rspec/core/rake_task'
 
-require 'rubocop/rake_task'
-RuboCop::RakeTask.new
-
-require 'rspec/core'
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec)
+  RSpec::Core::RakeTask.new(:spec)
+rescue LoadError
+  task(:spec) do
+    warn("RSpec is disabled")
+  end
+end
 
 task default: %i(rubocop spec)

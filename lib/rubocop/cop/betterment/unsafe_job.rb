@@ -15,8 +15,8 @@ module RuboCop
 
         def initialize(config = nil, options = nil)
           super
-          @sensitive_params = cop_config.fetch("sensitive_params").map(&:to_sym)
-          @class_regex = Regexp.new cop_config.fetch("class_regex")
+          @sensitive_params = cop_config.fetch("sensitive_params", []).map(&:to_sym)
+          @class_regex = Regexp.new cop_config.fetch("class_regex", ".*Job$")
         end
 
         def on_def(node)

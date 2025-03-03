@@ -35,8 +35,8 @@ module RuboCop
 
         def initialize(config = nil, options = nil)
           super
-          @unsafe_parameters = cop_config.fetch("unsafe_parameters").map(&:to_sym)
-          @unsafe_regex = Regexp.new cop_config.fetch("unsafe_regex")
+          @unsafe_parameters = cop_config.fetch("unsafe_parameters", []).map(&:to_sym)
+          @unsafe_regex = Regexp.new cop_config.fetch("unsafe_regex", ".*_id$")
           @param_wrappers = []
         end
 
@@ -88,7 +88,7 @@ module RuboCop
 
         # Flags objects being created/updated with unsafe
         # params indirectly from params or through params.permit
-        def flag_indirect_param_use(node) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+        def flag_indirect_param_use(node) # rubocop:disable Metrics/PerceivedComplexity
           name = Utils::Parser.get_root_token(node)
           # extracted_params contains parameters used like:
           # def create
@@ -118,7 +118,7 @@ module RuboCop
             #   params[:user_id]
             # end
             if ret.send_type? && ret.method?(:[])
-              internal_params = ret.arguments.select { |x| x.sym_type? || x.str_type? }.map(&:value)
+              internal_params = ret.arguments.select { |x| x.type?(:sym, :str) }.map(&:value)
             else
               internal_returns = Utils::MethodReturnTable.get_method(Utils::Parser.get_root_token(ret)) || []
               internal_params = internal_returns.flat_map { |x| Utils::Parser.get_extracted_parameters(x, param_aliases: @param_wrappers) }

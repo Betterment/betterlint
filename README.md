@@ -25,6 +25,11 @@ inherit_gem:
 This gem depends on the following other gems:
 
 - rubocop
+- rubocop-factory_bot
+- rubocop-graphql
+- rubocop-performance
+- rubocop-rails
+- rubocop-rake
 - rubocop-rspec
 
 ## Custom Cops
@@ -297,3 +302,26 @@ This allows us two benefits:
 This cop identifies associations where `:strict_loading` is set explicitly, and prefers that it be removed in favor of using the global strict loading settings.
 
 This is related to the [Betterment/UseGlobalStrictLoading/ByDefaultForModels](#bettermentuseglobalstrictloadingbydefaultformodels) cop, but allows for more granular enablement and disablement of associations within a model. The intention is similar, in that we are using this cop to help "burn down" code to strict load, but it allows us to focus on the per-association level. Some models may have quite a lot of usage, so enabling it for a model might cause thousands of failures in the specs. In those cases we will disable all the associations, and then work through them one at a time until all code that uses the model strict loads.
+
+## Contributing
+
+### Appraisal
+
+Generate a new set of Appraisal gemfiles:
+
+```bash
+BUNDLE_GEMFILE=appraisal_root.gemfile bundle update
+BUNDLE_GEMFILE=appraisal_root.gemfile appraisal update
+BUNDLE_GEMFILE=gemfiles/style.gemfile bundle exec rubocop -A --only Style/FrozenStringLiteralComment,Layout/EmptyLineAfterMagicComment
+```
+
+### Reproduce CI test failure
+
+Example: A test fails in the workflow for `rails-8-0`.
+
+You want to reproduce it similar to how it runs on CI:
+
+```shell
+CI=true BUNDLE_GEMFILE=appraisal_root.gemfile appraisal "rails-8-0" bundle exec rake spec
+```
+safe_load_file`
