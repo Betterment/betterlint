@@ -39,6 +39,13 @@ Betterment/DirectDelayedEnqueue:
 
 Betterment/DynamicParams:
   StyleGuide: '#bettermentdynamicparams'
+  
+Betterment/EnvironmentConfiguration:
+  StyleGuide: '#bettermentenvironmentconfiguration'
+  Exclude:
+    - config/**/*.rb
+    - spec/**/*.rb
+    - test/**/*.rb
 
 Betterment/HardcodedID:
   AutoCorrect: false
