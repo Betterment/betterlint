@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    betterlint (1.19.0)
+    betterlint (1.20.0)
       rubocop (~> 1.71)
       rubocop-graphql (~> 1.5)
       rubocop-performance (~> 1.23)

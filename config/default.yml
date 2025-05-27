@@ -39,7 +39,7 @@ Betterment/DirectDelayedEnqueue:
 
 Betterment/DynamicParams:
   StyleGuide: '#bettermentdynamicparams'
-  
+
 Betterment/EnvironmentConfiguration:
   StyleGuide: '#bettermentenvironmentconfiguration'
   Exclude:
@@ -377,6 +377,9 @@ Style/GuardClause:
 
 Style/IfUnlessModifier:
   Enabled: false
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: always
 
 Style/Lambda:
   Enabled: false
