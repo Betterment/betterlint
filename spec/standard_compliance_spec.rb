@@ -20,6 +20,7 @@ RSpec.describe 'standard compliance' do
       Naming/VariableNumber
       Style/BlockDelimiters
       Style/FrozenStringLiteralComment
+      Style/HashSyntax
       Style/LambdaCall
       Style/MissingElse
       Style/NumberedParameters
