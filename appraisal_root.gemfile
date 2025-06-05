@@ -1,0 +1,22 @@
+# frozen_string_literal: true
+
+# To update Appraisal-generated gemfiles/*.gemfile run:
+#   BUNDLE_GEMFILE=appraisal_root.gemfile bundle update
+#   BUNDLE_GEMFILE=appraisal_root.gemfile appraisal update
+#   BUNDLE_GEMFILE=gemfiles/style.gemfile bundle exec rubocop -A --only Style/FrozenStringLiteralComment,Layout/EmptyLineAfterMagicComment
+
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+
+source "https://rubygems.org"
+
+# Appraisal Root Gemfile is for running appraisal to generate the Appraisal Gemfiles
+#   in gemfiles/*gemfile.
+# In GitHub Actions CI it is used to prepare the env to install an Appraisal gemfiles/*gemfile.
+#
+# Do not load the primary Gemfile for Appraisal Gemfiles generation,
+#   as it is tailored for local development,
+#   and includes things unrelated to running the spec suite.
+
+gem 'appraisal', '~> 2.5'
+
+gemspec

@@ -11,24 +11,28 @@ describe RuboCop::Cop::Betterment::NonStandardActions, :betterlint_config do
           resource :status, only: :show
           resources :messages, only: [:index,:show,:create]
           get :signup, to: 'signups#show'
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Route goes to a non-standard controller action. Use a new controller instead of custom actions.
           get 'old_summary', to: redirect('/summary', status: 302)
           resources :users do
             get 'messages', to: 'user_messages#show', as: :user_messages
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Route goes to a non-standard controller action. Use a new controller instead of custom actions.
           end
           resource :react_app, controller: 'react_app', only: [] do
             get '', action: :show
+            ^^^^^^^^^^^^^^^^^^^^^ Route goes to a non-standard controller action. Use a new controller instead of custom actions.
             get '/*path', action: :show
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^ Route goes to a non-standard controller action. Use a new controller instead of custom actions.
           end
 
           # NOT OK
           resources :items, only: :index do
             get 'total', on: :member
-            ^^^^^^^^^^^^^^^^^^^^^^^^ Route goes to a non-standard controller action[...]
+            ^^^^^^^^^^^^^^^^^^^^^^^^ Route goes to a non-standard controller action. Use a new controller instead of custom actions.
           end
           resource :splash, only: [:show, :dismiss]
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Resource route refers to a non-standard action[...]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Resource route refers to a non-standard action in it's 'only:' param. Use a new controller instead of custom actions.
           get 'summary', to: 'pages#summary'
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Route goes to a non-standard controller action[...]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Route goes to a non-standard controller action. Use a new controller instead of custom actions.
         end
       RUBY
     end

@@ -37,7 +37,7 @@ RSpec.describe 'standard compliance' do
   let(:default_config) do
     root = Gem.loaded_specs['rubocop'].full_gem_path
     path = File.expand_path('config/default.yml', root)
-    config = YAML.load_file(path, permitted_classes: [Regexp, Symbol])
+    config = YAML.safe_load_file(path, permitted_classes: [Regexp, Symbol])
     config.delete('AllCops')
     config
   end
@@ -45,11 +45,11 @@ RSpec.describe 'standard compliance' do
   let(:standard_config) do
     root = Gem.loaded_specs['standard'].full_gem_path
     path = File.expand_path('config/base.yml', root)
-    YAML.load_file(path)
+    YAML.safe_load_file(path)
   end
 
   let(:betterlint_config) do
-    YAML.load_file('config/default.yml')
+    YAML.safe_load_file('config/default.yml')
   end
 
   it 'complies with standardrb with notable exceptions' do
