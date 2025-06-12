@@ -20,14 +20,15 @@ module RuboCop
         PATTERN
 
         # @!method kwargs_with_coder?(node)
-        def_node_matcher :kwargs_with_coder?, '(hash <(pair (sym :coder) (const ...)) ...>)'
+        def_node_matcher :kwargs_with_coder?, '(hash <(pair (sym :coder) const) ...>)'
+
+        # @!method valid_serialize?(node)
+        def_node_matcher :valid_serialize?, <<-PATTERN
+          (send nil? :serialize _ { const !#kwargs_with_coder?? | #kwargs_with_coder? })
+        PATTERN
 
         def on_send(node)
-          return unless serialize? node
-
-          coder_args = node.arguments[1..].select { |arg| arg.const_type? || kwargs_with_coder?(arg) }
-
-          add_offense(node) if node.arguments.length < 2 || coder_args.length != 1
+          add_offense(node) if serialize?(node) && !valid_serialize?(node)
         end
         alias on_csend on_send
       end

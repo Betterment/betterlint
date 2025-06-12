@@ -33,6 +33,13 @@ describe RuboCop::Cop::Betterment::VagueSerialize, :config do
           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ #{offense}
         end
       RUBY
+
+      expect_offense(<<-RUBY)
+        class Cat < ActiveRecord::Base
+          serialize :attributes, Array, type: MyType, coder: Array
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ #{offense}
+        end
+      RUBY
     end
 
     it 'does not register an offense if there is a deserializer' do
