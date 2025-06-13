@@ -4,15 +4,8 @@ module RuboCop
   module Cop
     module Betterment
       class VagueSerialize < Base
-        MSG = <<~MESSAGE
-          Active Record models with serialized columns should specify which deserializer to use instead of falling back to the default.
-
-          If you are using Rails <= 7.0, stick with a positional argument. E.g.
-            `serialize :foo, MyCoderClass`
-
-          If you are using Rails >= 7.1, use the `coder` kwarg, since the positional arg was deprecated
-            e.g. `serialize :foo, coder: MyCoderClass`
-        MESSAGE
+        MSG = 'Active Record models with serialized columns should specify which ' \
+              'deserializer to use instead of falling back to the default.'
 
         # @!method serialize?(node)
         def_node_matcher :serialize?, <<-PATTERN

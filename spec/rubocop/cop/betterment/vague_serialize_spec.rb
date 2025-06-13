@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe RuboCop::Cop::Betterment::VagueSerialize, :config do
   let(:offense) do
-    "Active Record models with serialized columns should specify which deserializer to use instead of falling back to the default.[...]"
+    "Active Record models with serialized columns should specify which deserializer to use instead of falling back to the default."
   end
 
   context 'defining a class with a serialized column' do

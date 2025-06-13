@@ -321,8 +321,8 @@ This is related to the [Betterment/UseGlobalStrictLoading/ByDefaultForModels](#b
 
 ### Betterment/VagueSerialize
 
-This cop identifies calls to `serialize` that do not specify a coder, either by using the positional argument or the `coder`
-keyword argument.
+This cop identifies calls to `serialize` that do not specify a coder either by using the positional argument or
+the `coder` keyword argument.
 
 **NOTE:** Using a positional argument is deprecated for Rails 7.1+. That means that...
 
