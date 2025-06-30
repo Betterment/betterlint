@@ -12,10 +12,16 @@ module RuboCop
           (send nil? :serialize ...)
         PATTERN
 
-        def on_send(node)
-          return unless serialize? node
+        # @!method kwargs_with_coder?(node)
+        def_node_matcher :kwargs_with_coder?, '(hash <(pair (sym :coder) const) ...>)'
 
-          add_offense(node) if node.arguments.length < 2 || !node.arguments[1].const_type?
+        # @!method valid_serialize?(node)
+        def_node_matcher :valid_serialize?, <<-PATTERN
+          (send nil? :serialize _ { const !#kwargs_with_coder?? | #kwargs_with_coder? })
+        PATTERN
+
+        def on_send(node)
+          add_offense(node) if serialize?(node) && !valid_serialize?(node)
         end
         alias on_csend on_send
       end

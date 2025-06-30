@@ -318,3 +318,15 @@ This allows us two benefits:
 This cop identifies associations where `:strict_loading` is set explicitly, and prefers that it be removed in favor of using the global strict loading settings.
 
 This is related to the [Betterment/UseGlobalStrictLoading/ByDefaultForModels](#bettermentuseglobalstrictloadingbydefaultformodels) cop, but allows for more granular enablement and disablement of associations within a model. The intention is similar, in that we are using this cop to help "burn down" code to strict load, but it allows us to focus on the per-association level. Some models may have quite a lot of usage, so enabling it for a model might cause thousands of failures in the specs. In those cases we will disable all the associations, and then work through them one at a time until all code that uses the model strict loads.
+
+### Betterment/VagueSerialize
+
+This cop identifies calls to `serialize` that do not specify a coder either by using the positional argument or
+the `coder` keyword argument.
+
+**NOTE:** Using a positional argument is deprecated for Rails 7.1+. That means that...
+
+- If you are on Rails 7.2
+- And you've opted into 7.1 defaults (namely, `config.active_record.default_column_serializer = nil`)
+
+...you can safely disable this cop, since failing to pass a deserializer will raise an exception.
