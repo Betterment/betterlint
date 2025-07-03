@@ -142,13 +142,18 @@ If there isn't a better place to assign your environment variable, Rails provide
 for [custom configuration](https://guides.rubyonrails.org/configuring.html#custom-configuration):
 
 ```ruby
-config.x.whatever = ENV.fetch('WHATEVER')
+config.x.some_namespace.whatever = ENV.fetch('WHATEVER')
 ```
 
 Here's how you'd reference this configuration parameter at runtime:
 
 ```ruby
-Rails.configuration.x.whatever
+Rails.configuration.x.some_namespace.whatever
+```
+
+Or to raise an error when the value is not present
+```ruby
+Rails.configuration.x.some_namespace.whatever! # will raise "KeyError: :whatever is blank" when value is not set or set to nil
 ```
 
 ### Betterment/InternalsProtection
