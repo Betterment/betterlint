@@ -364,6 +364,9 @@ Rails/HttpPositionalArguments:
 Rails/OutputSafety:
   Enabled: true
 
+Rails/SquishedSQLHeredocs:
+  Enabled: false
+
 Style/AccessModifierDeclarations:
   Enabled: false
 
