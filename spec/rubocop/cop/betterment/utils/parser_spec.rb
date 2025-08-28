@@ -65,15 +65,15 @@ describe RuboCop::Cop::Betterment::Utils::Parser do
     it 'finds all the explicit return values' do
       node = parse_source(<<~RUBY).ast
         def some_method(arg)
-          return 123 if arg.this?
-          return 456 if arg.that?
+          return 1 if arg.this?
+          return 2 if arg.that?
         end
       RUBY
 
-      node_123 = parse_source("123").ast
-      node_456 = parse_source("456").ast
+      expected_node_1 = parse_source('1').ast
+      expected_node_2 = parse_source('2').ast
 
-      expect(described_class.get_return_values(node)).to eq([node_123, node_456])
+      expect(described_class.get_return_values(node)).to eq([expected_node_1, expected_node_2])
     end
 
     it 'finds all the implicit return values' do
@@ -83,26 +83,26 @@ describe RuboCop::Cop::Betterment::Utils::Parser do
         end
       RUBY
 
-      node_true = parse_source("true").ast
+      expected_node = parse_source('true').ast
 
-      expect(described_class.get_return_values(node)).to eq([node_true])
+      expect(described_class.get_return_values(node)).to eq([expected_node])
     end
 
     it 'finds all the implicit and explicit return values' do
       node = parse_source(<<~RUBY).ast
         def some_method(arg)
-          return 123 if arg.this?
-          return 456 if arg.that?
+          return 1 if arg.this?
+          return 2 if arg.that?
 
-          789
+          3
         end
       RUBY
 
-      node_123 = parse_source("123").ast
-      node_456 = parse_source("456").ast
-      node_789 = parse_source("789").ast
+      expected_node_1 = parse_source('1').ast
+      expected_node_2 = parse_source('2').ast
+      expected_node_3 = parse_source('3').ast
 
-      expect(described_class.get_return_values(node)).to eq([node_123, node_456, node_789])
+      expect(described_class.get_return_values(node)).to eq([expected_node_1, expected_node_2, expected_node_3])
     end
 
     it 'finds a compound statement return value' do
@@ -112,9 +112,9 @@ describe RuboCop::Cop::Betterment::Utils::Parser do
         end
       RUBY
 
-      node_add = parse_source("self.size + 1").ast
+      expected_node = parse_source('self.size + 1').ast
 
-      expect(described_class.get_return_values(node)).to eq([node_add])
+      expect(described_class.get_return_values(node)).to eq([expected_node])
     end
   end
 
