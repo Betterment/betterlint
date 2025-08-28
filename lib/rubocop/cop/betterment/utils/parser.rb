@@ -112,6 +112,23 @@ module RuboCop
 
             parameter_names.map(&:to_sym)
           end
+
+          def self.get_instance_methods(node) # rubocop:disable Metrics/PerceivedComplexity
+            raise ArgumentError, 'must be a class node' unless node&.class_type?
+
+            methods = node.descendants.select(&:def_type?).to_h do |method|
+              [method.method_name, get_return_values(method)]
+            end
+
+            node.descendants.each do |descendant|
+              lhs, rhs = *descendant
+              if descendant.equals_asgn? && !descendant.type.equal?(:casgn) && rhs&.send_type?
+                methods[lhs] = [rhs]
+              end
+            end
+
+            methods
+          end
         end
       end
     end
