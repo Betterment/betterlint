@@ -37,17 +37,17 @@ module RuboCop
           super
           @unsafe_parameters = cop_config.fetch("unsafe_parameters").map(&:to_sym)
           @unsafe_regex = Regexp.new cop_config.fetch("unsafe_regex")
-          @param_wrappers = []
+        end
+
+        def on_new_investigation
+          super
+          @class_methods = {}.freeze
+          @param_wrappers = [].freeze
         end
 
         def on_class(node)
-          Utils::MethodReturnTable.populate_index node
-          Utils::MethodReturnTable.indexed_methods.each do |method_name, method_returns|
-            method_returns.each do |x|
-              name = Utils::Parser.get_root_token(x)
-              @param_wrappers << method_name if name == :params || @param_wrappers.include?(name)
-            end
-          end
+          @class_methods = Utils::Parser.get_instance_methods(node).freeze
+          @param_wrappers = find_param_wrappers(@class_methods).freeze
         end
 
         def on_send(node) # rubocop:disable Metrics/PerceivedComplexity
@@ -88,7 +88,7 @@ module RuboCop
 
         # Flags objects being created/updated with unsafe
         # params indirectly from params or through params.permit
-        def flag_indirect_param_use(node) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+        def flag_indirect_param_use(node) # rubocop:disable Metrics/PerceivedComplexity
           name = Utils::Parser.get_root_token(node)
           # extracted_params contains parameters used like:
           # def create
@@ -99,7 +99,7 @@ module RuboCop
           # end
           extracted_params = Utils::Parser.get_extracted_parameters(node, param_aliases: @param_wrappers)
 
-          returns = Utils::MethodReturnTable.get_method(name) || []
+          returns = get_method_returns(name)
           returns.each do |ret|
             # # propagated_params contains parameters used like:
             # def create
@@ -120,7 +120,7 @@ module RuboCop
             if ret.send_type? && ret.method?(:[])
               internal_params = ret.arguments.select { |x| x.sym_type? || x.str_type? }.map(&:value)
             else
-              internal_returns = Utils::MethodReturnTable.get_method(Utils::Parser.get_root_token(ret)) || []
+              internal_returns = get_method_returns(Utils::Parser.get_root_token(ret))
               internal_params = internal_returns.flat_map { |x| Utils::Parser.get_extracted_parameters(x, param_aliases: @param_wrappers) }
             end
 
@@ -143,6 +143,19 @@ module RuboCop
         # check a symbol name against the cop's config parameters
         def suspicious_id?(symbol_name)
           @unsafe_parameters.include?(symbol_name.to_sym) || @unsafe_regex.match(symbol_name) # symbol_name.to_s.end_with?("_id")
+        end
+
+        def find_param_wrappers(class_methods)
+          class_methods.each_with_object([]) do |(method_name, method_returns), param_wrappers|
+            param_wrappers << method_name if method_returns.any? do |return_value|
+              name = Utils::Parser.get_root_token(return_value)
+              name.equal?(:params) || param_wrappers.include?(name)
+            end
+          end
+        end
+
+        def get_method_returns(method_name)
+          @class_methods.fetch(method_name, [])
         end
       end
     end
