@@ -138,4 +138,110 @@ describe RuboCop::Cop::Betterment::Utils::Parser do
       expect(described_class.get_extracted_parameters(node, param_aliases: param_aliases)).to eq([:user_id])
     end
   end
+
+  context 'when extracting instance methods' do
+    it 'raises an error for a non-node' do
+      expect { described_class.get_instance_methods(nil) }.to raise_error(ArgumentError, 'must be a class node')
+    end
+
+    it 'raises an error for a non-class node' do
+      node = parse_source('nil').ast
+
+      expect { described_class.get_instance_methods(node) }.to raise_error(ArgumentError, 'must be a class node')
+    end
+
+    it 'tracks methods with a single return value' do
+      node = parse_source(<<~RUBY).ast
+        class Test
+          def method
+            1
+          end
+        end
+      RUBY
+
+      expected_node = parse_source('1').ast
+      result = described_class.get_instance_methods(node)
+
+      expect(result).to eql(method: [expected_node])
+    end
+
+    it 'tracks methods with multiple return values' do
+      node = parse_source(<<~RUBY).ast
+        class Test
+          def method
+            if condition
+              1
+            else
+              2
+            end
+          end
+        end
+      RUBY
+
+      expected_node_1 = parse_source('1').ast
+      expected_node_2 = parse_source('2').ast
+      result = described_class.get_instance_methods(node)
+
+      expect(result).to eql(method: [expected_node_1, expected_node_2])
+    end
+
+    it 'tracks multiple methods' do
+      node = parse_source(<<~RUBY).ast
+        class Test
+          def method_a
+            1
+          end
+
+          def method_b
+            2
+          end
+        end
+      RUBY
+
+      expected_node_1 = parse_source('1').ast
+      expected_node_2 = parse_source('2').ast
+      result = described_class.get_instance_methods(node)
+
+      expect(result).to eql(method_a: [expected_node_1], method_b: [expected_node_2])
+    end
+
+    it 'tracks assignment statements with send types' do
+      node = parse_source(<<~RUBY).ast
+        class Test
+          def method
+            @var = call
+          end
+        end
+      RUBY
+
+      expected_node = parse_source('call').ast
+      result = described_class.get_instance_methods(node)
+
+      expect(result).to eql(method: [], :@var => [expected_node])
+    end
+
+    it 'handles empty class' do
+      node = parse_source('class Test; end').ast
+      result = described_class.get_instance_methods(node)
+
+      expect(result).to eql({})
+    end
+
+    it 'ignores constant assignments and non-send assignments' do
+      node = parse_source(<<~RUBY).ast
+        class Test
+          CONSTANT = call
+          def method
+            @number = 1
+            @call = call
+          end
+        end
+      RUBY
+
+      expected_node = parse_source('call').ast
+      result = described_class.get_instance_methods(node)
+
+      expect(result).to eql(method: [], '@call': [expected_node])
+    end
+  end
 end
