@@ -88,16 +88,16 @@ module RuboCop
             return [] unless node.send_type?
 
             parameter_names = []
-            param_aliases << :params
+            aliases = param_aliases | %i(params)
 
-            if node.method?(:[]) && param_aliases.include?(get_root_token(node))
+            if node.method?(:[]) && aliases.include?(get_root_token(node))
               return node.arguments.select { |x|
                 x.sym_type? || x.str_type?
               }.map(&:value)
             end
 
             children = node.descendants.select do |child|
-              child.send_type? && param_aliases.include?(child.method_name)
+              child.send_type? && aliases.include?(child.method_name)
             end
 
             children.each do |child|
