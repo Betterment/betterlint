@@ -133,8 +133,9 @@ describe RuboCop::Cop::Betterment::Utils::Parser do
 
     it 'returns the parameters when accessing params through an alias' do
       node = parse_source('create_params[:user_id]').ast
+      param_aliases = %i(create_params).freeze
 
-      expect(described_class.get_extracted_parameters(node, param_aliases: [:create_params])).to eq([:user_id])
+      expect(described_class.get_extracted_parameters(node, param_aliases: param_aliases)).to eq([:user_id])
     end
   end
 end
