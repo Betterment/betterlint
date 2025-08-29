@@ -40,8 +40,13 @@ module RuboCop
           @unauthenticated_models = cop_config.fetch("unauthenticated_models").map(&:to_sym)
         end
 
+        def on_new_investigation
+          super
+          @class_methods = {}.freeze
+        end
+
         def on_class(node)
-          Utils::MethodReturnTable.populate_index(node)
+          @class_methods = Utils::Parser.get_instance_methods(node).freeze
         end
 
         def on_send(node)
@@ -86,9 +91,7 @@ module RuboCop
 
         def uses_params?(node)
           root = Utils::Parser.get_root_token(node)
-          root == :params || Array(Utils::MethodReturnTable.get_method(root)).find do |x|
-            Utils::Parser.get_root_token(x) == :params
-          end
+          root.equal?(:params) || method_returns_params?(root)
         end
 
         # yoinked from Rails/DynamicFindBy
@@ -97,6 +100,12 @@ module RuboCop
           return nil unless match
 
           match[2] ? 'find_by!' : 'find_by'
+        end
+
+        def method_returns_params?(method_name)
+          @class_methods.fetch(method_name, []).any? do |return_value|
+            Utils::Parser.get_root_token(return_value).equal?(:params)
+          end
         end
       end
     end
