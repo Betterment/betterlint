@@ -4,8 +4,13 @@ module RuboCop
   module Cop
     module Betterment
       class SimpleDelegator < Base
-        MSG = "In order to specify a set of explicitly available methods, " \
-              "use the delegate class method instead of SimpleDelegator."
+        MSG = <<~MSG
+          In order to specify a set of explicitly available methods,
+          use the `delegate` class method instead of `SimpleDelegator`.
+
+          See here for more information on this error:
+          https://github.com/Betterment/betterlint/#bettermentsimpledelegator
+        MSG
 
         # @!method class_with_simple_delegator?(node)
         def_node_matcher :class_with_simple_delegator?, <<~PATTERN

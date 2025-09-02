@@ -13,7 +13,7 @@ describe RuboCop::Cop::Betterment::SimpleDelegator, :config do
   it 'does report an offense when the class inherits from SimpleDelegator' do
     expect_offense(<<~RUBY)
       class EntityPresenter < SimpleDelegator
-      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ In order to specify a set of explicitly available methods, use the delegate class method instead of SimpleDelegator.
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ In order to specify a set of explicitly available methods [...]
       end
     RUBY
   end

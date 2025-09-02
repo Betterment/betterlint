@@ -95,6 +95,9 @@ Betterment/ServerErrorAssertion:
   Include:
     - spec/requests/**/*_spec.rb
 
+Betterment/SimpleDelegator:
+  SafeAutoCorrect: false
+
 Betterment/SitePrismLoaded:
   Include:
     - spec/features/**/*_spec.rb

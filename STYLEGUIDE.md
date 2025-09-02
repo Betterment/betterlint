@@ -109,3 +109,36 @@ expect(response).to have_http_status 422
 expect(response).to have_http_status :internal_server_error
 expect(response).to have_http_status 500
 ```
+
+## Betterment/SimpleDelegator
+
+This cop requires you to use Rail's `delegate` class method instead of `SimpleDelegator` in order to explicitly specify
+the set of delegating methods.
+
+### BAD:
+
+```ruby
+class GearPresenter < SimpleDelegator
+  def ratio_string
+    ratio.to_s
+  end
+end
+```
+
+### GOOD:
+
+```ruby
+class GearDelegator
+  attr_reader :gear
+
+  delegate :ratio, to: :gear
+
+  def initialize(gear)
+    @gear = gear
+  end
+
+  def ratio_string
+    ratio.to_s
+  end
+end
+```

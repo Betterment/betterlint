@@ -307,6 +307,39 @@ This cop requires you to explicitly provide an HTTP status code when rendering a
 create, update, and destroy actions. When autocorrecting, this will automatically add
 `status: :unprocessable_entity` or `status: :ok` depending on what you're rendering.
 
+### Betterment/SimpleDelegator
+
+This cop requires you to use Rail's `delegate` class method instead of `SimpleDelegator` in order to explicitly specify
+the set of delegating methods.
+
+#### BAD:
+
+```ruby
+class GearPresenter < SimpleDelegator
+  def ratio_string
+    ratio.to_s
+  end
+end
+```
+
+#### GOOD:
+
+```ruby
+class GearDelegator
+  attr_reader :gear
+  
+  delegate :ratio, to: :gear
+  
+  def initialize(gear)
+    @gear = gear
+  end
+  
+  def ratio_string
+    ratio.to_s
+  end
+end
+```
+
 ### Betterment/UseGlobalStrictLoading/ByDefaultForModels
 
 This cop identifies models where `self.strict_loading_by_default` is assigned to explicitly, and prefers that it be removed in favor of using the global strict loading settings.
