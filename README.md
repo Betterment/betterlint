@@ -325,7 +325,7 @@ end
 #### GOOD:
 
 ```ruby
-class GearDelegator
+class GearPresenter
   attr_reader :gear
   
   delegate :ratio, to: :gear
