@@ -309,8 +309,8 @@ create, update, and destroy actions. When autocorrecting, this will automaticall
 
 ### Betterment/SimpleDelegator
 
-This cop requires you to use Rail's `delegate` class method instead of `SimpleDelegator` in order to explicitly specify
-the set of delegating methods.
+This cop requires you to use Rails's `delegate` class method instead of `SimpleDelegator` in order to explicitly specify
+the set of delegated methods.
 
 #### BAD:
 
