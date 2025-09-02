@@ -4,8 +4,8 @@ module RuboCop
   module Cop
     module Betterment
       class SimpleDelegator < Base
-        MSG = "In order to specify a narrow set of explicitly available methods, " \
-              "replace SimpleDelegator with direct delegation to an object."
+        MSG = "In order to specify a set of explicitly available methods, " \
+              "use the delegate class method instead of SimpleDelegator."
 
         # @!method class_with_simple_delegator?(node)
         def_node_matcher :class_with_simple_delegator?, <<~PATTERN
