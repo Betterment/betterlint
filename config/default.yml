@@ -96,7 +96,8 @@ Betterment/ServerErrorAssertion:
     - spec/requests/**/*_spec.rb
 
 Betterment/SimpleDelegator:
-  SafeAutoCorrect: false
+  StyleGuide: '#bettermentsimpledelegator'
+  AutoCorrect: false
 
 Betterment/SitePrismLoaded:
   Include:
