@@ -88,16 +88,16 @@ module RuboCop
             return [] unless node.send_type?
 
             parameter_names = []
-            param_aliases << :params
+            aliases = param_aliases | %i(params)
 
-            if node.method?(:[]) && param_aliases.include?(get_root_token(node))
+            if node.method?(:[]) && aliases.include?(get_root_token(node))
               return node.arguments.select { |x|
                 x.sym_type? || x.str_type?
               }.map(&:value)
             end
 
             children = node.descendants.select do |child|
-              child.send_type? && param_aliases.include?(child.method_name)
+              child.send_type? && aliases.include?(child.method_name)
             end
 
             children.each do |child|
@@ -111,6 +111,23 @@ module RuboCop
             end
 
             parameter_names.map(&:to_sym)
+          end
+
+          def self.get_instance_methods(node) # rubocop:disable Metrics/PerceivedComplexity
+            raise ArgumentError, 'must be a class node' unless node&.class_type?
+
+            methods = node.descendants.select(&:def_type?).to_h do |method|
+              [method.method_name, get_return_values(method)]
+            end
+
+            node.descendants.each do |descendant|
+              lhs, rhs = *descendant
+              if descendant.equals_asgn? && !descendant.type.equal?(:casgn) && rhs&.send_type?
+                methods[lhs] = [rhs]
+              end
+            end
+
+            methods
           end
         end
       end
