@@ -47,10 +47,9 @@ Betterment/DynamicParams:
 
 Betterment/EnvironmentConfiguration:
   StyleGuide: '#bettermentenvironmentconfiguration'
-  Exclude:
-    - config/**/*.rb
-    - spec/**/*.rb
-    - test/**/*.rb
+  Include:
+    - app/**/*.rb
+    - lib/**/*.rb
 
 Betterment/HardcodedID:
   AutoCorrect: false
