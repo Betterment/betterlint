@@ -1,11 +1,11 @@
 PATH
   remote: .
   specs:
-    betterlint (1.25.0)
+    betterlint (1.26.0)
       rubocop (~> 1.82)
       rubocop-capybara (~> 2.22)
       rubocop-factory_bot (~> 2.28)
-      rubocop-graphql (~> 1.5)
+      rubocop-graphql (~> 1.5, >= 1.5.6)
       rubocop-performance (~> 1.26)
       rubocop-rails (~> 2.34)
       rubocop-rake (~> 0.7)
