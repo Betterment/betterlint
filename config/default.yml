@@ -274,9 +274,6 @@ Performance/RedundantMatch:
 RSpec/BeEq:
   Enabled: false
 
-RSpec/Capybara/FeatureMethods:
-  Enabled: false
-
 RSpec/ContextWording:
   Enabled: false
 
