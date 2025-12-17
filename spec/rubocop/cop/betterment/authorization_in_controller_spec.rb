@@ -403,7 +403,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :betterlint_config
       RUBY
     end
 
-    it 'registers unsafe parameters to be specified via config' do
+    it 'registers an offense when unsafe parameters are specified via config' do
       temp = cop.unsafe_parameters
       cop.unsafe_parameters = %i(dangerous shady)
       expect_offense(<<~RUBY)
@@ -429,7 +429,7 @@ describe RuboCop::Cop::Betterment::AuthorizationInController, :betterlint_config
       cop.unsafe_parameters = temp
     end
 
-    it 'registers the config to specify a regex alternative to _id' do
+    it 'registers an offense when unsafe_regex is specified via config' do
       temp = cop.unsafe_regex
       cop.unsafe_regex = /(.*_fk$|^id_.*$)/
       expect_offense(<<~RUBY)
