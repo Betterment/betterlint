@@ -24,10 +24,13 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = ">= 3.0"
 
-  s.add_dependency "rubocop", "~> 1.71"
+  s.add_dependency "rubocop", "~> 1.82"
+  s.add_dependency "rubocop-capybara", "~> 2.22"
+  s.add_dependency "rubocop-factory_bot", "~> 2.28"
   s.add_dependency "rubocop-graphql", "~> 1.5"
-  s.add_dependency "rubocop-performance", "~> 1.23"
-  s.add_dependency "rubocop-rails", "~> 2.29"
-  s.add_dependency "rubocop-rake", "~> 0.6"
-  s.add_dependency "rubocop-rspec", "~> 2.29"
+  s.add_dependency "rubocop-performance", "~> 1.26"
+  s.add_dependency "rubocop-rails", "~> 2.34"
+  s.add_dependency "rubocop-rake", "~> 0.7"
+  s.add_dependency "rubocop-rspec", "~> 3.8"
+  s.add_dependency "rubocop-rspec_rails", "~> 2.32"
 end
