@@ -16,7 +16,7 @@ RSpec.describe 'standard compliance' do
       Metrics/ModuleLength
       Metrics/ParameterLists
       Metrics/PerceivedComplexity
-      Naming/PredicateName
+      Naming/PredicatePrefix
       Naming/VariableNumber
       Style/BlockDelimiters
       Style/FrozenStringLiteralComment
