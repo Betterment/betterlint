@@ -118,7 +118,7 @@ module RuboCop
             #   params[:user_id]
             # end
             if ret.send_type? && ret.method?(:[])
-              internal_params = ret.arguments.select { |x| x.sym_type? || x.str_type? }.map(&:value)
+              internal_params = ret.arguments.select { |x| x.type?(:sym, :str) }.map(&:value)
             else
               internal_returns = get_method_returns(Utils::Parser.get_root_token(ret))
               internal_params = internal_returns.flat_map { |x| Utils::Parser.get_extracted_parameters(x, param_aliases: @param_wrappers) }
