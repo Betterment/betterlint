@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = ">= 3.0"
 
+  s.add_dependency "lint_roller", "~> 1.1"
   s.add_dependency "rubocop", "~> 1.82"
   s.add_dependency "rubocop-capybara", "~> 2.22"
   s.add_dependency "rubocop-factory_bot", "~> 2.28"
