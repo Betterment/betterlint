@@ -8,23 +8,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: ['3.2', '3.3']
+        ruby: ["3.2", "3.3", "3.4"]
         gemfile:
           - Gemfile
 
     steps:
-    - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
-    - uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 # v1
-      env:
-        BUNDLE_GEMFILE: ${{ matrix.gemfile }}
-      with:
-        ruby-version: ${{ matrix.ruby }}
-        bundler-cache: true
-    - name: Run linter
-      env:
-        BUNDLE_GEMFILE: ${{ matrix.gemfile }}
-      run: bundle exec rubocop --parallel
-    - name: Run tests
-      env:
-        BUNDLE_GEMFILE: ${{ matrix.gemfile }}
-      run: bundle exec rake
+      - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
+      - uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 # v1
+        env:
+          BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Run linter
+        env:
+          BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+        run: bundle exec rubocop --parallel
+      - name: Run tests
+        env:
+          BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+        run: bundle exec rake
