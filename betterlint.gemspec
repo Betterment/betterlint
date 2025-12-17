@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.metadata["bug_tracker_uri"] = "#{s.homepage}/issues"
   s.metadata["documentation_uri"] = "https://www.rubydoc.info/gems/#{s.name}/#{s.version}"
   s.metadata['rubygems_mfa_required'] = 'true'
+  s.metadata['default_lint_roller_plugin'] = 'Betterlint::Plugin'
 
   s.files = Dir["README.md", "STYLEGUIDE.md", "config/*.yml", "lib/**/*.rb"]
 

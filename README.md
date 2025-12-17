@@ -15,9 +15,8 @@ gem 'betterlint'
 .rubocop.yml:
 
 ```yml
-inherit_gem:
-  betterlint:
-    - config/default.yml
+plugins:
+  - betterlint
 ```
 
 ## Dependencies
