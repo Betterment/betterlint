@@ -3,9 +3,11 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
+require 'betterlint/version'
+
 Gem::Specification.new do |s|
   s.name = "betterlint"
-  s.version = "1.25.0"
+  s.version = Betterlint::VERSION
   s.authors = ["Development"]
   s.email = ["development@betterment.com"]
   s.summary = "Betterment rubocop configuration"
