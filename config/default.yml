@@ -305,7 +305,7 @@ RSpec/ExpectChange:
   EnforcedStyle: block
 
 RSpec/SpecFilePathSuffix:
-  Enabled: false
+  Enabled: true
 
 RSpec/SpecFilePathFormat:
   Enabled: false
