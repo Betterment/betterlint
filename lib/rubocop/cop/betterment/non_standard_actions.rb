@@ -52,6 +52,10 @@ module RuboCop
           route = route_to(node)
           if route
             (path, param, value) = route
+
+            # Newer Rubocop versions return param as an array
+            param = param.first if param.is_a?(Array)
+
             action = case param
             when :to then value.first.split('#').last
             when :action then value.first
