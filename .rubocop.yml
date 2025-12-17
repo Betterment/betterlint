@@ -2,8 +2,8 @@ inherit_from:
   - config/default.yml
   - .rubocop_todo.yml
 
-require:
-  - rubocop/cop/internal_affairs
+plugins:
+  - rubocop-internal_affairs
 
 AllCops:
   NewCops: enable
