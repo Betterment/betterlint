@@ -62,6 +62,11 @@ Betterment/InternalsProtection:
   StyleGuide: '#bettermentinternalsprotection'
   Enabled: false
 
+Betterment/NonNamespacedClass:
+  Description: Detects classes that are not namespaced under a module or constant
+  StyleGuide: '#bettermentnonamespacedclass'
+  Enabled: false
+
 Betterment/NonStandardActions:
   AdditionalAllowedActions: []
   Description: Detects non-standard controller actions.
