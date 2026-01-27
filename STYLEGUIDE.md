@@ -110,6 +110,39 @@ expect(response).to have_http_status :internal_server_error
 expect(response).to have_http_status 500
 ```
 
+## Betterment/NonNamespacedClass
+
+This cop prevents defining classes at the top level without a namespace. All classes should be defined within a module namespace to avoid polluting the global namespace and to better organize code.
+
+### BAD:
+
+```ruby
+class MyClass
+  def my_method
+  end
+end
+```
+
+### GOOD:
+
+```ruby
+module MyNamespace
+  class MyClass
+    def my_method
+    end
+  end
+end
+```
+
+or using the `::` syntax:
+
+```ruby
+class MyNamespace::MyClass
+  def my_method
+  end
+end
+```
+
 ## Betterment/SimpleDelegator
 
 This cop requires you to use Rail's `delegate` class method instead of `SimpleDelegator` in order to explicitly specify
