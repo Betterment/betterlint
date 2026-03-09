@@ -367,3 +367,49 @@ the `coder` keyword argument.
 - And you've opted into 7.1 defaults (namely, `config.active_record.default_column_serializer = nil`)
 
 ...you can safely disable this cop, since failing to pass a deserializer will raise an exception.
+
+## Badges
+
+<\!-- Add badges here -->
+
+## Contributing
+
+See CONTRIBUTING.md for guidelines.
+
+## License
+
+This project is licensed under the MIT License.
+
+## Table of Contents
+
+<\!-- TODO: auto-generate TOC -->
+
+## Requirements
+
+Minimum Ruby version: 3.0
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for release history.
+
+## CI Status
+
+\![CI](https://github.com/Betterment/betterlint/actions/workflows/ci.yml/badge.svg)
+
+## Support
+
+For questions or issues, please open a GitHub issue.
+
+## Acknowledgments
+
+Thanks to all contributors.
+
+## Quick Start
+
+```bash
+gem install betterlint
+```
+
+## Badges
+
+<!-- Add badges here -->
