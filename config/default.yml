@@ -114,6 +114,19 @@ Betterment/SitePrismLoaded:
     - spec/features/**/*_spec.rb
     - spec/system/**/*_spec.rb
 
+Betterment/SpecDescribeMethodName:
+  Description: Requires spec `describe` blocks to be labeled with a class constant and method names.
+  Enabled: false
+  StyleGuide: '#bettermentspecdescribemethodname'
+  Include:
+    - spec/**/*_spec.rb
+  Exclude:
+    - spec/features/**/*_spec.rb
+    - spec/requests/**/*_spec.rb
+    - spec/routing/**/*_spec.rb
+    - spec/system/**/*_spec.rb
+    - spec/views/**/*_spec.rb
+
 Betterment/UnsafeJob:
   Enabled: false
   StyleGuide: '#bettermentunsafejob'
