@@ -158,8 +158,8 @@ describe RuboCop::Cop::Betterment::SpecDescribeMethodName, :config do
       expect_offense(<<~RUBY)
         RSpec.describe Invoice do
           describe "::open" do
+                   ^^^^^^^^ Put examples inside a `describe` labeled with a method name, such as `"#instance_method"` or `".class_method"`.
             it "excludes paid invoices" do
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^ Put examples inside a `describe` labeled with a method name, such as `"#instance_method"` or `".class_method"`.
               expect(described_class.open).to be_empty
             end
           end
@@ -250,13 +250,38 @@ describe RuboCop::Cop::Betterment::SpecDescribeMethodName, :config do
   end
 
   context 'when a describe inside the class describe is not a method label' do
-    it 'registers an offense for the examples' do
+    it 'registers an offense for the describe' do
       expect_offense(<<~RUBY)
         RSpec.describe Invoice do
           describe "totalling" do
+                   ^^^^^^^^^^^ Put examples inside a `describe` labeled with a method name, such as `"#instance_method"` or `".class_method"`.
             it "sums the line items" do
-            ^^^^^^^^^^^^^^^^^^^^^^^^ Put examples inside a `describe` labeled with a method name, such as `"#instance_method"` or `".class_method"`.
               expect(invoice.total).to eq 100
+            end
+          end
+        end
+      RUBY
+    end
+
+    it 'registers an offense when the describe holds only contexts' do
+      expect_offense(<<~RUBY)
+        RSpec.describe Invoice do
+          describe "totalling" do
+                   ^^^^^^^^^^^ Put examples inside a `describe` labeled with a method name, such as `"#instance_method"` or `".class_method"`.
+            context "when empty" do
+              it_behaves_like "a total"
+            end
+          end
+        end
+      RUBY
+    end
+
+    it 'registers an offense when the describe is nested in a context' do
+      expect_offense(<<~RUBY)
+        RSpec.describe Invoice do
+          context "when paid" do
+            describe "totalling" do
+                     ^^^^^^^^^^^ Put examples inside a `describe` labeled with a method name, such as `"#instance_method"` or `".class_method"`.
             end
           end
         end
