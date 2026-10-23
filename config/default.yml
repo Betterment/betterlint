@@ -62,6 +62,10 @@ Betterment/InternalsProtection:
   StyleGuide: '#bettermentinternalsprotection'
   Enabled: false
 
+Betterment/KwargsForFieldDefinitions:
+  Description: Requires `type:` and `description:` kwargs for GraphQL field definitions
+  Enabled: false
+
 Betterment/NonNamespacedClass:
   Description: Detects classes that are not namespaced under a module or constant
   StyleGuide: '#bettermentnonamespacedclass'
