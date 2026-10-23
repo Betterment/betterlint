@@ -24,6 +24,21 @@ describe RuboCop::Cop::Betterment::ResolverFieldType, :config do
     RUBY
   end
 
+  it 'registers an offense for nullability on a field with a resolver' do
+    expect_offense(<<~RUBY)
+      field :full_name, resolver: Resolvers::FullName, null: false
+                                                       ^^^^^^^^^^^ Declare the type[...]
+    RUBY
+  end
+
+  it 'registers an offense for both type and nullability on a field with a resolver' do
+    expect_offense(<<~RUBY)
+      field :full_name, String, null: false, resolver: Resolvers::FullName
+                                ^^^^^^^^^^^ Declare the type[...]
+                        ^^^^^^ Declare the type[...]
+    RUBY
+  end
+
   it 'registers an offense for a type on a field with a mutation' do
     expect_offense(<<~RUBY)
       field :create_user, Types::UserPayload, mutation: Mutations::CreateUser

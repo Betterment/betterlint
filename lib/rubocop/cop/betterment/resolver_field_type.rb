@@ -4,10 +4,10 @@ module RuboCop
   module Cop
     module Betterment
       class ResolverFieldType < Base
-        MSG = 'Declare the type on the resolver class, not on a field that uses it.'
+        MSG = 'Declare the type and `null:` on the resolver class, not on a field that uses it.'
         RESTRICT_ON_SEND = %i(field).freeze
         RESOLVER_OPTIONS = %i(resolver mutation subscription).freeze
-        TYPE_OPTIONS = %i(type).freeze
+        TYPE_OPTIONS = %i(type null).freeze
 
         def on_send(node)
           return unless field_with_resolver?(node)

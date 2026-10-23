@@ -426,12 +426,13 @@ This cop is disabled by default, because it reports many offenses in application
 
 ### Betterment/ResolverFieldType
 
-This cop requires type information to be declared on the resolver, not on a field that uses it. When a field sets `resolver:`, `mutation:`, or `subscription:`, graphql-ruby uses the field's own type over the one declared in the resolver class, so a type on the field silently replaces the resolver's.
+This cop requires type information (the type and `null:`) to be declared on the resolver, not on a field that uses it. When a field sets `resolver:`, `mutation:`, or `subscription:`, graphql-ruby uses the field's own type and nullability over the ones declared in the resolver class, so declaring them on the field silently replaces the resolver's.
 
 ```ruby
 # BAD - the field's type overrides the resolver's
 field :full_name, String, resolver: Resolvers::FullName
 field :full_name, type: String, resolver: Resolvers::FullName
+field :full_name, resolver: Resolvers::FullName, null: false
 
 # GOOD
 field :full_name, resolver: Resolvers::FullName
@@ -442,5 +443,7 @@ module Resolvers
   end
 end
 ```
+
+To fix an offense, move the type and `null:` to the resolver rather than deleting them from the field. A resolver is nullable unless it declares `null false`, so deleting `null: false` from the field changes the schema. This is also why the cop has no autocorrect.
 
 This cop is disabled by default, so that applications can enable it and add existing offenses to their `.rubocop_todo.yml` at the same time.
