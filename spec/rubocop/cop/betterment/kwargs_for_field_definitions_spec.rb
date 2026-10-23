@@ -60,6 +60,34 @@ describe RuboCop::Cop::Betterment::KwargsForFieldDefinitions, :config do
     RUBY
   end
 
+  it 'autocorrects a multiline field' do
+    expect_offense(<<~RUBY)
+      field :name,
+      ^^^^^^^^^^^^ #{msg}
+        String,
+        "The name",
+        null: false
+    RUBY
+
+    expect_correction(<<~RUBY)
+      field :name,
+        type: String,
+        description: "The name",
+        null: false
+    RUBY
+  end
+
+  it 'autocorrects a field with a namespaced type' do
+    expect_offense(<<~RUBY)
+      field :user, Types::UserType, "The user", null: false
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ #{msg}
+    RUBY
+
+    expect_correction(<<~RUBY)
+      field :user, type: Types::UserType, description: "The user", null: false
+    RUBY
+  end
+
   it 'does not report a field using kwargs' do
     expect_no_offenses(<<~RUBY)
       field :name, type: String, description: "The name"
