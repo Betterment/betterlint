@@ -423,3 +423,24 @@ end
 ```
 
 This cop is disabled by default, because it reports many offenses in applications with older specs. To use it, enable it in your `.rubocop.yml`. By default it examines all files in `spec/`, except for the `features`, `requests`, `routing`, `system`, and `views` directories, where integration style tests that don't test one class and method are common. Examples in shared example groups are also ignored.
+
+### Betterment/ResolverFieldType
+
+This cop requires type information to be declared on the resolver, not on a field that uses it. When a field sets `resolver:`, `mutation:`, or `subscription:`, graphql-ruby uses the field's own type over the one declared in the resolver class, so a type on the field silently replaces the resolver's.
+
+```ruby
+# BAD - the field's type overrides the resolver's
+field :full_name, String, resolver: Resolvers::FullName
+field :full_name, type: String, resolver: Resolvers::FullName
+
+# GOOD
+field :full_name, resolver: Resolvers::FullName
+
+module Resolvers
+  class FullName < BaseResolver
+    type String, null: false
+  end
+end
+```
+
+This cop is disabled by default, so that applications can enable it and add existing offenses to their `.rubocop_todo.yml` at the same time.

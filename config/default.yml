@@ -100,6 +100,11 @@ Betterment/RenderStatus:
   Include:
     - app/controllers/**/*.rb
 
+Betterment/ResolverFieldType:
+  Description: Requires type information to live on the resolver, not on a field that uses it.
+  Enabled: false
+  StyleGuide: '#bettermentresolverfieldtype'
+
 Betterment/ServerErrorAssertion:
   Description: Detects assertions on 5XX HTTP statuses.
   Include:
