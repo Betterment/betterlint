@@ -265,30 +265,21 @@ class AddNickname < ActiveRecord::Migration[8.0]
 end
 ```
 
-The cop is disabled by default so applications can baseline existing migrations before enforcing it:
+The cop is disabled by default. Enable it and set RuboCop Rails' `MigratedSchemaVersion` to the last
+migration version you want to leave unchanged:
 
 ```yaml
+AllCops:
+  MigratedSchemaVersion: '20261030120000'
+
 Betterment/NoDownMigrations:
   Enabled: true
 ```
 
-Migration files are included in normal `bundle exec rubocop` runs. Generated `db/schema.rb` files remain excluded.
-Generate a baseline of existing offenses once:
-
-```sh
-bundle exec rubocop --auto-gen-config --auto-gen-only-exclude --no-exclude-limit
-```
-
-This regenerates `.rubocop_todo.yml` for all enabled cops and adds `inherit_from` to `.rubocop.yml` when needed.
-Commit both configuration files. For this cop, the baseline contains explicit file exclusions:
-
-```yaml
-Betterment/NoDownMigrations:
-  Exclude:
-    - db/migrate/20261030120000_add_nickname.rb
-```
-
-Keep existing migrations unchanged. New migration files are checked by the normal lint run.
+Migration files whose filename timestamps are at or below this cutoff are ignored by all cops.
+Newer migrations are checked by normal `bundle exec rubocop` runs. Keep the cutoff fixed when adding migrations;
+it marks when enforcement began, rather than tracking the current database schema version.
+Generated `db/schema.rb` files remain excluded.
 Leave `Rails/ReversibleMigrationMethodDefinition` disabled: it requires a `down` method alongside `up`.
 
 ### Betterment/NonStandardActions

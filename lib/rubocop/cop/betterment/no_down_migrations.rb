@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require 'rubocop/cop/mixin/migrations_helper'
+require 'rubocop/rails/migration_file_skippable'
 
 module RuboCop
   module Cop
     module Betterment
       class NoDownMigrations < Base
         include MigrationsHelper
+        prepend RuboCop::Rails::MigrationFileSkippable
 
         MSG = 'Do not write explicit rollback code. Correct deployed migrations with a new forward migration.'
         RESTRICT_ON_SEND = %i(down).freeze
