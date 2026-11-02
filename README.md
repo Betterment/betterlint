@@ -235,6 +235,53 @@ Betterment/UnsafeJob:
 
 It may make sense to consult your application's values for `Rails.application.config.filter_parameters`; if the application is filtering specific parameters from being logged, it might be a good idea to prevent these values from being stored in plaintext in a database as well.
 
+### Betterment/NoDownMigrations
+
+This cop enforces [the rule against down migrations](https://the-book.betterment.io/rules/ruby/#do-not-write-down-migrations).
+It flags `down` methods and `direction.down` calls inside migration `reversible` blocks.
+It allows `change`, standalone `up` methods, and Rails' automatic reversibility. It does not autocorrect.
+
+**Bad**
+
+```ruby
+class AddNickname < ActiveRecord::Migration[8.0]
+  def up
+    add_column :users, :nickname, :string
+  end
+
+  def down
+    remove_column :users, :nickname
+  end
+end
+```
+
+**Good**
+
+```ruby
+class AddNickname < ActiveRecord::Migration[8.0]
+  def change
+    add_column :users, :nickname, :string
+  end
+end
+```
+
+The cop is disabled by default so applications can baseline existing migrations before enforcing it:
+
+```yaml
+Betterment/NoDownMigrations:
+  Enabled: true
+```
+
+The shared configuration excludes `db/` from file discovery. Pass migration files explicitly when running this cop,
+without `--force-exclusion`, or adjust your application's file discovery configuration:
+
+```sh
+bundle exec rubocop --only Betterment/NoDownMigrations db/migrate/*.rb
+```
+
+Keep existing migrations unchanged and record their offenses in the application's `.rubocop_todo.yml`.
+Leave `Rails/ReversibleMigrationMethodDefinition` disabled: it requires a `down` method alongside `up`.
+
 ### Betterment/NonStandardActions
 
 This cop looks at Rails route files and flags routes that go to non-standard controller actions.

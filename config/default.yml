@@ -62,6 +62,13 @@ Betterment/InternalsProtection:
   StyleGuide: '#bettermentinternalsprotection'
   Enabled: false
 
+Betterment/NoDownMigrations:
+  Description: Disallows explicit rollback code in database migrations.
+  Enabled: false
+  StyleGuide: https://the-book.betterment.io/rules/ruby/#do-not-write-down-migrations
+  Include:
+    - db/migrate/**/*.rb
+
 Betterment/NonNamespacedClass:
   Description: Detects classes that are not namespaced under a module or constant
   StyleGuide: '#bettermentnonamespacedclass'
