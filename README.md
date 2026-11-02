@@ -237,9 +237,9 @@ It may make sense to consult your application's values for `Rails.application.co
 
 ### Betterment/NoDownMigrations
 
-This cop enforces [the rule against down migrations](https://the-book.betterment.io/rules/ruby/#do-not-write-down-migrations).
-It flags `down` methods and `direction.down` calls inside migration `reversible` blocks.
-It allows `change`, standalone `up` methods, and Rails' automatic reversibility. It does not autocorrect.
+This cop enforces [the rule against down migrations](https://the-book.betterment.io/rules/ruby/#do-not-write-down-migrations)
+by flagging `down` methods and `direction.down` calls in migration `reversible` blocks.
+It allows `change` and standalone `up` methods and does not autocorrect.
 
 **Bad**
 
@@ -265,8 +265,7 @@ class AddNickname < ActiveRecord::Migration[8.0]
 end
 ```
 
-The cop is disabled by default. Enable it and set its `MigratedSchemaVersion` to the last
-migration version you want to leave unchanged:
+The cop is disabled by default. Enable it for migrations newer than a chosen version:
 
 ```yaml
 Betterment/NoDownMigrations:
@@ -274,11 +273,8 @@ Betterment/NoDownMigrations:
   MigratedSchemaVersion: '20261030120000'
 ```
 
-This cop ignores migration files whose filename versions are at or below the cutoff. Other cops still check them.
-Omit the cutoff to check all migrations. Newer migrations are checked by normal `bundle exec rubocop` runs.
-Keep the cutoff fixed at the version where enforcement began.
-Generated `db/schema.rb` files remain excluded.
-Leave `Rails/ReversibleMigrationMethodDefinition` disabled: it requires a `down` method alongside `up`.
+Keep this cutoff fixed to leave existing migrations unchanged, or omit it to check all migrations.
+It only affects this cop. Leave `Rails/ReversibleMigrationMethodDefinition` disabled: it requires `up` and `down`.
 
 ### Betterment/NonStandardActions
 
