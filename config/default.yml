@@ -65,6 +65,7 @@ Betterment/InternalsProtection:
 Betterment/NoDownMigrations:
   Description: Disallows explicit rollback code in database migrations.
   Enabled: false
+  MigratedSchemaVersion: ~
   StyleGuide: https://the-book.betterment.io/rules/ruby/#do-not-write-down-migrations
   Include:
     - db/migrate/**/*.rb

@@ -265,20 +265,18 @@ class AddNickname < ActiveRecord::Migration[8.0]
 end
 ```
 
-The cop is disabled by default. Enable it and set RuboCop Rails' `MigratedSchemaVersion` to the last
+The cop is disabled by default. Enable it and set its `MigratedSchemaVersion` to the last
 migration version you want to leave unchanged:
 
 ```yaml
-AllCops:
-  MigratedSchemaVersion: '20261030120000'
-
 Betterment/NoDownMigrations:
   Enabled: true
+  MigratedSchemaVersion: '20261030120000'
 ```
 
-Migration files whose filename timestamps are at or below this cutoff are ignored by all cops.
-Newer migrations are checked by normal `bundle exec rubocop` runs. Keep the cutoff fixed when adding migrations;
-it marks when enforcement began, rather than tracking the current database schema version.
+This cop ignores migration files whose filename versions are at or below the cutoff. Other cops still check them.
+Omit the cutoff to check all migrations. Newer migrations are checked by normal `bundle exec rubocop` runs.
+Keep the cutoff fixed at the version where enforcement began.
 Generated `db/schema.rb` files remain excluded.
 Leave `Rails/ReversibleMigrationMethodDefinition` disabled: it requires a `down` method alongside `up`.
 
