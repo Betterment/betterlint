@@ -102,6 +102,31 @@ RSpec.describe RuboCop::Cop::Betterment::NoDownMigrations, :betterlint_config do
         RUBY
       end
     end
+
+    context 'when a global migrated schema version is configured' do
+      let(:all_cops_config) { super().merge('MigratedSchemaVersion' => '20261030120000') }
+
+      it 'ignores migrations at the global cutoff' do
+        expect_no_offenses(<<~RUBY, 'db/migrate/20261030120000_add_nickname.rb')
+          class AddNickname < ActiveRecord::Migration[8.0]
+            def down
+              remove_column :users, :nickname
+            end
+          end
+        RUBY
+      end
+
+      it 'reports migrations after the global cutoff' do
+        expect_offense(<<~RUBY, 'db/migrate/20261030120001_add_nickname.rb')
+          class AddNickname < ActiveRecord::Migration[8.0]
+            def down
+                ^^^^ Do not write explicit rollback code. Correct deployed migrations with a new forward migration.
+              remove_column :users, :nickname
+            end
+          end
+        RUBY
+      end
+    end
   end
 
   describe '#on_send' do

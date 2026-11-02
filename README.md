@@ -268,11 +268,14 @@ end
 The cop is disabled by default. Enable it for migrations newer than a chosen version:
 
 ```yaml
+AllCops:
+  MigratedSchemaVersion: '20261030120000'
+
 Betterment/NoDownMigrations:
   Enabled: true
-  MigratedSchemaVersion: '20261030120000'
 ```
 
+Set `MigratedSchemaVersion` under this cop to ignore additional migrations.
 Leave `Rails/ReversibleMigrationMethodDefinition` disabled: it requires `up` and `down`.
 
 ### Betterment/NonStandardActions
