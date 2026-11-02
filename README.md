@@ -273,7 +273,6 @@ Betterment/NoDownMigrations:
   MigratedSchemaVersion: '20261030120000'
 ```
 
-Keep this cutoff fixed to leave existing migrations unchanged, or omit it to check all migrations.
 Leave `Rails/ReversibleMigrationMethodDefinition` disabled: it requires `up` and `down`.
 
 ### Betterment/NonStandardActions
