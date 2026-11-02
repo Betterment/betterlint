@@ -274,7 +274,7 @@ Betterment/NoDownMigrations:
 ```
 
 Keep this cutoff fixed to leave existing migrations unchanged, or omit it to check all migrations.
-It only affects this cop. Leave `Rails/ReversibleMigrationMethodDefinition` disabled: it requires `up` and `down`.
+Leave `Rails/ReversibleMigrationMethodDefinition` disabled: it requires `up` and `down`.
 
 ### Betterment/NonStandardActions
 
