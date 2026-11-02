@@ -272,14 +272,23 @@ Betterment/NoDownMigrations:
   Enabled: true
 ```
 
-The shared configuration excludes `db/` from file discovery. Pass migration files explicitly when running this cop,
-without `--force-exclusion`, or adjust your application's file discovery configuration:
+Migration files are included in normal `bundle exec rubocop` runs. Generated `db/schema.rb` files remain excluded.
+Generate a baseline of existing offenses once:
 
 ```sh
-bundle exec rubocop --only Betterment/NoDownMigrations db/migrate/*.rb
+bundle exec rubocop --auto-gen-config --auto-gen-only-exclude --no-exclude-limit
 ```
 
-Keep existing migrations unchanged and record their offenses in the application's `.rubocop_todo.yml`.
+This regenerates `.rubocop_todo.yml` for all enabled cops and adds `inherit_from` to `.rubocop.yml` when needed.
+Commit both configuration files. For this cop, the baseline contains explicit file exclusions:
+
+```yaml
+Betterment/NoDownMigrations:
+  Exclude:
+    - db/migrate/20261030120000_add_nickname.rb
+```
+
+Keep existing migrations unchanged. New migration files are checked by the normal lint run.
 Leave `Rails/ReversibleMigrationMethodDefinition` disabled: it requires a `down` method alongside `up`.
 
 ### Betterment/NonStandardActions

@@ -20,7 +20,7 @@ AllCops:
     - Gemfile
     - bin/**/*
     - build/**/*
-    - db/**/*
+    - db/schema.rb
     - frontend/**/*
     - node_modules/**/*
     - tmp/**/*
