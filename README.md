@@ -19,6 +19,10 @@ plugins:
   - betterlint
 ```
 
+## Upgrading to 1.30
+
+Migration files are included in normal lint runs. Set `AllCops/MigratedSchemaVersion` to the last existing migration version to [skip historical files](#bettermentnodownmigrations).
+
 ## Dependencies
 
 This gem depends on the following other gems:
