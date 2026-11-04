@@ -62,6 +62,13 @@ Betterment/InternalsProtection:
   StyleGuide: '#bettermentinternalsprotection'
   Enabled: false
 
+Betterment/NoSend:
+  Description: Detects dynamic method calls through send, public_send and __send__.
+  StyleGuide: '#bettermentnosend'
+  Enabled: false
+  Exclude:
+    - spec/**/*
+
 Betterment/NonNamespacedClass:
   Description: Detects classes that are not namespaced under a module or constant
   StyleGuide: '#bettermentnonamespacedclass'
