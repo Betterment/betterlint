@@ -443,4 +443,4 @@ record.name
 record.attributes.fetch(attribute_name)
 ```
 
-This cop is disabled by default. To use it, enable it in your `.rubocop.yml`. It ignores files in `spec/`, and calls to `send` with no arguments, which are usually a different method named `send`.
+This cop ignores files in `spec/`, and calls to `send` with no arguments, which are usually a different method named `send`.

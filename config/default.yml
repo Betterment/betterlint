@@ -65,7 +65,7 @@ Betterment/InternalsProtection:
 Betterment/NoSend:
   Description: Detects dynamic method calls through send, public_send and __send__.
   StyleGuide: '#bettermentnosend'
-  Enabled: false
+  Enabled: true
   Exclude:
     - spec/**/*
 
