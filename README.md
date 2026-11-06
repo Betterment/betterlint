@@ -19,6 +19,10 @@ plugins:
   - betterlint
 ```
 
+## Upgrading to 1.30
+
+Migration files are included in normal lint runs. Set `AllCops/MigratedSchemaVersion` to the last existing migration version to [skip historical files](#bettermentnodownmigrations).
+
 ## Dependencies
 
 This gem depends on the following other gems:
@@ -234,6 +238,49 @@ Betterment/UnsafeJob:
 ```
 
 It may make sense to consult your application's values for `Rails.application.config.filter_parameters`; if the application is filtering specific parameters from being logged, it might be a good idea to prevent these values from being stored in plaintext in a database as well.
+
+### Betterment/NoDownMigrations
+
+This cop enforces [the rule against down migrations](https://the-book.betterment.io/rules/ruby/#do-not-write-down-migrations)
+by flagging `down` methods and `direction.down` calls in migration `reversible` blocks.
+It allows `change` and standalone `up` methods and does not autocorrect.
+
+**Bad**
+
+```ruby
+class AddNickname < ActiveRecord::Migration[8.0]
+  def up
+    add_column :users, :nickname, :string
+  end
+
+  def down
+    remove_column :users, :nickname
+  end
+end
+```
+
+**Good**
+
+```ruby
+class AddNickname < ActiveRecord::Migration[8.0]
+  def change
+    add_column :users, :nickname, :string
+  end
+end
+```
+
+The cop is disabled by default. Enable it for migrations newer than a chosen version:
+
+```yaml
+AllCops:
+  MigratedSchemaVersion: '20261030120000'
+
+Betterment/NoDownMigrations:
+  Enabled: true
+```
+
+Set `MigratedSchemaVersion` under this cop to ignore additional migrations.
+Leave `Rails/ReversibleMigrationMethodDefinition` disabled: it requires `up` and `down`.
 
 ### Betterment/NonStandardActions
 

@@ -20,7 +20,7 @@ AllCops:
     - Gemfile
     - bin/**/*
     - build/**/*
-    - db/**/*
+    - db/*schema.rb
     - frontend/**/*
     - node_modules/**/*
     - tmp/**/*
@@ -61,6 +61,14 @@ Betterment/InternalsProtection:
   Description: Detects invalid references to Internals modules
   StyleGuide: '#bettermentinternalsprotection'
   Enabled: false
+
+Betterment/NoDownMigrations:
+  Description: Disallows explicit rollback code in database migrations.
+  Enabled: false
+  MigratedSchemaVersion:
+  StyleGuide: '#bettermentnodownmigrations'
+  Include:
+    - db/migrate/**/*.rb
 
 Betterment/NoSend:
   Description: Detects dynamic method calls through send, public_send and __send__.
