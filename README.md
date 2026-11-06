@@ -470,3 +470,24 @@ end
 ```
 
 This cop is disabled by default, because it reports many offenses in applications with older specs. To use it, enable it in your `.rubocop.yml`. By default it examines all files in `spec/`, except for the `features`, `requests`, `routing`, `system`, and `views` directories, where integration style tests that don't test one class and method are common. Examples in shared example groups are also ignored.
+
+### Betterment/NoSend
+
+This cop flags calls to `send`, `public_send`, and `__send__`. Dynamic dispatch hides the call from Sorbet and code search, and `send` also reaches private methods. Call the method directly instead.
+
+#### BAD:
+
+```ruby
+record.public_send(:name)
+record.send(attribute_name)
+job.send(:plaid_item)
+```
+
+#### GOOD:
+
+```ruby
+record.name
+record.attributes.fetch(attribute_name)
+```
+
+This cop ignores files in `spec/`, and calls to `send` with no arguments, which are usually a different method named `send`.

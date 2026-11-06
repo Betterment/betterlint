@@ -70,6 +70,13 @@ Betterment/NoDownMigrations:
   Include:
     - db/migrate/**/*.rb
 
+Betterment/NoSend:
+  Description: Detects dynamic method calls through send, public_send and __send__.
+  StyleGuide: '#bettermentnosend'
+  Enabled: true
+  Exclude:
+    - spec/**/*
+
 Betterment/NonNamespacedClass:
   Description: Detects classes that are not namespaced under a module or constant
   StyleGuide: '#bettermentnonamespacedclass'
