@@ -69,7 +69,7 @@ RSpec.describe RuboCop::Cop::Betterment::NoDownMigrations, :betterlint_config do
     end
 
     context 'when a migrated schema version is configured' do
-      let(:cop_config) { { 'MigratedSchemaVersion' => '20261030120000' } }
+      let(:cop_config) { {'MigratedSchemaVersion' => '20261030120000'} }
 
       it 'ignores migrations before the cutoff' do
         expect_no_offenses(<<~RUBY, 'db/migrate/20261030115959_add_nickname.rb')
@@ -221,7 +221,7 @@ RSpec.describe RuboCop::Cop::Betterment::NoDownMigrations, :betterlint_config do
     end
 
     context 'when a migrated schema version is configured' do
-      let(:cop_config) { { 'MigratedSchemaVersion' => '20261030120000' } }
+      let(:cop_config) { {'MigratedSchemaVersion' => '20261030120000'} }
 
       it 'ignores down branches in migrations at the cutoff' do
         expect_no_offenses(<<~RUBY, 'db/migrate/20261030120000_add_nickname.rb')

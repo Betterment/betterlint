@@ -16,7 +16,7 @@ describe RuboCop::Cop::Betterment::UseGlobalStrictLoading::ByDefaultForModels, :
         # Add explicit spaces to prevent editor from stripping them on-save
         expect_correction(<<~RUBY)
           class MyModel < ApplicationRecord
-          #{'  '}
+          #{"  "}
           end
         RUBY
       end
@@ -53,7 +53,7 @@ describe RuboCop::Cop::Betterment::UseGlobalStrictLoading::ByDefaultForModels, :
         expect_correction(<<~RUBY)
           class MyModel < ApplicationRecord
             self.table_name = :my_models
-          #{'  '}
+          #{"  "}
           end
         RUBY
       end
@@ -73,7 +73,7 @@ describe RuboCop::Cop::Betterment::UseGlobalStrictLoading::ByDefaultForModels, :
         # Add explicit spaces to prevent editor from stripping them on-save
         expect_correction(<<~RUBY)
           class MyModel < ApplicationRecord
-          #{'  '}
+          #{"  "}
 
             belongs_to :user
           end

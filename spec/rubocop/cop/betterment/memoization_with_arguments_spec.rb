@@ -27,7 +27,7 @@ describe RuboCop::Cop::Betterment::MemoizationWithArguments, :config do
   let(:method_def) do
     <<~RUBY
       def #{method_name}#{method_arguments}
-      #{method_body.gsub(/^/, '  ')}
+      #{method_body.gsub(/^/, "  ")}
       end
     RUBY
   end

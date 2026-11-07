@@ -45,9 +45,9 @@ module RuboCop
         def_node_matcher :offensive_node?, <<-PATTERN
           (send nil? :have_http_status
             {
-              (int {#{(500..599).map(&:to_s).join(' ')}})
-              (str {#{BAD_STATUSES.map(&:to_s).map(&:inspect).join(' ')}})
-              (sym {#{BAD_STATUSES.map(&:inspect).join(' ')}})
+              (int {#{(500..599).map(&:to_s).join(" ")}})
+              (str {#{BAD_STATUSES.map(&:to_s).map(&:inspect).join(" ")}})
+              (sym {#{BAD_STATUSES.map(&:inspect).join(" ")}})
             }
           )
         PATTERN

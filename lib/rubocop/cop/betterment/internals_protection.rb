@@ -57,7 +57,7 @@ module RuboCop
         end
 
         def string_path(string_node)
-          string_node.children[0].split('::').map { |name| name == '' ? nil : name.to_sym }
+          string_node.children[0].split('::').map { |name| (name == '') ? nil : name.to_sym }
         end
 
         def definition_context_path(node)

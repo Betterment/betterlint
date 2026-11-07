@@ -37,7 +37,7 @@ module RuboCop
 
           # @!method association_with_strict_loading?(node)
           def_node_matcher :association_with_strict_loading?, <<~PATTERN
-            (send nil? {#{ASSOCIATION_METHODS.map(&:inspect).join(' ')}} ... (hash <$(pair (sym :strict_loading) ...) ...>))
+            (send nil? {#{ASSOCIATION_METHODS.map(&:inspect).join(" ")}} ... (hash <$(pair (sym :strict_loading) ...) ...>))
           PATTERN
 
           def on_send(node)
