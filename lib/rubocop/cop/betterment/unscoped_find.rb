@@ -24,11 +24,11 @@ module RuboCop
         GRAPHQL_PATTERN = /\bGraphQL\b/i
 
         def_node_matcher :custom_scope_find?, <<-PATTERN
-          (send (send (const ... _) ...) {#{FINDS.map(&:inspect).join(' ')}} ...)
+          (send (send (const ... _) ...) {#{FINDS.map(&:inspect).join(" ")}} ...)
         PATTERN
 
         def_node_matcher :find?, <<-PATTERN
-          (send (const ... _) {#{FINDS.map(&:inspect).join(' ')}} ...)
+          (send (const ... _) {#{FINDS.map(&:inspect).join(" ")}} ...)
         PATTERN
 
         def_node_search :find_graphql_namespace_nodes, <<~PATTERN, name: GRAPHQL_PATTERN

@@ -217,7 +217,7 @@ describe RuboCop::Cop::Betterment::Utils::Parser do
       expected_node = parse_source('call').ast
       result = described_class.get_instance_methods(node)
 
-      expect(result).to eql(method: [], :@var => [expected_node])
+      expect(result).to eql(:method => [], :@var => [expected_node])
     end
 
     it 'handles empty class' do

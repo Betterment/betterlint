@@ -23,7 +23,9 @@ Gem::Specification.new do |s|
   s.metadata['rubygems_mfa_required'] = 'true'
   s.metadata['default_lint_roller_plugin'] = 'Betterlint::Plugin'
 
-  s.files = Dir["README.md", "STYLEGUIDE.md", "config/*.yml", "lib/**/*.rb"]
+  s.files = Dir["README.md", "STYLEGUIDE.md", "FORMATTING.md", "LICENSE.standard", "config/*.yml", "lib/**/*.rb", "exe/*"]
+  s.bindir = 'exe'
+  s.executables = ['betterlint-format']
 
   s.required_ruby_version = ">= 3.0"
 

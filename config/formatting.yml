@@ -1,0 +1,349 @@
+---
+Layout/AccessModifierIndentation:
+  Enabled: true
+  EnforcedStyle: indent
+  IndentationWidth:
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+Layout/ArrayAlignment:
+  EnforcedStyle: with_fixed_indentation
+Layout/AssignmentIndentation:
+  Enabled: true
+  IndentationWidth:
+Layout/BeginEndAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: start_of_line
+  Severity: warning
+Layout/BlockAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: either
+Layout/BlockEndNewline:
+  Enabled: true
+Layout/CaseIndentation:
+  EnforcedStyle: end
+Layout/ClassStructure:
+  Enabled: false
+Layout/ClosingHeredocIndentation:
+  Enabled: true
+Layout/ClosingParenthesisIndentation:
+  Enabled: true
+Layout/CommentIndentation:
+  Enabled: true
+Layout/ConditionPosition:
+  Enabled: true
+Layout/DefEndAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: start_of_line
+  Severity: warning
+Layout/DotPosition:
+  Enabled: true
+  EnforcedStyle: leading
+Layout/ElseAlignment:
+  Enabled: true
+Layout/EmptyComment:
+  Enabled: true
+  AllowBorderComment: true
+  AllowMarginComment: true
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+Layout/EmptyLineAfterMagicComment:
+  Enabled: true
+Layout/EmptyLineAfterMultilineCondition:
+  Enabled: false
+Layout/EmptyLineBetweenDefs:
+  Enabled: true
+  AllowAdjacentOneLineDefs: true
+  NumberOfEmptyLines: 1
+Layout/EmptyLines:
+  Enabled: true
+Layout/EmptyLinesAfterModuleInclusion:
+  Enabled: true
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: true
+Layout/EmptyLinesAroundArguments:
+  Enabled: true
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: false
+Layout/EmptyLinesAroundBeginBody:
+  Enabled: true
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: true
+  EnforcedStyle: no_empty_lines
+Layout/EmptyLinesAroundClassBody:
+  Enabled: true
+  EnforcedStyle: no_empty_lines
+Layout/EmptyLinesAroundExceptionHandlingKeywords:
+  Enabled: true
+Layout/EmptyLinesAroundMethodBody:
+  Enabled: true
+Layout/EmptyLinesAroundModuleBody:
+  Enabled: true
+  EnforcedStyle: no_empty_lines
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: variable
+  Severity: warning
+Layout/EndOfLine:
+  Enabled: true
+  EnforcedStyle: native
+Layout/ExtraSpacing:
+  Enabled: true
+  AllowForAlignment: false
+  AllowBeforeTrailingComments: true
+  ForceEqualSignAlignment: false
+Layout/FirstArgumentIndentation:
+  EnforcedStyle: consistent
+  IndentationWidth:
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+  IndentationWidth:
+Layout/FirstArrayElementLineBreak:
+  Enabled: false
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+  IndentationWidth:
+Layout/FirstHashElementLineBreak:
+  Enabled: false
+Layout/FirstMethodArgumentLineBreak:
+  Enabled: false
+Layout/FirstMethodParameterLineBreak:
+  Enabled: false
+Layout/FirstParameterIndentation:
+  Enabled: false
+Layout/HashAlignment:
+  Enabled: true
+  EnforcedHashRocketStyle: key
+  EnforcedColonStyle: key
+  EnforcedLastArgumentHashStyle: always_inspect
+Layout/HeredocArgumentClosingParenthesis:
+  Enabled: false
+Layout/HeredocIndentation:
+  Enabled: true
+Layout/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: normal
+Layout/IndentationStyle:
+  Enabled: true
+  IndentationWidth:
+Layout/IndentationWidth:
+  Enabled: true
+  Width: 2
+  AllowedPatterns: []
+Layout/InitialIndentation:
+  Enabled: true
+Layout/LeadingCommentSpace:
+  Enabled: true
+  AllowRBSInlineAnnotation: true
+Layout/LeadingEmptyLines:
+  Enabled: true
+Layout/LineContinuationLeadingSpace:
+  Enabled: false
+Layout/LineContinuationSpacing:
+  Enabled: true
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: false
+Layout/LineLength: {}
+Layout/MultilineArrayBraceLayout:
+  Enabled: true
+  EnforcedStyle: symmetrical
+Layout/MultilineArrayLineBreaks:
+  Enabled: false
+Layout/MultilineAssignmentLayout:
+  Enabled: false
+Layout/MultilineBlockLayout:
+  Enabled: true
+Layout/MultilineHashBraceLayout:
+  Enabled: true
+  EnforcedStyle: symmetrical
+Layout/MultilineHashKeyLineBreaks:
+  Enabled: false
+Layout/MultilineMethodArgumentLineBreaks:
+  Enabled: false
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: true
+  EnforcedStyle: symmetrical
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+  IndentationWidth:
+Layout/MultilineMethodDefinitionBraceLayout:
+  Enabled: true
+  EnforcedStyle: symmetrical
+Layout/MultilineMethodParameterLineBreaks:
+  Enabled: false
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+  IndentationWidth:
+Layout/ParameterAlignment:
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
+  IndentationWidth:
+Layout/RedundantLineBreak:
+  Enabled: false
+Layout/RescueEnsureAlignment:
+  Enabled: true
+Layout/SingleLineBlockChain:
+  Enabled: false
+Layout/SpaceAfterColon:
+  Enabled: true
+Layout/SpaceAfterComma:
+  Enabled: true
+Layout/SpaceAfterMethodName:
+  Enabled: true
+Layout/SpaceAfterNot:
+  Enabled: true
+Layout/SpaceAfterSemicolon:
+  Enabled: true
+Layout/SpaceAroundBlockParameters:
+  Enabled: true
+  EnforcedStyleInsidePipes: no_space
+Layout/SpaceAroundEqualsInParameterDefault:
+  Enabled: true
+  EnforcedStyle: space
+Layout/SpaceAroundKeyword:
+  Enabled: true
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+Layout/SpaceAroundOperators:
+  Enabled: true
+  AllowForAlignment: true
+Layout/SpaceBeforeBlockBraces:
+  Enabled: true
+  EnforcedStyle: space
+  EnforcedStyleForEmptyBraces: space
+Layout/SpaceBeforeBrackets:
+  Enabled: false
+Layout/SpaceBeforeComma:
+  Enabled: true
+Layout/SpaceBeforeComment:
+  Enabled: true
+Layout/SpaceBeforeFirstArg:
+  Enabled: true
+  AllowForAlignment: true
+Layout/SpaceBeforeSemicolon:
+  Enabled: true
+Layout/SpaceInLambdaLiteral:
+  Enabled: true
+  EnforcedStyle: require_no_space
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: true
+  EnforcedStyle: no_space
+  EnforcedStyleForEmptyBrackets: no_space
+Layout/SpaceInsideArrayPercentLiteral:
+  Enabled: true
+Layout/SpaceInsideBlockBraces:
+  Enabled: true
+  EnforcedStyle: space
+  EnforcedStyleForEmptyBraces: no_space
+  SpaceBeforeBlockParameters: true
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+  EnforcedStyle: no_space
+  EnforcedStyleForEmptyBraces: no_space
+Layout/SpaceInsideParens:
+  Enabled: true
+  EnforcedStyle: no_space
+Layout/SpaceInsidePercentLiteralDelimiters:
+  Enabled: true
+Layout/SpaceInsideRangeLiteral:
+  Enabled: true
+Layout/SpaceInsideReferenceBrackets:
+  Enabled: true
+  EnforcedStyle: no_space
+  EnforcedStyleForEmptyBrackets: no_space
+Layout/SpaceInsideStringInterpolation:
+  Enabled: true
+  EnforcedStyle: no_space
+Layout/TrailingEmptyLines:
+  Enabled: true
+  EnforcedStyle: final_newline
+Layout/TrailingWhitespace:
+  Enabled: true
+  AllowInHeredoc: true
+Style/BarePercentLiterals:
+  Enabled: true
+  EnforcedStyle: bare_percent
+Style/BlockDelimiters: {}
+Style/CharacterLiteral:
+  Enabled: true
+Style/DefWithParentheses:
+  Enabled: true
+Style/EmptyMethod:
+  Enabled: true
+  EnforcedStyle: expanded
+Style/HashSyntax:
+  EnforcedStyle: ruby19_no_mixed_keys
+  EnforcedShorthandSyntax: either
+Style/MethodCallWithoutArgsParentheses:
+  Enabled: true
+  AllowedMethods: []
+Style/MethodDefParentheses:
+  Enabled: false
+Style/MultilineMemoization:
+  Enabled: true
+  EnforcedStyle: keyword
+Style/NumericLiteralPrefix:
+  Enabled: true
+  EnforcedOctalStyle: zero_with_o
+Style/NumericLiterals:
+  Enabled: false
+Style/ParenthesesAroundCondition:
+  Enabled: true
+  AllowSafeAssignment: true
+  AllowInMultilineConditions: false
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: "()"
+    "%i": "[]"
+    "%I": "[]"
+    "%r": "{}"
+    "%w": "[]"
+    "%W": "[]"
+Style/PercentQLiterals:
+  Enabled: false
+Style/QuotedSymbols:
+  Enabled: true
+  EnforcedStyle: same_as_string_literals
+Style/RedundantCapitalW:
+  Enabled: false
+Style/RedundantHeredocDelimiterQuotes:
+  Enabled: true
+Style/RedundantParentheses:
+  Enabled: true
+Style/RedundantPercentQ:
+  Enabled: true
+Style/RedundantStringEscape:
+  Enabled: true
+Style/RegexpLiteral:
+  Enabled: false
+Style/Semicolon:
+  Enabled: true
+  AllowAsExpressionSeparator: false
+Style/StabbyLambdaParentheses:
+  Enabled: true
+  EnforcedStyle: require_parentheses
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+  ConsistentQuotesInMultiline: false
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+  EnforcedStyle: double_quotes
+Style/SymbolArray:
+  Enabled: false
+Style/SymbolLiteral:
+  Enabled: true
+Style/TernaryParentheses:
+  Enabled: true
+  EnforcedStyle: require_parentheses_when_complex
+  AllowSafeAssignment: true
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: no_comma
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: no_comma
+Style/TrailingCommaInBlockArgs:
+  Enabled: true
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: no_comma
+Style/TrailingMethodEndStatement:
+  Enabled: true
+Style/WordArray:
+  Enabled: false

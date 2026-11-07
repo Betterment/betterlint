@@ -1,4 +1,5 @@
-# please keep this file alphabetically ordered!
+inherit_from:
+  - formatting.yml
 
 require:
   - rubocop/cop/betterment.rb
@@ -466,7 +467,6 @@ Style/StringLiterals:
 Style/SymbolProc:
   Enabled: false
 
-# Use a trailing comma to keep diffs clean when elements are inserted or removed
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
 
