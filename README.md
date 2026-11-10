@@ -491,3 +491,37 @@ record.attributes.fetch(attribute_name)
 ```
 
 This cop ignores files in `spec/`, and calls to `send` with no arguments, which are usually a different method named `send`.
+
+### Betterment/AssociationPresencePredicate
+
+This cop prefers `has_<name>?` and `will_save_change_to_<name>?` predicates for `belongs_to` associations. Rails doesn't define these, so this cop is disabled by default. Enable it only in applications that generate them for every `belongs_to`.
+
+`has_owner?` answers from the loaded record or the foreign key, so it doesn't load `owner` to decide. It's also true when an unsaved `owner` is assigned, which `owner_id?` misses. `will_save_change_to_owner?` is true when the foreign key will change or when a loaded `owner` has unsaved changes.
+
+#### BAD:
+
+```ruby
+class LegalAccount < ApplicationRecord
+  belongs_to :owner
+
+  before_validation :set_taxpayer_from_owner, if: -> { owner.present? }
+  validate :owner_must_be_active, if: -> { owner_id? }
+  validate :owner_must_be_eligible, if: -> { owner_id_changed? }
+end
+```
+
+#### GOOD:
+
+```ruby
+class LegalAccount < ApplicationRecord
+  belongs_to :owner
+
+  before_validation :set_taxpayer_from_owner, if: -> { has_owner? }
+  validate :owner_must_be_active, if: -> { has_owner? }
+  validate :owner_must_be_eligible, if: -> { will_save_change_to_owner? }
+end
+```
+
+The cop only checks code in the class that declares the association, and skips class methods, nested classes, and associations whose reader, `has_<name>?`, or `will_save_change_to_<name>?` is defined in that class. It also reports symbol conditions such as `if: :owner_id?`. It reads custom `foreign_key:` options, and skips composite foreign keys. Change checks inside `after_*` callback options are skipped, but a method called from an `after_*` callback can still be reported; there, `saved_change_to_<foreign_key>?` is the right check.
+
+`owner.present?`, `owner.nil?`, and `owner.blank?` are autocorrected with `rubocop -A`. The autocorrect is unsafe because `has_owner?` is true when the foreign key points at a missing row or a row hidden by a default scope. Foreign key and change checks are reported but not corrected, because the generated predicates answer differently in the cases described above.

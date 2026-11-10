@@ -3,6 +3,7 @@
 require 'rubocop'
 require 'rubocop/cop/betterment/active_job_performable'
 require 'rubocop/cop/betterment/allowlist_blocklist'
+require 'rubocop/cop/betterment/association_presence_predicate'
 require 'rubocop/cop/betterment/authorization_in_controller'
 require 'rubocop/cop/betterment/direct_delayed_enqueue'
 require 'rubocop/cop/betterment/dynamic_params'
