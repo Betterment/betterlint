@@ -473,8 +473,8 @@ This cop is disabled by default, because it reports many offenses in application
 
 ### Betterment/NoNotImplementedError
 
-This cop enforces [The Book's rule against using `NotImplementedError` in application code](https://the-book.betterment.io/rules/ruby/#do-not-use-notimplementederror-in-application-code).
-It flags direct references to Ruby's exception, including in `raise`, `rescue`, and inheritance. It does not autocorrect, because the replacement depends on what failed.
+Ruby's [`NotImplementedError`](https://docs.ruby-lang.org/en/3.4/NotImplementedError.html) signals a feature unavailable on the current platform. It inherits from `ScriptError`, so a bare `rescue` won't catch it.
+This cop flags direct references to the exception in application code, including in `raise`, `rescue`, and inheritance. It does not autocorrect, because the replacement depends on what failed.
 If you need to handle a genuine platform limitation, scope the rescue to the platform call and disable the cop on that line.
 
 The cop is disabled by default. To enable it:
