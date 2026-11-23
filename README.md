@@ -491,3 +491,27 @@ record.attributes.fetch(attribute_name)
 ```
 
 This cop ignores files in `spec/`, and calls to `send` with no arguments, which are usually a different method named `send`.
+
+### Betterment/AvoidEarlyReturn
+
+This cop flags a `return`, with or without a value, inside a method when it is not the method's final expression. Early returns and guard clauses scatter a method's exit points; prefer a single return path, such as a boolean expression, `if`/`else`, `&.then`, or an extracted predicate method.
+
+#### BAD:
+
+```ruby
+def author_name
+  return 'Unknown' if author.nil?
+
+  author.name
+end
+```
+
+#### GOOD:
+
+```ruby
+def author_name
+  author&.name || 'Unknown'
+end
+```
+
+This cop is disabled by default, because it reports many offenses in existing applications. To use it, enable it in your `.rubocop.yml`. It ignores `return` inside blocks and lambdas, `next`, `break`, `raise`, and a `return` outside any method. It has no autocorrect.
