@@ -39,6 +39,11 @@ Betterment/AuthorizationInController:
   unsafe_regex: ".*_id$"
   unsafe_parameters: []
 
+Betterment/AvoidEarlyReturn:
+  Description: Detects return statements that are not the last expression of a method.
+  Enabled: false
+  StyleGuide: '#bettermentavoidearlyreturn'
+
 Betterment/DirectDelayedEnqueue:
   StyleGuide: '#bettermentdirectdelayedenqueue'
 
