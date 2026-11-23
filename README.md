@@ -471,6 +471,19 @@ end
 
 This cop is disabled by default, because it reports many offenses in applications with older specs. To use it, enable it in your `.rubocop.yml`. By default it examines all files in `spec/`, except for the `features`, `requests`, `routing`, `system`, and `views` directories, where integration style tests that don't test one class and method are common. Examples in shared example groups are also ignored.
 
+### Betterment/NoNotImplementedError
+
+This cop enforces [The Book's rule against using `NotImplementedError` in application code](https://the-book.betterment.io/rules/ruby/#do-not-use-notimplementederror-in-application-code).
+It flags direct references to Ruby's exception, including in `raise`, `rescue`, and inheritance. It does not autocorrect, because the replacement depends on what failed.
+If you need to handle a genuine platform limitation, scope the rescue to the platform call and disable the cop on that line.
+
+The cop is disabled by default. To enable it:
+
+```yaml
+Betterment/NoNotImplementedError:
+  Enabled: true
+```
+
 ### Betterment/NoSend
 
 This cop flags calls to `send`, `public_send`, and `__send__`. Dynamic dispatch hides the call from Sorbet and code search, and `send` also reaches private methods. Call the method directly instead.
