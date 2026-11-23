@@ -70,6 +70,11 @@ Betterment/NoDownMigrations:
   Include:
     - db/migrate/**/*.rb
 
+Betterment/NoNotImplementedError:
+  Description: Disallows direct references to Ruby's NotImplementedError in application code.
+  Enabled: false
+  StyleGuide: '#bettermentnonotimplementederror'
+
 Betterment/NoSend:
   Description: Detects dynamic method calls through send, public_send and __send__.
   StyleGuide: '#bettermentnosend'
