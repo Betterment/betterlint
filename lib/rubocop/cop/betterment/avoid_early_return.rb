@@ -4,7 +4,7 @@ module RuboCop
   module Cop
     module Betterment
       class AvoidEarlyReturn < Base
-        MSG = "Avoid early returns and guard clauses. Prefer a single return path, such as a boolean expression, " \
+        MSG = "Avoid early returns as guard clauses. Prefer a single return path, such as a boolean expression, " \
               "`if`/`else`, `&.then`, or an extracted predicate method."
         LAST_CHILD_TAIL_TYPES = %i(begin kwbegin when in_pattern resbody and or).freeze
 

@@ -8,7 +8,7 @@ describe RuboCop::Cop::Betterment::AvoidEarlyReturn, :config do
       expect_offense(<<~RUBY)
         def author_name
           return 'Unknown' if author.nil?
-          ^^^^^^^^^^^^^^^^ Avoid early returns and guard clauses.[...]
+          ^^^^^^^^^^^^^^^^ Avoid early returns as guard clauses.[...]
 
           author.name
         end
@@ -19,7 +19,7 @@ describe RuboCop::Cop::Betterment::AvoidEarlyReturn, :config do
       expect_offense(<<~RUBY)
         def check_out
           return unless available?
-          ^^^^^^ Avoid early returns and guard clauses.[...]
+          ^^^^^^ Avoid early returns as guard clauses.[...]
 
           lend_to_patron
         end
@@ -30,7 +30,7 @@ describe RuboCop::Cop::Betterment::AvoidEarlyReturn, :config do
       expect_offense(<<~RUBY)
         def self.catalog(attributes:)
           return if attributes.empty?
-          ^^^^^^ Avoid early returns and guard clauses.[...]
+          ^^^^^^ Avoid early returns as guard clauses.[...]
 
           new(**attributes)
         end
@@ -43,7 +43,7 @@ describe RuboCop::Cop::Betterment::AvoidEarlyReturn, :config do
           if checked_out?
             log_checkout
             return :checked_out
-            ^^^^^^^^^^^^^^^^^^^ Avoid early returns and guard clauses.[...]
+            ^^^^^^^^^^^^^^^^^^^ Avoid early returns as guard clauses.[...]
           end
 
           :on_shelf
@@ -57,7 +57,7 @@ describe RuboCop::Cop::Betterment::AvoidEarlyReturn, :config do
           case condition
           when :damaged
             return 'Damaged'
-            ^^^^^^^^^^^^^^^^ Avoid early returns and guard clauses.[...]
+            ^^^^^^^^^^^^^^^^ Avoid early returns as guard clauses.[...]
           end
 
           condition.to_s.titleize
@@ -70,7 +70,7 @@ describe RuboCop::Cop::Betterment::AvoidEarlyReturn, :config do
         def late_fee
           if waived?
             return 0
-            ^^^^^^^^ Avoid early returns and guard clauses.[...]
+            ^^^^^^^^ Avoid early returns as guard clauses.[...]
             log_waiver
           else
             overdue_fine
@@ -84,7 +84,7 @@ describe RuboCop::Cop::Betterment::AvoidEarlyReturn, :config do
         def first_available_book
           while (book = books.shift)
             return book if book.available?
-            ^^^^^^^^^^^ Avoid early returns and guard clauses.[...]
+            ^^^^^^^^^^^ Avoid early returns as guard clauses.[...]
           end
         end
       RUBY
@@ -95,7 +95,7 @@ describe RuboCop::Cop::Betterment::AvoidEarlyReturn, :config do
         def find_book
           begin
             return shelved_copy if shelved_copy
-            ^^^^^^^^^^^^^^^^^^^ Avoid early returns and guard clauses.[...]
+            ^^^^^^^^^^^^^^^^^^^ Avoid early returns as guard clauses.[...]
           rescue StandardError
             nil
           else
@@ -112,7 +112,7 @@ describe RuboCop::Cop::Betterment::AvoidEarlyReturn, :config do
             'Damaged'
           elsif lost?
             return 'Lost'
-            ^^^^^^^^^^^^^ Avoid early returns and guard clauses.[...]
+            ^^^^^^^^^^^^^ Avoid early returns as guard clauses.[...]
           end
 
           condition.to_s
@@ -126,7 +126,7 @@ describe RuboCop::Cop::Betterment::AvoidEarlyReturn, :config do
           until books.empty?
             book = books.shift
             return book if book.available?
-            ^^^^^^^^^^^ Avoid early returns and guard clauses.[...]
+            ^^^^^^^^^^^ Avoid early returns as guard clauses.[...]
           end
         end
       RUBY
@@ -296,7 +296,7 @@ describe RuboCop::Cop::Betterment::AvoidEarlyReturn, :config do
         Class.new do
           def call
             return unless open?
-            ^^^^^^ Avoid early returns and guard clauses.[...]
+            ^^^^^^ Avoid early returns as guard clauses.[...]
 
             lend_books
           end
