@@ -39,11 +39,12 @@ module RuboCop
 
           check_class_label(node) if groups.empty?
           check_method_describe_placement(node, groups)
+          check_method_label(node, groups)
         end
 
         def check_example(node)
           groups = enclosing_groups(node)
-          return if groups.any? { |group| shared_group?(group) || method_describe?(group) }
+          return if groups.any? { |group| shared_group?(group) || method_describe?(group) || misnamed_describe?(group) }
           return unless groups.any? { |group| class_describe?(group) }
 
           add_offense(node, message: MSG_METHOD_LABEL)
@@ -64,6 +65,13 @@ module RuboCop
           return unless groups.any? { |group| class_describe?(group) }
 
           add_offense(send_node, message: class_describe?(parent) ? MSG_ONE_CLASS : MSG_DIRECTLY_INSIDE)
+        end
+
+        def check_method_label(send_node, groups)
+          return unless misnamed_describe?(send_node)
+          return unless groups.any? { |group| class_describe?(group) }
+
+          add_offense(send_node.first_argument, message: MSG_METHOD_LABEL)
         end
 
         def enclosing_groups(node)
@@ -100,6 +108,13 @@ module RuboCop
           return false unless label&.str_type?
 
           METHOD_LABEL.match?(label.value)
+        end
+
+        def misnamed_describe?(send_node)
+          return false unless describe?(send_node)
+
+          label = send_node.first_argument
+          !label.nil? && !label.const_type? && !method_describe?(send_node)
         end
 
         def rspec_receiver?(send_node)
